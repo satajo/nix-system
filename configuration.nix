@@ -5,10 +5,12 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    # User accounts
+    ./users.nix
+  ];
 
   # Nix itself
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -82,32 +84,19 @@
   # Enable spice-vdagent for sharing clipboard.
   services.spice-vdagentd.enable = true;
 
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.satajo = {
-    isNormalUser = true;
-    description = "satajo";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      git
-      firefox
-      hyperfine # Benchmarking tool
-    #  thunderbird
-    ];
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
-  ];
+  environment.systemPackages = with pkgs;
+    [
+      #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+      #  wget
+    ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
