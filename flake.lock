@@ -21,6 +21,26 @@
         "type": "github"
       }
     },
+    "longcut": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1710002498,
+        "narHash": "sha256-ZfI8JUdG3RpfQqYlDQk31iPsHDWx9MqJwu2FyKaRZug=",
+        "owner": "satajo",
+        "repo": "longcut",
+        "rev": "20d033455b6d360fc0d7af080dcc72e45b1baf2a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "satajo",
+        "repo": "longcut",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1710162809,
@@ -40,6 +60,7 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
+        "longcut": "longcut",
         "nixpkgs": "nixpkgs"
       }
     }

@@ -135,13 +135,14 @@
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs;};
     users = {
       "satajo" = {
         home.username = "satajo";
         home.homeDirectory = "/home/satajo";
         home.stateVersion = "23.11";
-        imports = [ user-modules/alacritty user-modules/shell ];
+        imports =
+          [ user-modules/alacritty user-modules/longcut user-modules/shell ];
       };
     };
   };

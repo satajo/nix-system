@@ -1,0 +1,518 @@
+### Longcut configuration
+
+gui:
+  font_family: "Hack"
+  font_size: 20
+
+  window_height: 360
+  window_width: 1280
+
+  # Normal
+  background_color: "$COLOR_BACKGROUND"
+  border_color: "$COLOR_BLACK"
+  foreground_color: "$COLOR_FOREGROUND"
+
+  # Errors
+  error_border_color: "$COLOR_RED"
+
+  # Actions
+  placeholder_color: "$COLOR_WHITE"
+  action_execute_color: "$COLOR_WHITE"
+  action_system_color: "$COLOR_YELLOW"
+
+shell:
+  default_timeout_ms: 3000 # TODO: Lower this once commands support command-specific timeouts.
+
+core:
+  keys_activate:
+    - Super_L
+    - Super_R
+  keys_back: BackSpace
+  keys_deactivate:
+    - Super_L
+    - Super_R
+    - Escape
+
+  commands:
+    - name: Media
+      shortcut: m
+      steps: playerctl --player {0} {1}
+      parameters:
+        - name: Player name
+          type: choose
+          generate_options:
+            command: playerctl --list-all
+        - name: Control action
+          type: choose
+          options:
+            - next
+            - play
+            - pause
+            - previous
+            - stop
+
+    - name: Workspace
+      shortcut: w
+      steps: i3-msg workspace '{0}'
+      parameters:
+        - name: Workspace number
+          type: character
+
+    ## Focus commands
+    - name: Focus down
+      shortcut: Down
+      final: false
+      steps: i3-msg focus down
+    - name: Focus left
+      shortcut: Left
+      final: false
+      steps: i3-msg focus left
+    - name: Focus right
+      shortcut: Right
+      final: false
+      steps: i3-msg focus right
+    - name: Focus up
+      shortcut: Up
+      final: false
+      steps: i3-msg focus up
+    - name: Focus parent
+      shortcut: PageUp
+      final: false
+      steps: i3-msg focus parent
+    - name: Focus child
+      shortcut: PageDown
+      final: false
+      steps: i3-msg focus child
+
+    ## Move commands
+    - name: Move down
+      shortcut:
+        key: Down
+        modifiers: shift
+      final: false
+      steps: i3-msg move container down
+    - name: Move left
+      shortcut:
+        key: Left
+        modifiers: shift
+      final: false
+      steps: i3-msg move container left
+    - name: Move Right
+      shortcut:
+        key: Right
+        modifiers: shift
+      final: false
+      steps: i3-msg move container right
+    - name: Move up
+      shortcut:
+        key: Up
+        modifiers: shift
+      final: false
+      steps: i3-msg move container up
+
+    ## Resize commands
+    - name: Shorten
+      shortcut:
+        key: Down
+        modifiers: control
+      final: false
+      steps: i3-msg resize shrink height
+    - name: Heighten
+      shortcut:
+        key: Up
+        modifiers: control
+      final: false
+      steps: i3-msg resize grow height
+    - name: Narrow
+      shortcut:
+        key: Left
+        modifiers: control
+      final: false
+      steps: i3-msg resize shrink width
+    - name: Widen
+      shortcut:
+        key: Right
+        modifiers: control
+      final: false
+      steps: i3-msg resize grow width
+
+  layers:
+    ## Keymaps layer
+    - name: Keymaps
+      shortcut: "0"
+      commands:
+        - name: US Colemak
+          shortcut: "0"
+          steps: setxkbmap us -variant colemak
+        - name: Greek Colemak
+          shortcut: "1"
+          steps: setxkbmap gr -variant colemak
+        - name: Finnish Qwerty
+          shortcut: "2"
+          steps: setxkbmap fi
+
+    ## Layout layer
+    - name: Layout
+      shortcut: l
+      commands:
+        - name: Horizontal
+          shortcut: h
+          steps: i3-msg layout splith
+        - name: Stacking
+          shortcut: s
+          steps: i3-msg layout stacking
+        - name: Tabbed
+          shortcut: t
+          steps: i3-msg layout tabbed
+        - name: Vertical
+          shortcut: v
+          steps: i3-msg layout splitv
+
+    ## Noise layer
+    - name: Noise
+      shortcut: n
+      commands:
+        - name: Play
+          shortcut: p
+          steps: ~/applications/noisegen.sh play
+        - name: Stop
+          shortcut: s
+          steps: ~/applications/noisegen.sh stop
+
+    ## Open layer
+    - name: Open
+      shortcut: o
+      commands:
+        - name: Application
+          shortcut: a
+          steps: rofi -show drun -show-icons
+          synchronous: false
+        - name: Browser
+          shortcut: b
+          steps: firefox
+          synchronous: false
+        - name: Empty container
+          shortcut: e
+          steps: i3-msg open
+        - name: Horizontally
+          shortcut: h
+          final: false
+          steps: i3-msg split h
+        - name: Terminal
+          shortcut: "t"
+          steps: alacritty
+          synchronous: false
+        - name: Vertically
+          shortcut: v
+          final: false
+          steps: i3-msg split v
+
+    ## Pomodoro layer
+    - name: Pomodoro
+      shortcut: p
+      commands:
+        - name: Begin
+          shortcut: b
+          steps: ~/applications/pomodoro.sh begin 1800 # 30 minutes
+        - name: End
+          shortcut: e
+          steps: ~/applications/pomodoro.sh end
+
+    ## Realworld layer
+    - name: Realworld
+      shortcut: r
+      layers:
+        - name: Desk fan
+          shortcut: "f"
+          commands:
+            - name: Turn on
+              shortcut: "1"
+              steps: hueadm light 14 on
+            - name: Turn off
+              shortcut: "0"
+              steps: hueadm light 14 off
+        - name: Desk lights
+          shortcut: "l"
+          commands:
+            - name: Turn on
+              shortcut: "1"
+              steps:
+                - hueadm light 7 on
+                - hueadm light 13 on
+            - name: Turn off
+              shortcut: "0"
+              steps:
+                - hueadm light 7 off
+                - hueadm light 13 off
+
+    ## Search layer
+    - name: Search
+      shortcut: e
+      commands:
+        - name: Crates.io
+          shortcut: c
+          steps: firefox --new-window 'https://crates.io/search?q={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Duck Duck Go
+          shortcut: d
+          steps: firefox --new-window 'https://www.duckduckgo.com/{0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Google
+          shortcut: g
+          steps: firefox --new-window 'https://www.google.com/search?q={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Hoogle
+          shortcut: h
+          steps: firefox --new-window 'https://hoogle.haskell.org/?hoogle={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Kagi
+          shortcut: k
+          steps: firefox --new-window 'https://kagi.com/search?q={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Merriam-Webster
+          shortcut: m
+          steps: firefox --new-window 'https://merriam-webster.com/dictionary/{0}'
+          synchronous: false
+          parameters:
+            - name: Word to look up
+              type: text
+        - name: Npm
+          shortcut: n
+          steps: firefox --new-window 'https://npmjs.com/search?q={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Reddit
+          shortcut: r
+          steps: firefox --new-window 'https://www.reddit.com/search/?q={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+        - name: Youtube
+          shortcut: y
+          steps: firefox --new-window 'https://www.youtube.com/results?search_query={0}'
+          synchronous: false
+          parameters:
+            - name: Search term
+              type: text
+
+    ## System layer
+    - name: System
+      shortcut: s
+      commands:
+        - name: i3 restart
+          shortcut: "3"
+          steps: i3 restart
+      layers:
+        - name: Audio
+          shortcut: a
+          commands:
+            - name: Device select
+              shortcut: d
+              steps: pactl set-default-sink {0}
+              parameters:
+                - name: Name
+                  type: choose
+                  generate_options:
+                    command: "pactl list sinks | grep 'Name: ' | awk '{ print $2 }'"
+
+        - name: Backlight
+          shortcut: b
+          commands:
+            - name: Down
+              shortcut: d
+              steps: light -T 0.8
+              final: false
+            - name: Up
+              shortcut: u
+              steps: light -T 1.25
+              final: false
+        - name: Capture
+          shortcut: c
+          commands:
+            - name: Color
+              shortcut: c
+              steps: gpick --single --output --converter-name color_{0} | xclip -sel c
+              synchronous: false
+              parameters:
+                - name: Converter
+                  type: choose
+                  options:
+                    - css_hsl
+                    - css_rgb
+                    - web_hex
+            - name: Region
+              shortcut: r
+              steps: scrot --select --line mode=edge,width=4 - | xclip -selection c -t image/png
+              synchronous: false
+            - name: Window
+              shortcut: i
+              steps: scrot --focused --line mode=edge,width=4 - | xclip -selection c -t image/png
+              synchronous: false
+            - name: Workspace
+              shortcut: w
+              steps: scrot --line mode=edge,width=4 - | xclip -selection c -t image/png
+              synchronous: false
+
+        - name: Desktop
+          shortcut: d
+          layers:
+            - name: Gaps
+              shortcut: g
+              commands:
+                - name: Reset
+                  shortcut: r
+                  steps:
+                    - i3-msg 'gaps inner all set 35'
+                    - i3-msg 'gaps outer all set -34'
+                - name: Disable
+                  shortcut: d
+                  steps:
+                    - i3-msg 'gaps inner all set 0'
+                    - i3-msg 'gaps outer all set 0'
+                - name: Widen
+                  shortcut: w
+                  final: false
+                  steps: i3-msg 'gaps inner all plus 5'
+                - name: Narrow
+                  shortcut: n
+                  final: false
+                  steps: i3-msg 'gaps inner all minus 5'
+          commands:
+            - name: Narrow gaps
+              shortcut: n
+              steps: i3-msg 'gaps horizontal all set -10'
+            - name: Wide gaps
+              shortcut: w
+              steps: i3-msg 'gaps horizontal all set 410'
+
+        - name: Monitor
+          shortcut: m
+          commands:
+            - name: Rotate
+              shortcut: r
+              parameters:
+                - name: Monitor name
+                  type: choose
+                  generate_options:
+                    command: xrandr | grep " connected " | awk '{ print$1 }'
+                - name: Direction
+                  type: choose
+                  options:
+                    - left
+                    - right
+                    - normal
+                    - inverted
+              steps: xrandr --output {0} --rotate {1}
+
+        - name: Network
+          shortcut: "n"
+          commands:
+            - name: Connect
+              shortcut: c
+              steps: nmcli connection up {0}
+              timeout: 5000 # Sometimes this takes a rather long time.
+              parameters:
+                - name: Connection
+                  type: choose
+                  generate_options:
+                    command: nmcli connection show | grep -E "wifi|ethernet" | awk -F "  " '{ print $1 }'
+
+        - name: Notification
+          shortcut: "o"
+          commands:
+            - name: Act
+              shortcut: a
+              steps: dunstctl action
+            - name: Close
+              shortcut: c
+              steps: dunstctl close
+            - name: Close all
+              shortcut:
+                key: c
+                modifiers: control
+              steps: dunstctl close-all
+            - name: History pop
+              shortcut: h
+              steps: dunstctl history-pop
+
+        # TODO: Inline the lock script.
+        - name: Session
+          shortcut: s
+          commands:
+            - name: Exit
+              shortcut: e
+              steps: i3-msg exit
+              synchronous: false
+            - name: Lock
+              shortcut: l
+              steps: ~/.config/i3/script/lock.sh
+              synchronous: false
+            - name: Power off
+              shortcut: p
+              steps: poweroff
+              synchronous: false
+            - name: Reboot
+              shortcut: r
+              steps: reboot
+              synchronous: false
+            - name: Suspend
+              shortcut: s
+              steps:
+                - ~/.config/i3/script/lock.sh &
+                - sleep 5
+                - systemctl suspend &
+
+        - name: Volume
+          shortcut: v
+          commands:
+            - name: Down
+              shortcut: d
+              final: false
+              steps: amixer -q sset Master 1%-
+            - name: Mute
+              shortcut: m
+              steps: amixer -q sset Master mute
+            - name: Unmute
+              shortcut: "n"
+              steps: amixer -q sset Master unmute
+            - name: Up
+              shortcut: u
+              final: false
+              steps: amixer -q sset Master 1%+
+
+    - name: Window
+      shortcut: i
+      commands:
+        - name: Fullscreen toggle
+          shortcut: f
+          steps: i3-msg fullscreen toggle
+        - name: Hover toggle
+          shortcut: h
+          steps: i3-msg floating toggle
+        - name: Kill active
+          shortcut: k
+          steps: i3-msg kill
+        - name: Move to workspace
+          shortcut: m
+          steps: i3-msg move container to workspace {0}
+          parameters:
+            - name: Target workspace
+              type: character
