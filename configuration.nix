@@ -9,9 +9,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Imports
-  imports = [
-    system-modules/fonts.nix
-  ];
+  imports = [ system-modules/fonts.nix ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -143,7 +141,7 @@
         home.username = "satajo";
         home.homeDirectory = "/home/satajo";
         home.stateVersion = "23.11";
-        imports = [ user-modules/alacritty ];
+        imports = [ user-modules/alacritty user-modules/shell ];
       };
     };
   };
