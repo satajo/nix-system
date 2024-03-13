@@ -1,0 +1,78 @@
+window:
+  decorations: full
+  padding:
+    x: 24
+    y: 24
+
+scrolling:
+  history: 10000
+  multiplier: 1
+
+font:
+  size: 11.0
+  normal:
+    family: JetBrainsMono Nerd Font
+    style: Regular
+  bold:
+    style: Bold
+  italic:
+    style: Italic
+  bold_italic:
+    style: Bold Italic
+
+colors:
+  primary:
+    background: '#1d2021'
+    foreground: '#ebdbb2'
+
+  cursor:
+    text:   '#1d2021'
+    cursor: '#ebdbb2'
+
+  # Normal colors
+  normal:
+    black:   '#3c3836'
+    red:     '#fb4934'
+    green:   '#b8bb26'
+    yellow:  '#fabd2f'
+    blue:    '#83a598'
+    magenta: '#d3869b'
+    cyan:    '#8ec07c'
+    white:   '#928374'
+
+  # Bright colors
+  bright:
+    black:   '#3c3836'
+    red:     '#fb4934'
+    green:   '#b8bb26'
+    yellow:  '#fabd2f'
+    blue:    '#83a598'
+    magenta: '#d3869b'
+    cyan:    '#8ec07c'
+    white:   '#928374'
+
+live_config_reload: true
+
+# Keybinding reference for overrides
+#key_bindings:
+  #- { key: Paste,                                action: Paste          }
+  #- { key: Copy,                                 action: Copy           }
+  #- { key: L,         mods: Control,             action: ClearLogNotice }
+  #- { key: L,         mods: Control, mode: ~Vi,  chars: "\x0c"          }
+  #- { key: PageUp,    mods: Shift,   mode: ~Alt, action: ScrollPageUp,  }
+  #- { key: PageDown,  mods: Shift,   mode: ~Alt, action: ScrollPageDown }
+  #- { key: Home,      mods: Shift,   mode: ~Alt, action: ScrollToTop,   }
+  #- { key: End,       mods: Shift,   mode: ~Alt, action: ScrollToBottom }
+
+  #- { key: V,              mods: Control|Shift,           action: Paste            }
+  #- { key: C,              mods: Control|Shift,           action: Copy             }
+  #- { key: F,              mods: Control|Shift,           action: SearchForward    }
+  #- { key: B,              mods: Control|Shift,           action: SearchBackward   }
+  #- { key: C,              mods: Control|Shift, mode: Vi, action: ClearSelection   }
+  #- { key: Insert,         mods: Shift,                   action: PasteSelection   }
+  #- { key: Key0,           mods: Control,                 action: ResetFontSize    }
+  #- { key: Equals,         mods: Control,                 action: IncreaseFontSize }
+  #- { key: Plus,           mods: Control,                 action: IncreaseFontSize }
+  #- { key: NumpadAdd,      mods: Control,                 action: IncreaseFontSize }
+  #- { key: Minus,          mods: Control,                 action: DecreaseFontSize }
+  #- { key: NumpadSubtract, mods: Control,                 action: DecreaseFontSize }

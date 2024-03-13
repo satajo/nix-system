@@ -2,16 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  imports = [
-    # Include the results of the hardware scan.
-    ./hardware-configuration.nix
-    # User accounts
-    ./users.nix
-  ];
-
   # Nix itself
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
@@ -125,4 +118,28 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 
+  # Main user account. Don't forget to set a password with ‘passwd’.
+  users.users.satajo = {
+    isNormalUser = true;
+    description = "satajo";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [
+      firefox
+      git
+      hyperfine # Benchmarking tool
+      tig # Git terminal gui
+    ];
+  };
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "satajo" = {
+        home.username = "satajo";
+        home.homeDirectory = "/home/satajo";
+        home.stateVersion = "23.11";
+        imports = [ user-modules/alacritty ];
+      };
+    };
+  };
 }
