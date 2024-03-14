@@ -1,24 +1,24 @@
 ### Longcut configuration
 
 gui:
-  font_family: "Hack"
+  font_family: "@FONT_MONOSPACE@"
   font_size: 20
 
   window_height: 360
   window_width: 1280
 
   # Normal
-  background_color: "$COLOR_BACKGROUND"
-  border_color: "$COLOR_BLACK"
-  foreground_color: "$COLOR_FOREGROUND"
+  background_color: "@COLOR_BACKGROUND_NORMAL@"
+  border_color: "@COLOR_BACKGROUND_DARK@"
+  foreground_color: "@COLOR_FOREGROUND_NORMAL@"
 
   # Errors
-  error_border_color: "$COLOR_RED"
+  error_border_color: "@COLOR_ERROR_NORMAL@"
 
   # Actions
-  placeholder_color: "$COLOR_WHITE"
-  action_execute_color: "$COLOR_WHITE"
-  action_system_color: "$COLOR_YELLOW"
+  placeholder_color: "@COLOR_FOREGROUND_DARK@"
+  action_execute_color: "@COLOR_FOREGROUND_LIGHT@"
+  action_system_color: "@COLOR_FOREGROUND_DARK@"
 
 shell:
   default_timeout_ms: 3000 # TODO: Lower this once commands support command-specific timeouts.

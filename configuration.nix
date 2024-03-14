@@ -131,11 +131,12 @@
       git
       hyperfine # Benchmarking tool
       tig # Git terminal gui
+      vscode # Visual Studio Cod
     ];
   };
 
   home-manager = {
-    extraSpecialArgs = { inherit inputs;};
+    extraSpecialArgs = { inherit inputs; };
     users = {
       "satajo" = {
         home.username = "satajo";
