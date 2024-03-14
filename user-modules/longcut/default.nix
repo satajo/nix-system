@@ -18,10 +18,13 @@ in {
 
     Service = {
       Type = "simple";
-      ExecStart = "${package}/bin/longcut";
-      KillMode = "proces";
+      # Service is started through a login shell invocation to iherit paths correctly.
+      ExecStart = "${pkgs.runtimeShell} -lc ${package}/bin/longcut";
+      KillMode = "process";
       Restart = "always";
       RestartSec = "1s";
     };
+
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 }
