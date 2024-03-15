@@ -22,6 +22,8 @@ let
     };
   };
 in {
+  imports = [ ./fonts.nix ];
+
   # Theme object which exports the theme as variables.
   theme = theme;
 

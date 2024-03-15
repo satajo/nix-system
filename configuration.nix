@@ -13,9 +13,12 @@
 
   # Imports
   imports = [
-    system-modules/desktop.nix
-    system-modules/fonts.nix
-    system-modules/vm-guest.nix
+    module/i3-desktop.nix
+    module/vm-guest.nix
+
+    program/alacritty
+    program/longcut
+    program/shell
   ];
 
   # Bootloader.
@@ -135,8 +138,6 @@
         home.username = "satajo";
         home.homeDirectory = "/home/satajo";
         home.stateVersion = "23.11";
-        imports =
-          [ user-modules/alacritty user-modules/longcut user-modules/shell ];
       };
     };
   };

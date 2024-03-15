@@ -1,5 +1,5 @@
 { config, pkgs, callPackage, ... }:
-let theme = import ../themes { pkgs = pkgs; };
+let theme = import ../theme { pkgs = pkgs; };
 in {
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
