@@ -13,8 +13,8 @@
 
   # Imports
   imports = [
+    system-modules/desktop.nix
     system-modules/fonts.nix
-    system-modules/i3.nix
     system-modules/vm-guest.nix
   ];
 
