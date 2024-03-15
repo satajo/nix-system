@@ -14,4 +14,7 @@ if [ ! -f hardware-configuration.nix ]; then
   git update-index --assume-unchanged hardware-configuration.nix
 fi
 
+# Format the files which also checks for basic syntax.
+nix fmt
+
 sudo nixos-rebuild switch --flake .#default
