@@ -8,8 +8,15 @@
   # Nix itself
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
+
   # Imports
-  imports = [ system-modules/fonts.nix system-modules/i3.nix ];
+  imports = [
+    system-modules/fonts.nix
+    system-modules/i3.nix
+    system-modules/vm-guest.nix
+  ];
 
   # Bootloader.
   boot.loader.grub.enable = true;
@@ -69,14 +76,8 @@
     #media-session.enable = true;
   };
 
-  # Enable spice-vdagent for sharing clipboard.
-  services.spice-vdagentd.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

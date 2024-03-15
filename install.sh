@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 # Ensure hardware-cofiguration.nix exists.
-if [ ! -f hardware-configuration.nix ]; then
+if [ ! -s hardware-configuration.nix ]; then
   echo "NixOS hardware configuration file not found - Regenerating..."
   sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
 
