@@ -8,19 +8,19 @@ in rec {
 
   color = {
     foreground = {
-      light = colors.gray.light;
-      normal = colors.gray.light;
-      dark = colors.gray.regular;
+      light = "#fbf1c7";
+      normal = "#ebdbb2";
+      dark = "#d5c4a1";
     };
     background = {
-      light = colors.black.light;
-      normal = colors.black.regular;
-      dark = colors.black.regular;
+      light = "#3c3836";
+      normal = "#282828";
+      dark = "#1d2021";
     };
     error = {
-      light = colors.red.light;
-      normal = colors.red.regular;
-      dark = colors.red.regular;
+      light = "#fb4934";
+      normal = "#cc241d";
+      dark = "#cc241d";
     };
   };
 

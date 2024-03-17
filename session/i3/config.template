@@ -1,0 +1,120 @@
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+
+#------------------------------------------------------------------------------
+# General configuration
+#------------------------------------------------------------------------------
+
+focus_follows_mouse no
+focus_on_window_activation none
+focus_wrapping no
+
+# Open all windows to the center if they float
+for_window [floating] move position center
+
+#------------------------------------------------------------------------------
+# Shortcuts
+#------------------------------------------------------------------------------
+
+# Escape hatch should Ordinator fail
+bindsym Pause exec alacritty
+
+# Volume keys
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%-
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle
+
+# Media control keys
+bindsym XF86AudioPlay exec playerctl play
+bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+#------------------------------------------------------------------------------
+# Desktop environment
+#------------------------------------------------------------------------------
+
+# Power management
+exec_always --no-startup-id xset dpms 0 7200 0s
+exec_always --no-startup-id xset s off
+
+# Compositor
+# exec_always --no-startup-id killall picom --wait; picom --daemon;
+
+# Keyboard input rate
+# exec_always --no-startup-id bash ~/.config/i3/script/bind-keys.sh
+
+# Wallpaper
+# exec_always --no-startup-id feh --image-bg "$COLOR_WM_BACKGROUND" --bg-fill ~/.config/i3/wallpaper.jpg
+exec_always --no-startup-id xsetroot -solid "@COLOR_BACKGROUND_DARK@"
+
+# Polybar
+exec_always --no-startup-id pkill polybar; polybar
+
+#------------------------------------------------------------------------------
+# Application configuration
+#------------------------------------------------------------------------------
+
+# c Chat
+assign [class="Slack"] c
+
+assign [class="TelegramDesktop"] c
+
+assign [class="discord"] c
+
+# e Editors
+assign [class="Code"] e
+
+assign [class="jetbrains-idea"] e
+for_window [class="jetbrains-idea" title="win0"] floating enable
+
+assign [class="jetbrains-studio"] e
+for_window [class="jetbrains-studio" title="win0"] floating enable
+
+# m Music
+assign [class="Spotify"] m
+
+# s Study
+assign [class="obsidian"] s
+
+# t Todo
+assign [class="Todoist"] t
+
+#------------------------------------------------------------------------------
+# i3 Appearance
+#------------------------------------------------------------------------------
+
+# Setting the font
+font pango:@FONT_MONOSPACE@ 12
+
+# Gaps
+smart_gaps on
+gaps inner 15
+gaps outer 0
+
+# Borders
+smart_borders on
+for_window [tiling] border pixel 1
+
+# Floating window rules
+for_window [floating_from="auto"] border normal 1
+title_align center
+
+# Theme application
+#                       title-border, title-background, title-text, indicator, child_border
+client.focused          @COLOR_FOREGROUND_NORMAL@ @COLOR_FOREGROUND_NORMAL@ @COLOR_BACKGROUND_NORMAL@ @COLOR_FOREGROUND_NORMAL@ @COLOR_FOREGROUND_NORMAL@
+client.focused_inactive @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@ @COLOR_FOREGROUND_NORMAL@ @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@
+client.unfocused        @COLOR_BACKGROUND_NORMAL@ @COLOR_BACKGROUND_NORMAL@ @COLOR_FOREGROUND_DARK@ @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@
+client.urgent           @COLOR_BACKGROUND_NORMAL@ @COLOR_BACKGROUND_NORMAL@ @COLOR_FOREGROUND_DARK@ @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@
+#                       background
+client.background       @COLOR_BACKGROUND_NORMAL@
+
+# i3 refuses to start without any extra "mode" blocks defined.
+mode WORKAROUND {
+    bindcode 999 echo ""
+}
+
+#------------------------------------------------------------------------------
+# Systemd target launch
+#------------------------------------------------------------------------------
+
+# exec --no-startup-id systemctl --user import-environment PATH && systemctl --user start i3-session.target
