@@ -13,14 +13,15 @@
 
   # Imports
   imports = [
-    module/i3-desktop.nix
-    module/vm-guest.nix
+    system/vm-guest.nix
+
+    ./session
 
     program/alacritty
     program/longcut
     program/shell
 
-    theme/default.nix
+    ./theme
   ];
 
   # Bootloader.
