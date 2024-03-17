@@ -1,5 +1,5 @@
 { config, pkgs, callPackage, ... }:
-let theme = import ../theme { pkgs = pkgs; };
+let theme = import ../theme/lib.nix { pkgs = pkgs; };
 in {
   environment.pathsToLink =
     [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
@@ -15,7 +15,7 @@ in {
       defaultSession = "none+i3";
       lightdm = {
         enable = true;
-        background = theme.theme.color.background.normal;
+        background = theme.color.background.normal;
         greeters.gtk = {
           enable = true;
           # For a list of themes, see: /run/current-system/share/themes/

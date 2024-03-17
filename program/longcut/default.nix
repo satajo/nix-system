@@ -1,10 +1,9 @@
-{ config, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
-  theme = import ../../theme { pkgs = pkgs; };
   package = inputs.longcut.packages.${pkgs.system}.default;
+  theme = import ../../theme/lib.nix { pkgs = pkgs; };
 in {
   home-manager.users.satajo = {
-
     home.packages = [ package ];
 
     xdg.configFile."longcut/longcut.yaml".source =

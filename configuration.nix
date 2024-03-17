@@ -19,6 +19,8 @@
     program/alacritty
     program/longcut
     program/shell
+
+    theme/default.nix
   ];
 
   # Bootloader.
