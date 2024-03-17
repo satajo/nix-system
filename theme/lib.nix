@@ -1,7 +1,11 @@
 { pkgs, ... }:
 let colors = import ./gruvbox-colors.nix;
 in rec {
-  font = { monospace = "JetBrainsMonoNerdFont"; };
+  font = {
+    icon = "SymbolsNerdFont";
+    monospace = "JetBrainsMonoNerdFont";
+  };
+
   color = {
     foreground = {
       light = colors.gray.light;
@@ -27,6 +31,7 @@ in rec {
       # TODO: Change this to "substitutions" once it is made stable.
       # TODO: Use --replace-fail instead of --replace once it is made stable.
       replacements = [
+        "--replace @FONT_ICON@ ${font.icon}"
         "--replace @FONT_MONOSPACE@ ${font.monospace}"
 
         "--replace @COLOR_FOREGROUND_LIGHT@ ${color.foreground.light}"
