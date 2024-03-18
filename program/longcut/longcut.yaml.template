@@ -9,7 +9,7 @@ gui:
 
   # Normal
   background_color: "@COLOR_BACKGROUND_NORMAL@"
-  border_color: "@COLOR_BACKGROUND_DARK@"
+  border_color: "@COLOR_BACKGROUND_LIGHT@"
   foreground_color: "@COLOR_FOREGROUND_NORMAL@"
 
   # Errors
@@ -17,7 +17,8 @@ gui:
 
   # Actions
   placeholder_color: "@COLOR_FOREGROUND_DARK@"
-  action_execute_color: "@COLOR_FOREGROUND_LIGHT@"
+  action_branch_color: "@COLOR_FOREGROUND_LIGHT@"
+  action_execute_color: "@COLOR_FOREGROUND_NORMAL@"
   action_system_color: "@COLOR_FOREGROUND_DARK@"
 
 shell:
