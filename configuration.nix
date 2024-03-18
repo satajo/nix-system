@@ -13,6 +13,7 @@
 
   # Imports
   imports = [
+    system/keyd.nix
     system/vm-guest.nix
 
     ./session
