@@ -131,7 +131,8 @@
       git
       hyperfine # Benchmarking tool
       tig # Git terminal gui
-      vscode # Visual Studio Cod
+      tldr # Console command cheatsheets
+      vscode # Visual Studio Code
     ];
   };
 
