@@ -41,8 +41,12 @@ function run_in_install_branch() {
 ### Main
 
 case "$1" in
-  ("test")
+  ("build")
     run_in_install_branch nixos-rebuild dry-build --flake .#default
+    ;;
+
+  ("test")
+    run_in_install_branch sudo nixos-rebuild test --flake .#default
     ;;
 
   ("install")
