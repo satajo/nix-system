@@ -1,4 +1,5 @@
 #!/bin/sh -e
+cd "$(dirname "$0")"
 
 function run_in_install_branch() {
   local COMMAND="$@";
