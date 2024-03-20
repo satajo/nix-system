@@ -1,0 +1,63 @@
+* {
+    font: "@FONT_MONOSPACE@ 14";
+    background-color: @COLOR_BACKGROUND_DARK@;
+    text-color: @COLOR_FOREGROUND_NORMAL@;
+}
+
+window {
+    border: 1px;
+    border-color: @COLOR_BACKGROUND_NORMAL@;
+    width: 1024px;
+    height: 768px;
+    padding: 45px 45px;
+}
+
+mainbox {
+    padding: 0;
+}
+
+listview {
+    scrollbar: true;
+}
+
+scrollbar {
+    background-color: @COLOR_BACKGROUND_NORMAL@;
+    handle-color: @COLOR_BACKGROUND_LIGHT@;
+    handle-width: 8px;
+    margin: 8px 0 0 10px;
+}
+
+inputbar {
+    background-color: @COLOR_BACKGROUND_NORMAL@;
+    children: [ entry ];
+    margin: 0 0 18px 0;
+    padding: 12px;
+}
+
+entry {
+    background-color: @COLOR_BACKGROUND_NORMAL@;
+    text-color: @COLOR_FOREGROUND_NORMAL@;
+}
+
+element {
+    border: 0 0 0 0;
+    padding: 12px;
+    margin: 8px 0 0 0;
+    background-color: @COLOR_BACKGROUND_NORMAL@;
+    text-color: @COLOR_FOREGROUND_NORMAL@;
+}
+
+element selected {
+    background-color: @COLOR_BACKGROUND_LIGHT@;
+    text-color: @COLOR_FOREGROUND_LIGHT@;
+}
+
+element-text {
+    background-color: inherit;
+    text-color: inherit;
+}
+
+element-icon {
+    background-color: inherit;
+    margin: 0 8px 0 0;
+}

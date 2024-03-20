@@ -3,6 +3,7 @@
     ./i3 # Window manager
     ./lightdm.nix # Display / login manage
     ./polybar # Status bar
+    ./rofi # Application switcher / launcher
   ];
 
   services.xserver = {
