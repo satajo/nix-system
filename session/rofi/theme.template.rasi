@@ -7,8 +7,8 @@
 window {
     border: 1px;
     border-color: @COLOR_BACKGROUND_NORMAL@;
-    width: 1024px;
-    height: 768px;
+    width: calc(80% min 1024px);
+    height: calc(80% min 768px);
     padding: 45px 45px;
 }
 
