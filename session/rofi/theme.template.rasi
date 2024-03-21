@@ -1,12 +1,12 @@
 * {
     font: "@FONT_MONOSPACE@ 14";
-    background-color: @COLOR_BACKGROUND_DARK@;
-    text-color: @COLOR_FOREGROUND_NORMAL@;
+    background-color: @COLOR_LAYER2_BACKGROUND@;
+    text-color: @COLOR_LAYER2_FOREGROUND@;
 }
 
 window {
     border: 1px;
-    border-color: @COLOR_BACKGROUND_NORMAL@;
+    border-color: @COLOR_LAYER2_BORDER@;
     width: calc(80% min 1024px);
     height: calc(80% min 768px);
     padding: 45px 45px;
@@ -21,37 +21,39 @@ listview {
 }
 
 scrollbar {
-    background-color: @COLOR_BACKGROUND_NORMAL@;
-    handle-color: @COLOR_ACCENT_NORMAL@;
+    background-color: @COLOR_LAYER3_BACKGROUND@;
+    handle-color: @COLOR_LAYER3_ACCENT@;
     handle-width: 8px;
     margin: 8px 0 0 10px;
 }
 
 inputbar {
-    background-color: @COLOR_BACKGROUND_NORMAL@;
+    background-color: @COLOR_LAYER3_BACKGROUND@;
+    text-color: @COLOR_LAYER3_FOREGROUND@;
     children: [ entry ];
     margin: 0 0 18px 0;
     padding: 12px;
 }
 
 entry {
-    background-color: @COLOR_BACKGROUND_NORMAL@;
-    text-color: @COLOR_FOREGROUND_NORMAL@;
+    background-color: @COLOR_LAYER3_BACKGROUND@;
+    text-color: @COLOR_LAYER3_FOREGROUND@;
 }
 
 element {
     border: 0 0 0 0;
-    padding: 12px;
     margin: 8px 0 0 0;
-    background-color: @COLOR_BACKGROUND_NORMAL@;
-    text-color: @COLOR_FOREGROUND_NORMAL@;
+    background-color: @COLOR_LAYER3_BACKGROUND@;
+    text-color: @COLOR_LAYER3_FOREGROUND@;
+    border: 0 0 0 8px;
+    padding: 12px 12px 12px 16px;
+    border-color: @COLOR_LAYER3_BACKGROUND@;
 }
 
 element selected {
-    background-color: @COLOR_BACKGROUND_LIGHT@;
-    text-color: @COLOR_FOREGROUND_LIGHT@;
-    border: 0 0 0 4;
-    border-color: @COLOR_ACCENT_LIGHT@;
+    background-color: @COLOR_LAYER4_BACKGROUND@;
+    text-color: @COLOR_LAYER4_FOREGROUND@;
+    border-color: @COLOR_LAYER4_ACCENT@;
 }
 
 element-text {

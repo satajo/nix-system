@@ -7,7 +7,8 @@ in {
     displayManager = {
       lightdm = {
         enable = true;
-        background = theme.color.background.normal;
+        # TODO: background regex check is invalid. Fix it, and use value from layer 1.
+        background = "#202021";
         greeters.gtk = {
           enable = true;
           # For a list of themes, see: /run/current-system/share/themes/

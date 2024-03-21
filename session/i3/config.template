@@ -44,8 +44,7 @@ exec_always --no-startup-id xset s off
 # exec_always --no-startup-id bash ~/.config/i3/script/bind-keys.sh
 
 # Wallpaper
-# exec_always --no-startup-id feh --image-bg "$COLOR_WM_BACKGROUND" --bg-fill ~/.config/i3/wallpaper.jpg
-exec_always --no-startup-id xsetroot -solid "@COLOR_BACKGROUND_DARK@"
+exec_always --no-startup-id xsetroot -solid "@COLOR_LAYER1_BACKGROUND@"
 
 # Polybar
 exec_always --no-startup-id pkill polybar; polybar
@@ -101,12 +100,12 @@ title_align center
 
 # Theme application
 #                       title-border, title-background, title-text, indicator, child_border
-client.focused          @COLOR_FOREGROUND_NORMAL@ @COLOR_FOREGROUND_NORMAL@ @COLOR_BACKGROUND_NORMAL@ @COLOR_FOREGROUND_NORMAL@ @COLOR_FOREGROUND_NORMAL@
-client.focused_inactive @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@ @COLOR_FOREGROUND_NORMAL@ @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@
-client.unfocused        @COLOR_BACKGROUND_NORMAL@ @COLOR_BACKGROUND_NORMAL@ @COLOR_FOREGROUND_DARK@ @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@
-client.urgent           @COLOR_BACKGROUND_NORMAL@ @COLOR_BACKGROUND_NORMAL@ @COLOR_FOREGROUND_DARK@ @COLOR_BACKGROUND_LIGHT@ @COLOR_BACKGROUND_LIGHT@
+client.focused          @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_FOREGROUND@
+client.focused_inactive @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER3_BACKGROUND@
+client.unfocused        @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER1_FOREGROUND@ @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER3_BACKGROUND@
+client.urgent           @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER1_FOREGROUND@ @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER3_BACKGROUND@
 #                       background
-client.background       @COLOR_BACKGROUND_NORMAL@
+client.background       @COLOR_LAYER2_BACKGROUND@
 
 # i3 refuses to start without any extra "mode" blocks defined.
 mode WORKAROUND {
