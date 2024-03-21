@@ -4,6 +4,7 @@
   # System wide single-package programs with no configuration.
   environment.systemPackages = with pkgs; [
     curl
+    htop
     git
     nano
     tig # Git terminal gui
