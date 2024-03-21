@@ -20,15 +20,11 @@ function run_in_install_branch() {
     exit 1
   fi
 
-  # 2. Format the files which also checks for basic syntax.
-  nix fmt
-
-  # 3. Take note of the current HEAD sha, and switch over to the install branch.
+  # 2. Take note of the current HEAD sha, and switch over to the install branch.
   ORIGINAL_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
-  # Switch to the install branch.
-  git switch --quiet install
-  # Rebase the branch over the HEAD, autostashing the changes to avoid conflicts.
+  # 3. Rebase the install branch over the HEAD, autostashing the changes to avoid conflicts.
+  #    The rebase operation checkouts the install branch.
   git rebase --autostash --onto $ORIGINAL_BRANCH install~1 install
 
   # 4. Run the command, ignoring the error so that we always switch back to the original branch.
@@ -42,14 +38,17 @@ function run_in_install_branch() {
 
 case "$1" in
   ("build")
+    nix fmt
     run_in_install_branch nixos-rebuild dry-build --flake .#default
     ;;
 
   ("test")
+    nix fmt
     run_in_install_branch sudo nixos-rebuild test --flake .#default
     ;;
 
   ("install")
+    nix fmt
     run_in_install_branch sudo nixos-rebuild switch --flake .#default
     ;;
 
