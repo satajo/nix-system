@@ -13,22 +13,13 @@
 
   # Imports
   imports = [
+    system/bootloader.nix
     system/keyd.nix
     system/vm-guest.nix
-
     ./session
-
-    program/alacritty
-    program/longcut
-    program/shell
-
+    ./program
     ./theme
   ];
-
-  # Bootloader.
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
-  boot.loader.grub.useOSProber = true;
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -63,6 +54,11 @@
     xkbVariant = "colemak";
   };
 
+  # Device mounting
+  services.devmon.enable = true;
+  services.gvfs.enable = true;
+  services.udisks2.enable = true;
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -85,14 +81,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs;
-    [
-      #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-      #  wget
-    ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -126,14 +114,6 @@
     isNormalUser = true;
     description = "satajo";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      firefox
-      git
-      hyperfine # Benchmarking tool
-      tig # Git terminal gui
-      tldr # Console command cheatsheets
-      vscode # Visual Studio Code
-    ];
   };
 
   home-manager = {
