@@ -15,6 +15,7 @@
   home-manager.users.satajo.home.packages = with pkgs; [
     firefox # Browser
     hyperfine # Benchmarking tool
+    nil # Nix language server
     tldr # Console command cheatsheets
     vscode # Visual Studio Code
   ];

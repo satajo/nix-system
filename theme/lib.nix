@@ -17,10 +17,20 @@ in rec {
       normal = "#282828";
       dark = "#1d2021";
     };
-    error = {
+    accent = {
+      light = "#83a598";
+      normal = "#458588";
+      dark = "#458588";
+    };
+    negative = {
       light = "#fb4934";
       normal = "#cc241d";
       dark = "#cc241d";
+    };
+    positive = {
+      light = "#98971a";
+      normal = "#b8bb26";
+      dark = "#b8bb26";
     };
   };
 
@@ -42,9 +52,17 @@ in rec {
         "--replace @COLOR_BACKGROUND_NORMAL@ ${color.background.normal}"
         "--replace @COLOR_BACKGROUND_DARK@ ${color.background.dark}"
 
-        "--replace @COLOR_ERROR_LIGHT@ ${color.error.light}"
-        "--replace @COLOR_ERROR_NORMAL@ ${color.error.normal}"
-        "--replace @COLOR_ERROR_DARK@ ${color.error.dark}"
+        "--replace @COLOR_ACCENT_LIGHT@ ${color.accent.light}"
+        "--replace @COLOR_ACCENT_NORMAL@ ${color.accent.normal}"
+        "--replace @COLOR_ACCENT_DARK@ ${color.accent.dark}"
+
+        "--replace @COLOR_NEGATIVE_LIGHT@ ${color.negative.light}"
+        "--replace @COLOR_NEGATIVE_NORMAL@ ${color.negative.normal}"
+        "--replace @COLOR_NEGATIVE_DARK@ ${color.negative.dark}"
+
+        "--replace @COLOR_POSITIVE_LIGHT@ ${color.positive.light}"
+        "--replace @COLOR_POSITIVE_NORMAL@ ${color.positive.normal}"
+        "--replace @COLOR_POSITIVE_DARK@ ${color.positive.dark}"
       ];
     };
 }

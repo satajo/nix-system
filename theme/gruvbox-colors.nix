@@ -11,7 +11,6 @@
     regular = "#98971a";
     light = "#b8bb26";
   };
-
   yellow = {
     regular = "#d79921";
     light = "#fabd2f";

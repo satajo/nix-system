@@ -13,13 +13,13 @@ gui:
   foreground_color: "@COLOR_FOREGROUND_NORMAL@"
 
   # Errors
-  error_border_color: "@COLOR_ERROR_NORMAL@"
+  error_border_color: "@COLOR_NEGATIVE_LIGHT@"
 
   # Actions
   placeholder_color: "@COLOR_FOREGROUND_DARK@"
-  action_branch_color: "@COLOR_FOREGROUND_LIGHT@"
+  action_branch_color: "@COLOR_ACCENT_NORMAL@"
   action_execute_color: "@COLOR_FOREGROUND_NORMAL@"
-  action_system_color: "@COLOR_FOREGROUND_DARK@"
+  action_system_color: "@COLOR_BACKGROUND_LIGHT@"
 
 shell:
   default_timeout_ms: 3000 # TODO: Lower this once commands support command-specific timeouts.

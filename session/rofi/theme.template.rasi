@@ -22,7 +22,7 @@ listview {
 
 scrollbar {
     background-color: @COLOR_BACKGROUND_NORMAL@;
-    handle-color: @COLOR_BACKGROUND_LIGHT@;
+    handle-color: @COLOR_ACCENT_NORMAL@;
     handle-width: 8px;
     margin: 8px 0 0 10px;
 }
@@ -50,6 +50,8 @@ element {
 element selected {
     background-color: @COLOR_BACKGROUND_LIGHT@;
     text-color: @COLOR_FOREGROUND_LIGHT@;
+    border: 0 0 0 4;
+    border-color: @COLOR_ACCENT_LIGHT@;
 }
 
 element-text {
