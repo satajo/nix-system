@@ -13,12 +13,15 @@
 
   # Imports
   imports = [
-    system/bootloader.nix
-    system/keyd.nix
-    system/vm-guest.nix
-    ./session
-    ./program
+    ./profile.nix
+
+    # Library / utility code
     ./theme
+
+    # Configuration layers
+    ./system # Configuration affecting the whole system
+    ./session # Graphical user session related configuration
+    ./program # Individual programs
   ];
 
   networking.hostName = "nixos"; # Define your hostname.
