@@ -39,7 +39,7 @@ function run_in_install_branch() {
 case "$1" in
   ("build")
     nix fmt
-    run_in_install_branch nixos-rebuild dry-build --flake .#default
+    run_in_install_branch nixos-rebuild dry-build --flake .#default --show-trace
     ;;
 
   ("test")
