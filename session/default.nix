@@ -1,10 +1,10 @@
 { ... }: {
   imports = [
     ./i3 # Window manager
-    ./lightdm.nix # Display / login manage
+    ./lightdm.nix # Display / login manager
     ./notifications
-    ./polybar # Status bar
     ./rofi # Application switcher / launcher
+    ./statusbar
   ];
 
   services.xserver = {
