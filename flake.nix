@@ -23,8 +23,8 @@
         specialArgs = { inherit inputs; };
         modules = [
           home-manager.nixosModules.default
-          ./hardware-configuration.nix
           ./configuration.nix
+          ./host/configuration.nix
         ];
       };
 
