@@ -34,8 +34,9 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  # Time zone.
+  services.localtimed.enable = true;
+  services.geoclue2.enable = true;
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
