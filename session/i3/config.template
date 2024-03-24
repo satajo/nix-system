@@ -44,7 +44,7 @@ exec_always --no-startup-id xset s off
 # exec_always --no-startup-id bash ~/.config/i3/script/bind-keys.sh
 
 # Wallpaper
-exec_always --no-startup-id xsetroot -solid "@COLOR_LAYER1_BACKGROUND@"
+exec_always --no-startup-id hsetroot -solid "@COLOR_LAYER1_BACKGROUND@"
 
 # Polybar
 exec_always --no-startup-id pkill polybar; polybar
