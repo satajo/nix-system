@@ -23,6 +23,6 @@
       bitwarden # password manager
       discord # chat
       telegram-desktop # chat
-      todoist # todo list
+      todoist-electron # todo list
     ];
 }
