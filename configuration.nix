@@ -52,6 +52,12 @@
     LC_TIME = "en_GB.UTF-8";
   };
 
+  # Configure keymap in console
+  console = {
+    earlySetup = true;
+    keyMap = "colemak";
+  };
+
   # Configure keymap in X11
   services.xserver = {
     layout = "us";
