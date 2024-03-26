@@ -1,12 +1,15 @@
 { config, lib, pkgs, ... }: {
-  imports = [ ./alacritty ./file-manager ./longcut ./obsidian.nix ./shell ];
+  imports =
+    [ ./alacritty ./file-manager ./git.nix ./longcut ./obsidian.nix ./shell ];
 
   # System wide single-package programs with no configuration.
   environment.systemPackages = with pkgs; [
+    coreutils # GNU coreutils
     curl
     htop
     git
     nano
+    pkg-config
     tig # Git terminal gui
     wget
     unzip # .zip extraction
