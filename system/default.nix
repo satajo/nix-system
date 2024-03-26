@@ -1,2 +1,2 @@
-{ imports = [ ./bootloader.nix ./keyd.nix ./vm-guest.nix ]; }
+{ imports = [ ./bootloader.nix ./keyd.nix ./nix.nix ./vm-guest.nix ]; }
 
