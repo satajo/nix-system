@@ -56,6 +56,7 @@
   services.xserver = {
     layout = "us";
     xkbVariant = "colemak";
+    libinput.mouse.accelProfile = "flat";
   };
 
   # Device mounting
