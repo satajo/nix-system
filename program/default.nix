@@ -9,6 +9,7 @@
     nano
     tig # Git terminal gui
     wget
+    unzip # .zip extraction
   ];
 
   # Userspace single-package programs with no configuration.
@@ -16,6 +17,7 @@
     [
       firefox # browser
       hyperfine # benchmarking tool
+      neofetch # it's basically required, right?
       nil # nix language server
       tldr # console command cheatsheets
       vscode # code editor / ide
