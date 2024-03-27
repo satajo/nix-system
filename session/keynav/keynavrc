@@ -1,0 +1,32 @@
+#### Keynav configuration
+
+clear
+
+### Keybindings
+
+## Lifecycle
+Scroll_Lock start, grid 3x3, warp
+Escape end
+q end
+
+## Movement
+l cell-select 1x1, warp
+u cell-select 2x1, warp
+y cell-select 3x1, warp
+n cell-select 1x2, warp
+e cell-select 2x2, warp
+i cell-select 3x2, warp
+m cell-select 1x3, warp
+comma cell-select 2x3, warp
+period cell-select 3x3, warp
+
+## Actions
+t warp, click 1, end
+s warp, click 3, end
+r warp, click 2, end
+
+### Drag examples
+# Start drag holding the left mouse button
+#q drag 1
+# Start drag holding middle mouse + control and shift
+#w drag 2 ctrl+shift
