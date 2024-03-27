@@ -454,32 +454,24 @@ core:
               shortcut: h
               steps: dunstctl history-pop
 
-        # TODO: Inline the lock script.
         - name: Session
           shortcut: s
           commands:
-            - name: Exit
-              shortcut: e
-              steps: i3-msg exit
-              synchronous: false
             - name: Lock
               shortcut: l
-              steps: ~/.config/i3/script/lock.sh
-              synchronous: false
+              steps: loginctl lock-session
             - name: Power off
               shortcut: p
-              steps: poweroff
-              synchronous: false
+              steps: systemctl poweroff
             - name: Reboot
               shortcut: r
-              steps: reboot
-              synchronous: false
+              steps: systemctl reboot
             - name: Suspend
               shortcut: s
-              steps:
-                - ~/.config/i3/script/lock.sh &
-                - sleep 5
-                - systemctl suspend &
+              steps: systemctl suspend
+            - name: Terminate
+              shortcut: t
+              steps: loginctl terminate-session
 
         - name: Volume
           shortcut: v
