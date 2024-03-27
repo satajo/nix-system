@@ -11,23 +11,26 @@ scrolling:
 font:
   size: 11.0
   normal:
-    family: JetBrainsMono Nerd Font
+    family: "@FONT_MONOSPACE@"
     style: Regular
   bold:
+    family: "@FONT_MONOSPACE@"
     style: Bold
   italic:
+    family: "@FONT_MONOSPACE@"
     style: Italic
   bold_italic:
+    family: "@FONT_MONOSPACE@"
     style: Bold Italic
 
 colors:
   primary:
-    background: '#1d2021'
-    foreground: '#ebdbb2'
+    background: "@COLOR_LAYER2_BACKGROUND@"
+    foreground: "@COLOR_LAYER2_FOREGROUND@"
 
   cursor:
-    text:   '#1d2021'
-    cursor: '#ebdbb2'
+    text:   "@COLOR_LAYER2_BACKGROUND@"
+    cursor: "@COLOR_LAYER2_FOREGROUND@"
 
   # Normal colors
   normal:
