@@ -7,7 +7,7 @@ in {
     home.packages = [ package ];
 
     xdg.configFile."longcut/longcut.yaml".source =
-      theme.substitute ./longcut.yaml.template;
+      theme.substitute ./longcut.template.yaml;
 
     # Systemd service
     systemd.user.services.longcut = {
