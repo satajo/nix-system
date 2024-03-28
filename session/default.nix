@@ -5,6 +5,7 @@
     ./lightdm.nix # Display / login manager
     ./notifications
     ./rofi # Application switcher / launcher
+    ./screen-locker
     ./statusbar
   ];
 
