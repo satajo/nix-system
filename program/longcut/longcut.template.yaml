@@ -471,7 +471,7 @@ core:
               steps: systemctl suspend
             - name: Terminate
               shortcut: t
-              steps: loginctl terminate-session
+              steps: loginctl terminate-user ""
 
         - name: Volume
           shortcut: v
