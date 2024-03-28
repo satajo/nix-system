@@ -4,7 +4,7 @@ let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
 in {
   home-manager.users.satajo = {
-    home.packages = [ package ];
+    home.packages = [ package ] ++ (with pkgs; [ gpick light scrot xclip ]);
 
     xdg.configFile."longcut/longcut.yaml".source =
       theme.substitute ./longcut.template.yaml;
