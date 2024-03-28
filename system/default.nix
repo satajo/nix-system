@@ -9,6 +9,10 @@
     ./vm-guest.nix
   ];
 
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Device mounting.
   services.devmon.enable = true;
   services.gvfs.enable = true;
