@@ -50,4 +50,15 @@ let
         --add-flags "--modif-color='${theme.color.layer1.foreground}'" \
     '';
   };
-in { environment.systemPackages = [ i3lock-wrapped ]; }
+in {
+  environment.systemPackages = [ i3lock-wrapped ];
+
+  programs.xss-lock = {
+    enable = true;
+    lockerCommand = "${i3lock-wrapped}/bin/i3lock --nofork";
+  };
+
+  services.xserver.displayManager.sessionCommands = ''
+    xset s 600 # 10 minutes
+  '';
+}

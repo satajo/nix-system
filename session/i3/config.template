@@ -33,10 +33,6 @@ bindsym XF86AudioPrev exec playerctl previous
 # Desktop environment
 #------------------------------------------------------------------------------
 
-# Power management
-exec_always --no-startup-id xset dpms 0 7200 0s
-exec_always --no-startup-id xset s off
-
 # Compositor
 # exec_always --no-startup-id killall picom --wait; picom --daemon;
 
