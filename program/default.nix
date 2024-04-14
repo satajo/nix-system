@@ -1,6 +1,14 @@
 { config, lib, pkgs, ... }: {
-  imports =
-    [ ./alacritty ./file-manager ./git.nix ./longcut ./obsidian.nix ./shell ];
+  imports = [
+    ./alacritty
+    ./file-manager
+    ./git.nix
+    ./longcut
+    ./obsidian.nix
+    ./shell
+    ./telegram.nix
+    ./todoist.nix
+  ];
 
   # System wide single-package programs with no configuration.
   environment.systemPackages = with pkgs; [
@@ -40,7 +48,5 @@
     ] ++ lib.optionals config.profile.personal [
       bitwarden # password manager
       discord # chat
-      telegram-desktop # chat
-      todoist-electron # todo list
     ];
 }
