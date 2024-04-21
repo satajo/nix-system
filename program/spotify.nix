@@ -11,7 +11,7 @@
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.spotify}/bin/spotify";
-        Restart = "always";
+        Restart = "on-failure";
         RestartSec = "1s";
       };
     };

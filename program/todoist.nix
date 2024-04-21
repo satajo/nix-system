@@ -11,7 +11,7 @@
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.todoist-electron}/bin/todoist-electron";
-        Restart = "always";
+        Restart = "on-failure";
         RestartSec = "1s";
       };
     };

@@ -11,7 +11,7 @@
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.telegram-desktop}/bin/telegram-desktop";
-        Restart = "always";
+        Restart = "on-failure";
         RestartSec = "1s";
       };
     };
