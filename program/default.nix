@@ -1,12 +1,12 @@
 { config, lib, pkgs, ... }: {
   imports = [
     ./alacritty
-    ./file-manager
     ./git.nix
     ./longcut
     ./obsidian.nix
     ./shell
     ./telegram.nix
+    ./thunar.nix
     ./todoist.nix
   ];
 
@@ -32,9 +32,11 @@
       evince # document viewer
       feh # image viewer
       firefox # browser
+      gimp # slow but capable image editor
       hyperfine # benchmarking tool
       neofetch # it's basically required, right?
       nil # nix language server
+      pinta # quick but simple image editor
       spotify
       tldr # console command cheatsheets
       vscode # code editor / ide
