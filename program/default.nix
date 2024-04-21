@@ -5,6 +5,7 @@
     ./longcut
     ./obsidian.nix
     ./shell
+    ./spotify.nix
     ./telegram.nix
     ./thunar.nix
     ./todoist.nix
@@ -37,7 +38,6 @@
       neofetch # it's basically required, right?
       nil # nix language server
       pinta # quick but simple image editor
-      spotify
       tldr # console command cheatsheets
       vscode # code editor / ide
       vlc # media player
