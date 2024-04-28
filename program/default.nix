@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }: {
   imports = [
     ./alacritty
+    ./docker.nix
     ./git.nix
     ./longcut
     ./obsidian.nix
