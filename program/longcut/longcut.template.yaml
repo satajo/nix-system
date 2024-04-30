@@ -339,11 +339,11 @@ core:
           commands:
             - name: Down
               shortcut: d
-              steps: light -T 0.8
+              steps: brightnessctl --exponent set 3%-
               final: false
             - name: Up
               shortcut: u
-              steps: light -T 1.25
+              steps: brightnessctl --exponent set 3%+
               final: false
         - name: Capture
           shortcut: c
