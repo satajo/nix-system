@@ -7,6 +7,7 @@
     ./obsidian.nix
     ./shell
     ./spotify.nix
+    ./steam.nix
     ./telegram.nix
     ./thunar.nix
     ./todoist.nix

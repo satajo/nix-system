@@ -65,6 +65,9 @@ for_window [class="jetbrains-idea" title="win0"] floating enable
 assign [class="jetbrains-studio"] e
 for_window [class="jetbrains-studio" title="win0"] floating enable
 
+# g Games
+assign [class="steam"] g
+
 # m Music
 assign [class="Spotify"] m
 
