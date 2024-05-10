@@ -26,7 +26,7 @@ in rec {
     # Examples: Modal application window background colors, content boxes inside
     # full-screen applications.
     layer2 = {
-      accent = "#458588";
+      accent = "#fe8019";
       background = "#282828";
       border = "#3c3836";
       foreground = "#ebdbb2";
@@ -39,7 +39,7 @@ in rec {
     #
     # Examples: Text input inside a dialog box inside a window, notification pop-up.
     layer3 = {
-      accent = "#458588";
+      accent = "#fe8019";
       background = "#3c3836";
       border = "#504945";
       foreground = "#ebdbb2";
@@ -51,7 +51,7 @@ in rec {
     #
     # Examples: Selected item inside a layer 3 menu. Call to action style buttons.
     layer4 = {
-      accent = "#458588";
+      accent = "#fe8019";
       background = "#504945";
       border = "#665c54";
       foreground = "#fbf1c7";
