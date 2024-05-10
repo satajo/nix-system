@@ -1,6 +1,7 @@
 {
   imports = [
     ./bootloader.nix
+    ./gtk.nix
     ./input.nix
     ./keyd.nix
     ./locale.nix

@@ -11,7 +11,7 @@ in {
         background = "#202021";
         greeters.gtk = {
           enable = true;
-          # For a list of themes, see: /run/current-system/share/themes/
+          # For theme names, see: /run/current-system/sw/share/themes/
           theme.name = "Gruvbox-Dark-B";
         };
       };
