@@ -8,7 +8,7 @@ in {
     font.name = theme.font.monospace;
     theme = {
       # For theme names, see: /run/current-system/sw/share/themes/
-      name = "Gruvbox-Dark-BL";
+      name = "Gruvbox-Dark-B";
       package = pkgs.gruvbox-gtk-theme;
     };
   };

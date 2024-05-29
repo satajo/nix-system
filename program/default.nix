@@ -24,6 +24,7 @@
     pkg-config
     ripgrep
     tig # Git terminal gui
+    tree
     wget
     units # conversion between different units
     unzip # .zip extraction
