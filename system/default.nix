@@ -6,6 +6,7 @@
     ./keyd.nix
     ./locale.nix
     ./nix.nix
+    ./nvidia.nix
     ./sound.nix
     ./vm-guest.nix
   ];
