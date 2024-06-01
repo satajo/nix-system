@@ -27,6 +27,7 @@
     tree
     wget
     units # conversion between different units
+    usbutils
     unzip # .zip extraction
   ];
 
@@ -42,8 +43,9 @@
       nil # nix language server
       pinta # quick but simple image editor
       tldr # console command cheatsheets
-      vscode # code editor / ide
+      via # keyboard firmware configurator
       vlc # media player
+      vscode # code editor / ide
 
       ## Kubernetes and virtualization
       minikube # local k8s deployment
