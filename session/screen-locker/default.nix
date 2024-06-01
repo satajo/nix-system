@@ -50,7 +50,8 @@ let
         --add-flags "--modif-color='${theme.color.layer1.foreground}'" \
     '';
   };
-in {
+in
+{
   environment.systemPackages = [ i3lock-wrapped ];
 
   programs.xss-lock = {

@@ -1,6 +1,13 @@
-{ config, pkgs, callPackage, ... }:
-let theme = import ../theme/lib.nix { pkgs = pkgs; };
-in {
+{
+  config,
+  pkgs,
+  callPackage,
+  ...
+}:
+let
+  theme = import ../theme/lib.nix { pkgs = pkgs; };
+in
+{
   environment.systemPackages = with pkgs; [ gruvbox-gtk-theme ];
 
   services.xserver = {

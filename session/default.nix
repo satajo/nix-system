@@ -1,4 +1,5 @@
-{ ... }: {
+{ ... }:
+{
   imports = [
     ./i3 # Window manager
     ./keynav
@@ -16,4 +17,3 @@
     dpi = 120;
   };
 }
-

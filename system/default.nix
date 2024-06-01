@@ -48,4 +48,3 @@
     lidSwitchDocked = "ignore";
   };
 }
-

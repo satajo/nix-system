@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let theme = import ../theme/lib.nix { pkgs = pkgs; };
-in {
+let
+  theme = import ../theme/lib.nix { pkgs = pkgs; };
+in
+{
   programs.dconf.enable = true;
 
   home-manager.users.satajo.gtk = {

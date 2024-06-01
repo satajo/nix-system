@@ -1,5 +1,12 @@
 # System configuration entry point. Well, after the flake.nix.
-{ config, inputs, lib, pkgs, ... }: {
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+{
   options = {
     # State version used for (both) system state and home-manager state versions.
     originalSystemStateVersion = lib.mkOption { type = lib.types.str; };
@@ -13,8 +20,7 @@
       personal = lib.mkEnableOption "personal profile features";
 
       # Services and configs for having the system work as a guest OS.
-      vm-guest = lib.mkEnableOption
-        "virtual machine guest operating system compatibility features";
+      vm-guest = lib.mkEnableOption "virtual machine guest operating system compatibility features";
     };
   };
 
@@ -36,11 +42,16 @@
     users.users.satajo = {
       isNormalUser = true;
       description = "satajo";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+      ];
     };
 
     home-manager = {
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = {
+        inherit inputs;
+      };
       users = {
         "satajo" = {
           home.username = "satajo";

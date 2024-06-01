@@ -1,14 +1,26 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   package = inputs.longcut.packages.${pkgs.system}.default;
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
-in {
+in
+{
   home-manager.users.satajo = {
-    home.packages = [ package ]
-      ++ (with pkgs; [ brightnessctl gpick scrot xclip ]);
+    home.packages =
+      [ package ]
+      ++ (with pkgs; [
+        brightnessctl
+        gpick
+        scrot
+        xclip
+      ]);
 
-    xdg.configFile."longcut/longcut.yaml".source =
-      theme.substitute ./longcut.template.yaml;
+    xdg.configFile."longcut/longcut.yaml".source = theme.substitute ./longcut.template.yaml;
 
     # Systemd service
     systemd.user.services.longcut = {

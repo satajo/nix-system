@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let theme = import ../../theme/lib.nix { pkgs = pkgs; };
-in {
+let
+  theme = import ../../theme/lib.nix { pkgs = pkgs; };
+in
+{
   home-manager.users.satajo = {
     programs.rofi = {
       enable = true;
@@ -15,7 +17,6 @@ in {
       };
     };
 
-    xdg.configFile."rofi/theme.rasi".source =
-      theme.substitute ./theme.template.rasi;
+    xdg.configFile."rofi/theme.rasi".source = theme.substitute ./theme.template.rasi;
   };
 }

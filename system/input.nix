@@ -1,5 +1,7 @@
-let keyboardLayout = "colemak";
-in {
+let
+  keyboardLayout = "colemak";
+in
+{
 
   # Console keymap
   console = {

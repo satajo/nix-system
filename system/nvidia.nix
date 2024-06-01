@@ -1,4 +1,5 @@
-{ config, lib, ... }: {
+{ config, lib, ... }:
+{
   # Functionality for running as a virtual machine guest.
   #
   # See the matcing user-config under user-modules/vm-guest.nix

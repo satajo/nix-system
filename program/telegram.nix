@@ -1,4 +1,10 @@
-{ config, lib, pkgs, ... }: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   config = lib.mkIf config.profile.personal {
     home-manager.users.satajo.home.packages = with pkgs; [ telegram-desktop ];
 

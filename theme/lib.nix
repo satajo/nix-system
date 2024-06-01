@@ -1,6 +1,8 @@
 { pkgs, ... }:
-let colors = import ./gruvbox-colors.nix;
-in rec {
+let
+  colors = import ./gruvbox-colors.nix;
+in
+rec {
   font = {
     icon = "SymbolsNerdFont";
     monospace = "JetBrainsMonoNerdFont";
@@ -61,7 +63,8 @@ in rec {
   };
 
   # Utlity for substituting theme variables in configuration files.
-  substitute = src:
+  substitute =
+    src:
     pkgs.substitute {
       src = src;
       # TODO: Change this to "substitutions" once it is made stable.
