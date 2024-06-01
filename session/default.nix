@@ -9,10 +9,11 @@
     ./statusbar
   ];
 
+  services.displayManager.defaultSession = "none+i3";
+
   services.xserver = {
     enable = true;
     dpi = 120;
-    displayManager.defaultSession = "none+i3";
   };
 }
 

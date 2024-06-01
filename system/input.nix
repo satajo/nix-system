@@ -11,14 +11,16 @@ in {
   services.xserver = {
     autoRepeatDelay = 200;
     autoRepeatInterval = 50;
-    layout = "us";
-    xkbVariant = keyboardLayout;
-
-    # Enable touchpad support (enabled default in most desktopManager).
-    libinput = {
-      enable = true;
-      mouse.accelProfile = "flat";
-      touchpad.accelProfile = "adaptive";
+    xkb = {
+      layout = "us";
+      variant = keyboardLayout;
     };
+  };
+
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.libinput = {
+    enable = true;
+    mouse.accelProfile = "flat";
+    touchpad.accelProfile = "adaptive";
   };
 }

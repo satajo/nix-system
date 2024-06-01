@@ -7,7 +7,7 @@
     # Defining nvidia as xserver video drivers enables a host of nvidia features.
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    # Docker integration
-    virtualisation.docker.enableNvidia = true;
+    # Expose the GPU to container runtimes.
+    hardware.nvidia-container-toolkit.enable = true;
   };
 }
