@@ -5,4 +5,10 @@
 # install branch.
 {
   imports = [ ./hardware-configuration.nix ];
+
+  # Set this to install-time nixos (+home-manager) version.
+  originalSystemStateVersion = "TODO";
+
+  # Profile flags. See configuration.nix.
+  profile.personal = false;
 }
