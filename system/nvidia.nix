@@ -10,5 +10,6 @@
 
     # Expose the GPU to container runtimes.
     hardware.nvidia-container-toolkit.enable = true;
+    virtualisation.docker.enableNvidia = true;
   };
 }
