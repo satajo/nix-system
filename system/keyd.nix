@@ -20,13 +20,13 @@
       j = "left";
       k = "down";
       l = "up";
-      ";" = "right";
+      semicolon = "right";
 
       # Movement keys under the right hand home position
       m = "home";
       comma = "pagedown";
       dot = "pageup";
-      "/" = "end";
+      slash = "end";
 
       # Function keys over number keys
       "1" = "f1";
@@ -39,8 +39,8 @@
       "8" = "f8";
       "9" = "f9";
       "0" = "f10";
-      "-" = "f11";
-      "=" = "f12";
+      minus = "f11";
+      equal = "f12";
     };
   };
 }
