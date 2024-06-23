@@ -8,6 +8,7 @@
   imports = [
     ./alacritty
     ./docker.nix
+    ./foliate.nix
     ./git.nix
     ./longcut
     ./obsidian.nix
