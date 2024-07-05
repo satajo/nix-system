@@ -49,6 +49,9 @@ exec_always --no-startup-id pkill polybar; polybar
 # Application configuration
 #------------------------------------------------------------------------------
 
+# a Anki
+assign [class="Anki"] a
+
 # c Chat
 assign [class="Slack"] c
 

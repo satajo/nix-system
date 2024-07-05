@@ -62,6 +62,7 @@
       skaffold # kubernetes deployer / dev environment
     ]
     ++ lib.optionals config.profile.personal [
+      anki # spaced repetition learning tool
       bitwarden # password manager
       discord # chat
     ];
