@@ -17,6 +17,7 @@ in
         brightnessctl
         gpick
         scrot
+        translate-shell
         xclip
       ]);
 

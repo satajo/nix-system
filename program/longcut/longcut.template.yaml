@@ -59,6 +59,29 @@ core:
         - name: Workspace number
           type: character
 
+    - name: Translate
+      shortcut: t
+      steps: trans -brief {0}:{1} '{2}' | xargs -d '\n' notify-send '{0} -> {1}'
+      parameters:
+        - name: From
+          type: choose
+          options:
+            - de
+            - en
+            - fi
+            - fr
+            - nl
+        - name: Into
+          type: choose
+          options:
+            - de
+            - en
+            - fi
+            - fr
+            - nl
+        - name: Text to translate
+          type: text
+
     ## Focus commands
     - name: Focus down
       shortcut: Down
