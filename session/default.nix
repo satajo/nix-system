@@ -16,4 +16,8 @@
     enable = true;
     dpi = 120;
   };
+
+  # Keyring management
+  services.gnome.gnome-keyring.enable = true;
+  programs.seahorse.enable = true;
 }
