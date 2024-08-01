@@ -19,7 +19,7 @@ in
         greeters.gtk = {
           enable = true;
           # For theme names, see: /run/current-system/sw/share/themes/
-          theme.name = "Gruvbox-Dark-B";
+          theme.name = "Gruvbox-Dark";
         };
       };
     };
