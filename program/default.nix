@@ -42,6 +42,7 @@
   home-manager.users.satajo.home.packages =
     with pkgs;
     [
+      chromium # another browser, as some sites don't work on Firefox
       evince # document viewer
       feh # image viewer
       firefox # browser
