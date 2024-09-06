@@ -15,6 +15,7 @@
   services.xserver = {
     enable = true;
     dpi = 120;
+    wacom.enable = true;
   };
 
   # Keyring management

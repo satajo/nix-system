@@ -65,5 +65,6 @@
       anki # spaced repetition learning tool
       bitwarden # password manager
       discord # chat
+      krita # art program
     ];
 }
