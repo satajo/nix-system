@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+  <head>
+    <title>Liferea Feed List Export</title>
+  </head>
+  <body>
+    <outline title="Tier 1" text="Tier 1" description="Tier 1" type="folder" id="fbsucfa" sortColumn="time" expanded="true">
+      <outline title="HackerNews yearly best" text="HackerNews yearly best" description="HackerNews yearly best" type="rss" id="gjftwfb" sortColumn="time" xmlUrl="https://hnrss.org/newest?comments=2000" htmlUrl="https://news.ycombinator.com/newest" updateInterval="-1" collapsed="true"/>
+      <outline title="r/ExperiencedDevs yearly best" text="r/ExperiencedDevs yearly best" description="r/ExperiencedDevs yearly best" type="atom" id="gvbdjax" sortColumn="time" xmlUrl="https://www.reddit.com/r/ExperiencedDevs/top.rss?sort=top&amp;t=year" htmlUrl="https://www.reddit.com/r/ExperiencedDevs/top?sort=top&amp;t=year" updateInterval="-1" collapsed="true"/>
+    </outline>
+    <outline title="Tier 2" text="Tier 2" description="Tier 2" type="folder" id="klywkfw" sortColumn="time" expanded="true">
+      <outline title="r/Suomi monthly best" text="r/Suomi monthly best" description="r/Suomi monthly best" type="atom" id="aobjrgu" sortColumn="time" xmlUrl="https://www.reddit.com/r/Suomi/top.rss?sort=top&amp;t=month" htmlUrl="https://www.reddit.com/r/Suomi/top?sort=top&amp;t=month" updateInterval="-1" collapsed="true"/>
+      <outline title="r/ExperiencedDevs monthly best" text="r/ExperiencedDevs monthly best" description="r/ExperiencedDevs monthly best" type="atom" id="lkldnqi" sortColumn="time" xmlUrl="https://www.reddit.com/r/ExperiencedDevs/top.rss?sort=top&amp;t=month" htmlUrl="https://www.reddit.com/r/ExperiencedDevs/top?sort=top&amp;t=month" updateInterval="-1" collapsed="true"/>
+    </outline>
+    <outline title="Tier 3" text="Tier 3" description="Tier 3" type="folder" id="hmmhavi" sortColumn="time" expanded="true">
+      <outline title="xkcd" text="xkcd" description="xkcd" type="atom" id="stmiguv" sortColumn="time" xmlUrl="https://xkcd.com/atom.xml" htmlUrl="https://xkcd.com/" updateInterval="-1" collapsed="true"/>
+    </outline>
+    <outline title="Tier 4" text="Tier 4" description="Tier 4" type="folder" id="pwulrjo" sortColumn="time" expanded="true">
+      <outline title="HackerNews Best Comments" text="HackerNews Best Comments" description="HackerNews Best Comments" type="rss" id="uighmoi" sortColumn="time" xmlUrl="https://hnrss.org/bestcomments" htmlUrl="https://news.ycombinator.com/bestcomments" updateInterval="-1" collapsed="true"/>
+    </outline>
+  </body>
+</opml>

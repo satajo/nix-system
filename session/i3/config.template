@@ -71,6 +71,9 @@ for_window [class="jetbrains-studio" title="win0"] floating enable
 # g Games
 assign [class="steam"] g
 
+# n Newsreader
+assign [class="liferea"] n
+
 # m Music
 assign [class="Spotify"] m
 
