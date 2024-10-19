@@ -33,14 +33,8 @@ bindsym XF86AudioPrev exec playerctl previous
 # Desktop environment
 #------------------------------------------------------------------------------
 
-# Compositor
-# exec_always --no-startup-id killall picom --wait; picom --daemon;
-
-# Keyboard input rate
-# exec_always --no-startup-id bash ~/.config/i3/script/bind-keys.sh
-
 # Wallpaper
-exec_always --no-startup-id hsetroot -solid "@COLOR_LAYER1_BACKGROUND@"
+exec_always --no-startup-id feh --bg-center --image-bg "@COLOR_LAYER1_BACKGROUND@" ~/.config/i3/wallpaper.png
 
 # Polybar
 exec_always --no-startup-id pkill polybar; polybar
