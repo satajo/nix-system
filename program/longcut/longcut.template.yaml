@@ -348,14 +348,16 @@ core:
         - name: Audio
           shortcut: a
           commands:
-            - name: Device select
+            - name: Default sink
               shortcut: d
-              steps: pactl set-default-sink {0}
+              # Set the default sink by finding it by name again
+              steps: pw-dump | jq -r '.[] | select(.info.props."node.name"=="{0}") | .id' | xargs wpctl set-default
               parameters:
                 - name: Name
                   type: choose
                   generate_options:
-                    command: "pactl list sinks | grep 'Name: ' | awk '{ print $2 }'"
+                    # List all sinks using pw-dump
+                    command: pw-dump | jq -r '.[] | select(.info.props."media.class"=="Audio/Sink") | .info.props."node.name"'
 
         - name: Backlight
           shortcut: b
@@ -502,17 +504,17 @@ core:
             - name: Down
               shortcut: d
               final: false
-              steps: amixer -q sset Master 1%-
+              steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%-
             - name: Mute
               shortcut: m
-              steps: amixer -q sset Master mute
+              steps: wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
             - name: Unmute
               shortcut: "n"
-              steps: amixer -q sset Master unmute
+              steps: wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
             - name: Up
               shortcut: u
               final: false
-              steps: amixer -q sset Master 1%+
+              steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%+
 
     - name: Window
       shortcut: i

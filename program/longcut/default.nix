@@ -16,8 +16,10 @@ in
       ++ (with pkgs; [
         brightnessctl
         gpick
+        jq
         scrot
         translate-shell
+        wireplumber
         xclip
       ]);
 
