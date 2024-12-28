@@ -1,4 +1,9 @@
-# Format string specifying the enabled modules
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Print a newline before the prompt
+add_newline = true
+
+# Only use specific modules
 format = """\
   $username\
   $hostname\
@@ -8,13 +13,12 @@ format = """\
   $git_state\
   $git_status\
   $nix_shell\
+  $aws\
+  $terraform\
   $cmd_duration\
   $status\
   $line_break\
   $character"""
-
-# Don't print a newline before the prompt
-add_newline = true
 
 [character]
 format = "[\\$](bold green) "
@@ -37,6 +41,7 @@ diverged = "[⇡ ${ahead_count} ⇕ ⇣ ${behind_count}](yellow) "
 
 [nix_shell]
 format = "via [$symbol Nix]($style) "
+heuristic = true
 symbol = "❄️"
 
 [status]
