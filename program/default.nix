@@ -28,6 +28,7 @@
     curl
     htop
     git
+    gnumake
     nano
     pkg-config
     ripgrep
