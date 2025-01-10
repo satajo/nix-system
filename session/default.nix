@@ -1,13 +1,12 @@
 { ... }:
 {
   imports = [
+    ./dunst # Notifications
     ./i3 # Window manager
+    ./i3lock # Screen locker
     ./keynav
-    ./lightdm.nix # Display / login manager
-    ./notifications
+    ./polybar # Status bar
     ./rofi # Application switcher / launcher
-    ./screen-locker
-    ./statusbar
   ];
 
   services.displayManager.defaultSession = "none+i3";

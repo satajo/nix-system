@@ -4,6 +4,7 @@
     ./gtk.nix
     ./input.nix
     ./keyd.nix
+    ./lightdm.nix # Display / login manager
     ./locale.nix
     ./nix.nix
     ./nvidia.nix
