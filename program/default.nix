@@ -23,21 +23,11 @@
 
   # System wide single-package programs with no configuration.
   environment.systemPackages = with pkgs; [
-    bc # calculator
-    coreutils # GNU coreutils
-    curl
-    htop
     git
     gnumake
     nano
     pkg-config
-    ripgrep
     tig # Git terminal gui
-    tree
-    wget
-    units # conversion between different units
-    usbutils
-    unzip # .zip extraction
   ];
 
   # Userspace single-package programs with no configuration.
