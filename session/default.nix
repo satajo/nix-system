@@ -2,6 +2,7 @@
 {
   imports = [
     ./dunst # Notifications
+    ./gtk
     ./i3 # Window manager
     ./i3lock # Screen locker
     ./keynav

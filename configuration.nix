@@ -24,12 +24,8 @@
     };
   };
 
-  # Imports
+  # Configuration layers
   imports = [
-    # Library / utility code
-    ./theme
-
-    # Configuration layers
     ./system # Configuration affecting the whole system
     ./session # Graphical user session related configuration
     ./program # Individual programs

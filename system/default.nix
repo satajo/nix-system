@@ -2,7 +2,7 @@
   imports = [
     ./bootloader.nix
     ./docker.nix
-    ./gtk.nix
+    ./fonts.nix
     ./input.nix
     ./keyd.nix
     ./lightdm.nix # Display / login manager

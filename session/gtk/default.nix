@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  theme = import ../theme/lib.nix { pkgs = pkgs; };
+  theme = import ../../theme/lib.nix { pkgs = pkgs; };
 in
 {
   programs.dconf.enable = true;
