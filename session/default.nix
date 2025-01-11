@@ -5,6 +5,7 @@
     ./i3 # Window manager
     ./i3lock # Screen locker
     ./keynav
+    ./longcut # Command runner
     ./polybar # Status bar
     ./rofi # Application switcher / launcher
   ];

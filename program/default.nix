@@ -7,11 +7,9 @@
 {
   imports = [
     ./alacritty
-    ./docker.nix
     ./foliate.nix
     ./git.nix
     ./liferea
-    ./longcut
     ./obsidian.nix
     ./shell
     ./spotify.nix
