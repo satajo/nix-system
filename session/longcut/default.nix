@@ -19,7 +19,6 @@ in
         jq
         scrot
         translate-shell
-        wireplumber
         xclip
       ]);
 

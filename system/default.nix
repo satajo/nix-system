@@ -9,7 +9,7 @@
     ./locale.nix
     ./nix.nix
     ./nvidia.nix
-    ./sound.nix
+    ./pipewire.nix # Audio server
     ./vm-guest.nix
   ];
 
