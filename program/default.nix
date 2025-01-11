@@ -8,7 +8,7 @@
   imports = [
     ./alacritty
     ./foliate.nix
-    ./git.nix
+    ./git
     ./liferea
     ./obsidian.nix
     ./shell
@@ -21,11 +21,9 @@
 
   # System wide single-package programs with no configuration.
   environment.systemPackages = with pkgs; [
-    git
     gnumake
     nano
     pkg-config
-    tig # Git terminal gui
   ];
 
   # Userspace single-package programs with no configuration.
