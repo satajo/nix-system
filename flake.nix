@@ -37,6 +37,14 @@
         ];
       };
 
+      devShells.${system}.default = pkgs.mkShell {
+        buildInputs = with pkgs; [
+          nix
+          nixd
+          nixfmt-rfc-style
+        ];
+      };
+
       # Formatter for .nix files. Run using "nix fmt" command.
       formatter.${system} = pkgs.nixfmt-rfc-style;
     };
