@@ -4,7 +4,6 @@
     autoPrune.enable = true;
     enable = true;
     liveRestore = false; # Can delay system shutdown
-    package = pkgs.docker_26;
   };
 
   # Docker requires the user to be in the group to run certain operations. This
