@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
+let
+  git-autofixup = pkgs.callPackage ./git-autofixup.nix { };
+in
 {
   environment.systemPackages = with pkgs; [
     git
+    git-autofixup
     tig # Git terminal UI
   ];
 
