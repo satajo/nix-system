@@ -5,7 +5,7 @@ in
 rec {
   font = {
     icon = "SymbolsNerdFont";
-    monospace = "JetBrainsMonoNerdFont";
+    monospace = "JetBrainsMono Nerd Font";
   };
 
   color = {

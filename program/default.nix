@@ -17,6 +17,7 @@
     ./telegram.nix
     ./thunar.nix
     ./todoist.nix
+    ./vscode.nix
   ];
 
   # System wide single-package programs with no configuration.
@@ -44,7 +45,6 @@
       tldr # console command cheatsheets
       via # keyboard firmware configurator
       vlc # media player
-      vscode # code editor / ide
 
       ## Kubernetes and virtualization
       minikube # local k8s deployment
