@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./activitywatch # Tracker
     ./dunst # Notifications
     ./gtk
     ./i3 # Window manager
