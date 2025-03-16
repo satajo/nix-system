@@ -14,20 +14,37 @@ in
 
       # Require extensions to be installed through Nix configuration.
       mutableExtensionsDir = false; # Pr
-      extensions = with pkgs.vscode-extensions; [
-        # Listing at: https://open-vsx.org/
-        # Search Nix by: nix search nixpkgs#vscode-extensions
-        asciidoctor.asciidoctor-vscode
-        jdinhlife.gruvbox
-        jnoortheen.nix-ide
-        k--kato.intellij-idea-keybindings
-        ms-vscode.makefile-tools
-        rust-lang.rust-analyzer
-        tamasfe.even-better-toml
-      ];
+      extensions =
+        with pkgs.vscode-extensions;
+        [
+          # Listing at: https://open-vsx.org/
+          # Search Nix by: nix search nixpkgs#vscode-extensions
+          asciidoctor.asciidoctor-vscode
+          jdinhlife.gruvbox
+          jnoortheen.nix-ide
+          k--kato.intellij-idea-keybindings
+          ms-vscode.makefile-tools
+          rust-lang.rust-analyzer
+          tamasfe.even-better-toml
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "numbered-bookmarks";
+            publisher = "alefragnani";
+            version = "8.5.0";
+            hash = "sha256-7b75+mMlJVfe8VXZrIe1/z0ifTcz+sNQpscvbnaxdL4=";
+          }
+        ];
 
       userSettings = {
         editor.fontFamily = theme.font.monospace;
+        explorer.confirmDragAndDrop = false;
+        numberedBookmarks = {
+          keepBookmarksOnLineDelete = true;
+          navigateThroughAllFiles = "replace";
+          gutterIconNumberColor = theme.color.layer3.background;
+          gutterIconFillColor = theme.color.layer3.accent;
+        };
         workbench.colorTheme = "Gruvbox Dark Medium";
       };
     };
