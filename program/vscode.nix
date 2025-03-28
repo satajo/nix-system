@@ -20,12 +20,14 @@ in
           # Listing at: https://open-vsx.org/
           # Search Nix by: nix search nixpkgs#vscode-extensions
           asciidoctor.asciidoctor-vscode
+          hashicorp.terraform
           jdinhlife.gruvbox
           jnoortheen.nix-ide
           k--kato.intellij-idea-keybindings
           ms-vscode.makefile-tools
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
+          vadimcn.vscode-lldb
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
@@ -38,7 +40,10 @@ in
 
       userSettings = {
         editor.fontFamily = theme.font.monospace;
-        explorer.confirmDragAndDrop = false;
+        explorer = {
+          confirmDelete = false;
+          confirmDragAndDrop = false;
+        };
         numberedBookmarks = {
           keepBookmarksOnLineDelete = true;
           navigateThroughAllFiles = "replace";
