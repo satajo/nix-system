@@ -20,13 +20,16 @@ in
           # Listing at: https://open-vsx.org/
           # Search Nix by: nix search nixpkgs#vscode-extensions
           asciidoctor.asciidoctor-vscode
+          esbenp.prettier-vscode
           hashicorp.terraform
           jdinhlife.gruvbox
           jnoortheen.nix-ide
           k--kato.intellij-idea-keybindings
           ms-vscode.makefile-tools
+          redhat.vscode-yaml
           rust-lang.rust-analyzer
           tamasfe.even-better-toml
+          timonwong.shellcheck
           vadimcn.vscode-lldb
         ]
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
