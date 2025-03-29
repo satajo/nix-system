@@ -50,7 +50,13 @@ in
           gutterIconNumberColor = theme.color.layer3.background;
           gutterIconFillColor = theme.color.layer3.accent;
         };
-        workbench.colorTheme = "Gruvbox Dark Medium";
+        workbench = {
+          colorTheme = "Gruvbox Dark Medium";
+          tree = {
+            indent = 24;
+            renderIndentGuides = "always";
+          };
+        };
       };
     };
   };
