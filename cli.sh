@@ -1,8 +1,10 @@
-#!/bin/sh -e
+#!/usr/bin/env bash
+set -e -u -o pipefail
+
 cd "$(dirname "$0")"
 
 function run_in_install_branch() {
-  local COMMAND="$@";
+  local COMMAND="$*";
 
   # 1. Assert that an "install" branch already exists. If it doesn't, we are dealing
   # with a fresh install and need to generate and possibly modify the hardware-configuration.nix
@@ -25,13 +27,13 @@ function run_in_install_branch() {
 
   # 3. Rebase the install branch over the HEAD, autostashing the changes to avoid conflicts.
   #    The rebase operation checkouts the install branch.
-  git rebase --autostash --onto $ORIGINAL_BRANCH install~1 install
+  git rebase --autostash --onto "$ORIGINAL_BRANCH" install~1 install
 
   # 4. Run the command, ignoring the error so that we always switch back to the original branch.
   $COMMAND || true
 
   # 5. Switch back to the working branch.
-  git switch --quiet $ORIGINAL_BRANCH
+  git switch --quiet "$ORIGINAL_BRANCH"
 };
 
 ### Main
