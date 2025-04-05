@@ -47,18 +47,46 @@ in
           confirmDelete = false;
           confirmDragAndDrop = false;
         };
+        nix.formatterPath = "nixfmt";
         numberedBookmarks = {
           keepBookmarksOnLineDelete = true;
           navigateThroughAllFiles = "replace";
           gutterIconNumberColor = theme.color.layer3.background;
           gutterIconFillColor = theme.color.layer3.accent;
         };
+        redhat.telemetry.enabled = false;
         workbench = {
           colorTheme = "Gruvbox Dark Medium";
           tree = {
             indent = 24;
             renderIndentGuides = "always";
           };
+        };
+
+        # File-type specific configuration
+
+        "[css]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+        };
+
+        "[html]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+        };
+
+        "[javascript]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+        };
+
+        "[javascriptreact]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+        };
+
+        "[typescript]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
+        };
+
+        "[typescriptreact]" = {
+          "editor.defaultFormatter" = "esbenp.prettier-vscode";
         };
       };
     };
