@@ -1,7 +1,6 @@
 {
   imports = [
     ./bootloader.nix
-    ./docker.nix
     ./fonts.nix
     ./input.nix
     ./keyd.nix

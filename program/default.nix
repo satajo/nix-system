@@ -11,6 +11,7 @@
     ./git
     ./liferea
     ./obsidian.nix
+    ./podman.nix
     ./shell
     ./spotify.nix
     ./steam.nix
