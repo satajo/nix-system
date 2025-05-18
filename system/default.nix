@@ -35,6 +35,10 @@
 
   # Networking
   networking = {
+    firewall = {
+      enabled = true;
+      allowedTCPPorts = [ 8000 ];
+    };
     networkmanager.enable = true;
     hostName = "nixos";
   };
