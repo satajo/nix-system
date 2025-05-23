@@ -36,7 +36,7 @@
   # Networking
   networking = {
     firewall = {
-      enabled = true;
+      enable = true;
       allowedTCPPorts = [ 8000 ];
     };
     networkmanager.enable = true;
