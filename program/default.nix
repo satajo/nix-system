@@ -42,7 +42,6 @@
       neofetch # it's basically required, right?
       nil # nix language server
       pinta # quick but simple image editor
-      redshift # night light
       tldr # console command cheatsheets
       via # keyboard firmware configurator
       vlc # media player

@@ -9,6 +9,7 @@
     ./keynav
     ./longcut # Command runner
     ./polybar # Status bar
+    ./redshift.nix
     ./rofi # Application switcher / launcher
   ];
 

@@ -43,9 +43,12 @@
     hostName = "nixos";
   };
 
+  # Location
+  location.provider = "geoclue2";
+  services.geoclue2.enable = true;
+
   # Time zone.
   services.localtimed.enable = true;
-  services.geoclue2.enable = true;
 
   # Logind.
   services.logind = {
