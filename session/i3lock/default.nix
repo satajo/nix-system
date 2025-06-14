@@ -54,6 +54,9 @@ in
 {
   environment.systemPackages = [ i3lock-wrapped ];
 
+  # i3 lock pam
+  security.pam.services.i3lock.enable = true;
+
   programs.xss-lock = {
     enable = true;
     lockerCommand = "${i3lock-wrapped}/bin/i3lock --nofork";
