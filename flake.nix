@@ -46,6 +46,6 @@
       };
 
       # Formatter for .nix files. Run using "nix fmt" command.
-      formatter.${system} = pkgs.nixfmt-rfc-style;
+      formatter.${system} = pkgs.nixfmt-tree;
     };
 }
