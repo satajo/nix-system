@@ -8,8 +8,30 @@
 let
   package = inputs.longcut.packages.${pkgs.system}.default;
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
+
+  configFile = theme.substitute ./longcut.template.yaml;
+
+  configCheckOk =
+    pkgs.runCommand "longcut-config-check"
+      {
+        nativeBuildInputs = [ package ];
+      }
+      ''
+        # Run the check
+        ${package}/bin/longcut --config-file ${configFile} --check-config-only
+
+        # If we get here, the check passed
+        touch $out
+      '';
 in
 {
+  assertions = [
+    {
+      assertion = builtins.pathExists configCheckOk;
+      message = "Longcut configuration validation failed";
+    }
+  ];
+
   home-manager.users.satajo = {
     home.packages =
       [ package ]
@@ -22,7 +44,7 @@ in
         xclip
       ]);
 
-    xdg.configFile."longcut/longcut.yaml".source = theme.substitute ./longcut.template.yaml;
+    xdg.configFile."longcut/longcut.yaml".source = configFile;
 
     # Systemd service
     systemd.user.services.longcut = {
