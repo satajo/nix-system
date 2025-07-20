@@ -21,24 +21,30 @@
       ...
     }@inputs:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      hosts = builtins.attrNames (builtins.readDir ./host);
+      mkSystem =
+        hostname:
+        nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit inputs;
+          };
+
+          modules = [
+            home-manager.nixosModules.default
+            ./configuration.nix
+            ./host/${hostname}/configuration.nix
+            ./host/${hostname}/hardware-configuration.nix
+          ];
+        };
+
+      toolingSystem = "x86_64-linux";
+      toolingPkgs = nixpkgs.legacyPackages.${toolingSystem};
     in
     {
-      # The only system configuration.
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
-        modules = [
-          home-manager.nixosModules.default
-          ./configuration.nix
-          ./host/configuration.nix
-        ];
-      };
+      nixosConfigurations = nixpkgs.lib.genAttrs hosts mkSystem;
 
-      devShells.${system}.default = pkgs.mkShell {
-        buildInputs = with pkgs; [
+      devShells.${toolingSystem}.default = toolingPkgs.mkShell {
+        buildInputs = with toolingPkgs; [
           nix
           nixd
           nixfmt-rfc-style
@@ -46,6 +52,6 @@
       };
 
       # Formatter for .nix files. Run using "nix fmt" command.
-      formatter.${system} = pkgs.nixfmt-tree;
+      formatter.${toolingSystem} = toolingPkgs.nixfmt-tree;
     };
 }
