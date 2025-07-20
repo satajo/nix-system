@@ -21,5 +21,12 @@
         RestartSec = "1s";
       };
     };
+
+    networking.firewall = {
+      # Local discovery of other Spotify clients.
+      allowedTCPPorts = [ 57621 ];
+      # Google Cast devices.
+      allowedUDPPorts = [ 5353 ];
+    };
   };
 }
