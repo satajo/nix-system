@@ -242,36 +242,27 @@ core:
           shortcut: e
           steps: ~/applications/pomodoro.sh end
 
-    ## Realworld layer
-    - name: Realworld
-      shortcut: r
-      layers:
-        - name: Desk fan
-          shortcut: "f"
-          commands:
-            - name: Turn on
-              shortcut: "1"
-              steps: hueadm light 14 on
-            - name: Turn off
-              shortcut: "0"
-              steps: hueadm light 14 off
-        - name: Desk lights
-          shortcut: "l"
-          commands:
-            - name: Turn on
-              shortcut: "1"
-              steps:
-                - hueadm light 7 on
-                - hueadm light 13 on
-            - name: Turn off
-              shortcut: "0"
-              steps:
-                - hueadm light 7 off
-                - hueadm light 13 off
-
     ## Search layer
     - name: Search
       shortcut: e
+      layers:
+        - name: Nix
+          shortcut: x
+          commands:
+            - name: Options
+              shortcut: o
+              steps: firefox --new-window 'https://search.nixos.org/options?query={0}'
+              synchronous: false
+              parameters:
+                - name: Search term
+                  type: text
+            - name: Packages
+              shortcut: p
+              steps: firefox --new-window 'https://search.nixos.org/packages?query={0}'
+              synchronous: false
+              parameters:
+                - name: Search term
+                  type: text
       commands:
         - name: Crates.io
           shortcut: c
