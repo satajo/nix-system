@@ -50,6 +50,12 @@ let
         --add-flags "--modif-color='${theme.color.layer1.foreground}'" \
     '';
   };
+  lockSessionScript = pkgs.writeShellScript "lock-session.sh" ''
+    # Mute audio. Run in background to instantly lock even with errors or delays.
+    ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1 &
+    # Invoke the lock script.
+    ${i3lock-wrapped}/bin/i3lock --nofork    
+  '';
 in
 {
   environment.systemPackages = [ i3lock-wrapped ];
@@ -59,7 +65,7 @@ in
 
   programs.xss-lock = {
     enable = true;
-    lockerCommand = "${i3lock-wrapped}/bin/i3lock --nofork";
+    lockerCommand = "${lockSessionScript}";
   };
 
   services.xserver.displayManager.sessionCommands = ''
