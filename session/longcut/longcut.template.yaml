@@ -467,6 +467,30 @@ core:
           parameters:
             - name: Note
               type: text
+        - name: Translate
+          shortcut: t
+          steps: trans -brief {0}:{1} '{2}' | xargs -d '\n' notify-send '{0} -> {1}'
+          parameters:
+            - name: From
+              type: choose
+              options:
+                - de
+                - en
+                - fi
+                - fr
+                - it
+                - nl
+            - name: Into
+              type: choose
+              options:
+                - de
+                - en
+                - fi
+                - fr
+                - it
+                - nl
+            - name: Text to translate
+              type: text
       layers:
         - name: Capture
           shortcut: c
@@ -494,28 +518,6 @@ core:
               shortcut: w
               steps: scrot --line mode=edge,width=4 - | xclip -selection c -t image/png
               synchronous: false
-        - name: Translate
-          shortcut: t
-          steps: trans -brief {0}:{1} '{2}' | xargs -d '\n' notify-send '{0} -> {1}'
-          parameters:
-            - name: From
-              type: choose
-              options:
-                - de
-                - en
-                - fi
-                - fr
-                - nl
-            - name: Into
-              type: choose
-              options:
-                - de
-                - en
-                - fi
-                - fr
-                - nl
-            - name: Text to translate
-              type: text
 
     - name: Window
       shortcut: i
