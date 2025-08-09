@@ -59,29 +59,6 @@ core:
         - name: Workspace number
           type: character
 
-    - name: Translate
-      shortcut: t
-      steps: trans -brief {0}:{1} '{2}' | xargs -d '\n' notify-send '{0} -> {1}'
-      parameters:
-        - name: From
-          type: choose
-          options:
-            - de
-            - en
-            - fi
-            - fr
-            - nl
-        - name: Into
-          type: choose
-          options:
-            - de
-            - en
-            - fi
-            - fr
-            - nl
-        - name: Text to translate
-          type: text
-
     ## Focus commands
     - name: Focus down
       shortcut: Down
@@ -361,32 +338,6 @@ core:
               shortcut: u
               steps: brightnessctl --exponent set 3%+
               final: false
-        - name: Capture
-          shortcut: c
-          commands:
-            - name: Color
-              shortcut: c
-              steps: gpick --single --output --converter-name color_{0} | xclip -sel c
-              synchronous: false
-              parameters:
-                - name: Converter
-                  type: choose
-                  options:
-                    - css_hsl
-                    - css_rgb
-                    - web_hex
-            - name: Region
-              shortcut: r
-              steps: scrot --select --line mode=edge,width=4 - | xclip -selection c -t image/png
-              synchronous: false
-            - name: Window
-              shortcut: i
-              steps: scrot --focused --line mode=edge,width=4 - | xclip -selection c -t image/png
-              synchronous: false
-            - name: Workspace
-              shortcut: w
-              steps: scrot --line mode=edge,width=4 - | xclip -selection c -t image/png
-              synchronous: false
 
         - name: Desktop
           shortcut: d
@@ -506,6 +457,65 @@ core:
               shortcut: u
               final: false
               steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%+
+
+    - name: Tool
+      shortcut: t
+      commands:
+        - name: Take note
+          shortcut: "n"
+          steps: echo "$(date '+%Y-%m-%d %H:%M:%S') {0}" >> ~/notes.txt
+          parameters:
+            - name: Note
+              type: text
+      layers:
+        - name: Capture
+          shortcut: c
+          commands:
+            - name: Color
+              shortcut: c
+              steps: gpick --single --output --converter-name color_{0} | xclip -sel c
+              synchronous: false
+              parameters:
+                - name: Converter
+                  type: choose
+                  options:
+                    - css_hsl
+                    - css_rgb
+                    - web_hex
+            - name: Region
+              shortcut: r
+              steps: scrot --select --line mode=edge,width=4 - | xclip -selection c -t image/png
+              synchronous: false
+            - name: Window
+              shortcut: i
+              steps: scrot --focused --line mode=edge,width=4 - | xclip -selection c -t image/png
+              synchronous: false
+            - name: Workspace
+              shortcut: w
+              steps: scrot --line mode=edge,width=4 - | xclip -selection c -t image/png
+              synchronous: false
+        - name: Translate
+          shortcut: t
+          steps: trans -brief {0}:{1} '{2}' | xargs -d '\n' notify-send '{0} -> {1}'
+          parameters:
+            - name: From
+              type: choose
+              options:
+                - de
+                - en
+                - fi
+                - fr
+                - nl
+            - name: Into
+              type: choose
+              options:
+                - de
+                - en
+                - fi
+                - fr
+                - nl
+            - name: Text to translate
+              type: text
 
     - name: Window
       shortcut: i
