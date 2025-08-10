@@ -24,6 +24,9 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  # Allow firmware updates through fwupdmgr
+  services.fwupd.enable = true;
+
   # Application realtime priority grants.
   security.rtkit.enable = true;
 
