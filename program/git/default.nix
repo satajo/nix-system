@@ -23,6 +23,7 @@ in
     };
 
     extraConfig = {
+      init.defaultBranch = "main";
       mergetool.hideResolved = true;
     };
   };
