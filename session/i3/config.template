@@ -36,9 +36,6 @@ bindsym XF86AudioPrev exec playerctl previous
 # Wallpaper
 exec_always --no-startup-id feh --bg-center --image-bg "@COLOR_LAYER1_BACKGROUND@" ~/.config/i3/wallpaper.png
 
-# Polybar
-exec_always --no-startup-id pkill polybar; polybar
-
 #------------------------------------------------------------------------------
 # Application configuration
 #------------------------------------------------------------------------------
