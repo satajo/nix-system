@@ -36,15 +36,18 @@
       chromium # another browser, as some sites don't work on Firefox
       evince # document viewer
       feh # image viewer
+      filen-desktop # cloud drive
       firefox # browser
       gimp # slow but capable image editor
       hyperfine # benchmarking tool
       neofetch # it's basically required, right?
       nil # nix language server
       pinta # quick but simple image editor
+      protonvpn-gui # vpn provider
+      rhythmbox # music player
       tldr # console command cheatsheets
       via # keyboard firmware configurator
-      vlc # media player
+      vlc # video player
 
       ## Kubernetes and virtualization
       minikube # local k8s deployment

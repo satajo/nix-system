@@ -37,6 +37,7 @@
   };
 
   # Networking
+  services.resolved.enable = true;
   networking = {
     firewall = {
       enable = true;
