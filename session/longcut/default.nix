@@ -33,16 +33,17 @@ in
   ];
 
   home-manager.users.satajo = {
-    home.packages =
-      [ package ]
-      ++ (with pkgs; [
-        brightnessctl
-        gpick
-        jq
-        scrot
-        translate-shell
-        xclip
-      ]);
+    home.packages = [
+      package
+    ]
+    ++ (with pkgs; [
+      brightnessctl
+      gpick
+      jq
+      scrot
+      translate-shell
+      xclip
+    ]);
 
     xdg.configFile."longcut/longcut.yaml".source = configFile;
 
