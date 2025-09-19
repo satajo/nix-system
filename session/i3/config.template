@@ -66,6 +66,7 @@ assign [class="steam"] g
 assign [class="liferea"] n
 
 # m Music
+assign [class="Rhythmbox"] m
 assign [class="Spotify"] m
 
 # s Study

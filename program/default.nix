@@ -13,7 +13,7 @@
     ./obsidian.nix
     ./podman.nix
     ./shell
-    ./spotify.nix
+    ./rhythmbox.nix
     ./steam.nix
     ./telegram.nix
     ./thunar.nix
@@ -44,7 +44,6 @@
       nil # nix language server
       pinta # quick but simple image editor
       protonvpn-gui # vpn provider
-      rhythmbox # music player
       tldr # console command cheatsheets
       via # keyboard firmware configurator
       vlc # video player
