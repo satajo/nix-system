@@ -17,6 +17,8 @@ in
   # i3 comes with no compositor so we use picom with it.
   services.picom = {
     enable = true;
+    backend = "glx";
+    vSync = true;
   };
 
   services.xserver = {
