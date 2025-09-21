@@ -56,7 +56,7 @@ background = "@COLOR_LAYER3_BACKGROUND@"
 foreground = "@COLOR_LAYER3_FOREGROUND@"
 
 # Frame
-frame_width = 2
+frame_width = 1
 frame_color = "@COLOR_LAYER3_BORDER@"
 word_wrap = true
 line_height = 0
