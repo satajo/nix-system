@@ -45,8 +45,6 @@ in
       xclip
     ]);
 
-    xdg.configFile."longcut/longcut.yaml".source = configFile;
-
     # Systemd service
     systemd.user.services.longcut = {
       Unit = {
@@ -58,7 +56,7 @@ in
       Service = {
         Type = "simple";
         # Service is started through a login shell invocation to iherit paths correctly.
-        ExecStart = "${pkgs.runtimeShell} -lc ${package}/bin/longcut";
+        ExecStart = "${pkgs.runtimeShell} -lc '${package}/bin/longcut --config-file ${configFile}'";
         KillMode = "process";
         Restart = "always";
         RestartSec = "1s";
