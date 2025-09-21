@@ -1,6 +1,6 @@
 { pkgs, ... }:
 let
-  colors = import ./gruvbox-colors.nix;
+  palette = import ./palette/gruvbox.nix;
 in
 rec {
   font = {
@@ -9,17 +9,21 @@ rec {
   };
 
   color = {
+    # Directly export the color palette for use with applications that wish to
+    # render a specific color, irrelevant of its semantics.
+    raw = palette;
+
     # 1. layer is the deepest layer of the UI, used as the base background color
     # of windows and applications.
     #
     # Examples: Desktop background, full-screen application background colors
     layer1 = {
-      accent = "#458588";
+      accent = "#fe8019";
       background = "#1d2021";
       border = "#282828";
       foreground = "#d5c4a1";
-      negative = "#cc241d";
-      positive = "#b8bb26";
+      negative = palette.red.regular;
+      positive = palette.green.regular;
     };
 
     # 2. layer is for large windows and UI containers that get drawn on top of
@@ -32,8 +36,8 @@ rec {
       background = "#282828";
       border = "#3c3836";
       foreground = "#ebdbb2";
-      negative = "#cc241d";
-      positive = "#b8bb26";
+      negative = palette.red.regular;
+      positive = palette.green.regular;
     };
 
     # 3. layer consists of content boxes and element-backgrounds inside modal
@@ -45,8 +49,8 @@ rec {
       background = "#3c3836";
       border = "#504945";
       foreground = "#ebdbb2";
-      negative = "#cc241d";
-      positive = "#b8bb26";
+      negative = palette.red.regular;
+      positive = palette.green.regular;
     };
 
     # 4. layer covers individual elements that must be highlighted from layer 3.
@@ -57,8 +61,8 @@ rec {
       background = "#504945";
       border = "#665c54";
       foreground = "#fbf1c7";
-      negative = "#cc241d";
-      positive = "#b8bb26";
+      negative = palette.red.regular;
+      positive = palette.green.regular;
     };
   };
 

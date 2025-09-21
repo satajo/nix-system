@@ -6,7 +6,7 @@
 }:
 {
   imports = [
-    ./alacritty
+    ./alacritty.nix
     ./foliate.nix
     ./git
     ./liferea
