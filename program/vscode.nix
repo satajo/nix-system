@@ -29,7 +29,7 @@ in
             k--kato.intellij-idea-keybindings
             ms-vscode.makefile-tools
             redhat.vscode-yaml
-            rust-lang.rust-analyzer
+            (rust-lang.rust-analyzer.override { setDefaultServerPath = false; })
             tamasfe.even-better-toml
             timonwong.shellcheck
             vadimcn.vscode-lldb
@@ -49,14 +49,6 @@ in
             confirmDelete = false;
             confirmDragAndDrop = false;
           };
-          nix.formatterPath = "nixfmt";
-          numberedBookmarks = {
-            keepBookmarksOnLineDelete = true;
-            navigateThroughAllFiles = "replace";
-            gutterIconNumberColor = theme.color.layer3.background;
-            gutterIconFillColor = theme.color.layer3.accent;
-          };
-          redhat.telemetry.enabled = false;
           workbench = {
             colorTheme = "Gruvbox Dark Medium";
             tree = {
@@ -65,8 +57,22 @@ in
             };
           };
 
-          # File-type specific configuration
+          ### Extension configuration
 
+          nix.formatterPath = "nixfmt";
+
+          numberedBookmarks = {
+            keepBookmarksOnLineDelete = true;
+            navigateThroughAllFiles = "replace";
+            gutterIconNumberColor = theme.color.layer3.background;
+            gutterIconFillColor = theme.color.layer3.accent;
+          };
+
+          redhat.telemetry.enabled = false;
+
+          rust-analyzer.server.path = "rust-analyzer";
+
+          ### File-type specific configuration
           "[css]" = {
             "editor.defaultFormatter" = "esbenp.prettier-vscode";
           };
