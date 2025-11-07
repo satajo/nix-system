@@ -64,8 +64,8 @@ in
           numberedBookmarks = {
             keepBookmarksOnLineDelete = true;
             navigateThroughAllFiles = "replace";
-            gutterIconNumberColor = theme.color.layer3.background;
-            gutterIconFillColor = theme.color.layer3.accent;
+            gutterIconNumberColor = theme.color.background;
+            gutterIconFillColor = theme.color.accent;
           };
 
           redhat.telemetry.enabled = false;

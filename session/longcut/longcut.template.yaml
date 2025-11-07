@@ -8,18 +8,18 @@ gui:
   window_width: 1280
 
   # Normal
-  background_color: "@COLOR_LAYER3_BACKGROUND@"
-  border_color: "@COLOR_LAYER3_BORDER@"
-  foreground_color: "@COLOR_LAYER3_FOREGROUND@"
+  background_color: "@COLOR_BACKGROUND@"
+  border_color: "@COLOR_BORDER@"
+  foreground_color: "@COLOR_FOREGROUND@"
 
   # Errors
-  error_border_color: "@COLOR_LAYER3_NEGATIVE@"
+  error_border_color: "@COLOR_NEGATIVE@"
 
   # Actions
-  placeholder_color: "@COLOR_LAYER2_FOREGROUND@"
-  action_branch_color: "@COLOR_LAYER3_ACCENT@"
-  action_execute_color: "@COLOR_LAYER3_FOREGROUND@"
-  action_system_color: "@COLOR_LAYER2_FOREGROUND@"
+  placeholder_color: "@COLOR_FOREGROUND_LOWER@"
+  action_branch_color: "@COLOR_ACCENT@"
+  action_execute_color: "@COLOR_FOREGROUND@"
+  action_system_color: "@COLOR_FOREGROUND_LOWER@"
 
 shell:
   default_timeout_ms: 3000 # TODO: Lower this once commands support command-specific timeouts.

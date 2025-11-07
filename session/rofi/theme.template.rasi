@@ -1,59 +1,64 @@
 * {
     font: "@FONT_MONOSPACE@ 14";
-    background-color: @COLOR_LAYER2_BACKGROUND@;
-    text-color: @COLOR_LAYER2_FOREGROUND@;
+    background-color: @COLOR_BACKGROUND@;
+    text-color: @COLOR_FOREGROUND@;
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
 
 window {
     border: 1px;
-    border-color: @COLOR_LAYER2_BORDER@;
+    border-color: @COLOR_BORDER@;
     width: calc(80% min 1024px);
     height: calc(80% min 768px);
-    padding: 45px 45px;
+    padding: 48px;
 }
 
 mainbox {
     padding: 0;
 }
 
-listview {
-    scrollbar: true;
-}
-
-scrollbar {
-    background-color: @COLOR_LAYER3_BACKGROUND@;
-    handle-color: @COLOR_LAYER3_ACCENT@;
-    handle-width: 8px;
-    margin: 8px 0 0 10px;
-}
-
 inputbar {
-    background-color: @COLOR_LAYER3_BACKGROUND@;
-    text-color: @COLOR_LAYER3_FOREGROUND@;
+    background-color: @COLOR_BACKGROUND_LOWER@;
+    text-color: @COLOR_FOREGROUND@;
     children: [ entry ];
-    margin: 0 0 18px 0;
+    margin: 0 0 14px 0;
     padding: 12px;
 }
 
 entry {
-    background-color: @COLOR_LAYER3_BACKGROUND@;
-    text-color: @COLOR_LAYER3_FOREGROUND@;
+    background-color: @COLOR_BACKGROUND_LOWER@;
+    text-color: @COLOR_FOREGROUND@;
+}
+
+listview {
+    scrollbar: true;
+    background-color: @COLOR_BACKGROUND_LOWER@;
+    padding: 0 8px 8px 8px;
+}
+
+scrollbar {
+    background-color: @COLOR_BACKGROUND@;
+    handle-color: @COLOR_BACKGROUND_UPPER@;
+    handle-width: 8px;
+    margin: 8px 0 0 6px;
 }
 
 element {
-    border: 0 0 0 0;
+    border: 0;
     margin: 8px 0 0 0;
-    background-color: @COLOR_LAYER3_BACKGROUND@;
-    text-color: @COLOR_LAYER3_FOREGROUND@;
+    background-color: @COLOR_BACKGROUND@;
+    text-color: @COLOR_FOREGROUND@;
     border: 0 0 0 8px;
+    border-color: @COLOR_BACKGROUND@;
     padding: 12px 12px 12px 16px;
-    border-color: @COLOR_LAYER3_BACKGROUND@;
 }
 
 element selected {
-    background-color: @COLOR_LAYER4_BACKGROUND@;
-    text-color: @COLOR_LAYER4_FOREGROUND@;
-    border-color: @COLOR_LAYER4_ACCENT@;
+    background-color: @COLOR_BACKGROUND_UPPER@;
+    text-color: @COLOR_FOREGROUND@;
+    border-color: @COLOR_ACCENT@;
 }
 
 element-text {

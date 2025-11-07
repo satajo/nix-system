@@ -34,7 +34,7 @@ bindsym XF86AudioPrev exec playerctl previous
 #------------------------------------------------------------------------------
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-center --image-bg "@COLOR_LAYER1_BACKGROUND@" ~/.config/i3/wallpaper.png
+exec_always --no-startup-id feh --bg-center --image-bg "@COLOR_BACKGROUND_LOWER@" ~/.config/i3/wallpaper.png
 
 #------------------------------------------------------------------------------
 # Application configuration
@@ -97,12 +97,12 @@ title_align center
 
 # Theme application
 #                       title-border, title-background, title-text, indicator, child_border
-client.focused          @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_FOREGROUND@
-client.focused_inactive @COLOR_LAYER2_BORDER@ @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER3_FOREGROUND@ @COLOR_LAYER3_BACKGROUND@ @COLOR_LAYER2_BORDER@
-client.unfocused        @COLOR_LAYER2_BORDER@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_BORDER@
-client.urgent           @COLOR_LAYER2_BORDER@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_FOREGROUND@ @COLOR_LAYER2_BACKGROUND@ @COLOR_LAYER2_BORDER@
+client.focused          @COLOR_FOREGROUND@ @COLOR_FOREGROUND@ @COLOR_BACKGROUND@ @COLOR_FOREGROUND@ @COLOR_FOREGROUND@
+client.focused_inactive @COLOR_BORDER@ @COLOR_BACKGROUND_UPPER@ @COLOR_FOREGROUND@ @COLOR_BACKGROUND_UPPER@ @COLOR_BORDER@
+client.unfocused        @COLOR_BORDER@ @COLOR_BACKGROUND@ @COLOR_FOREGROUND@ @COLOR_BACKGROUND@ @COLOR_BORDER@
+client.urgent           @COLOR_BORDER@ @COLOR_BACKGROUND@ @COLOR_FOREGROUND@ @COLOR_BACKGROUND@ @COLOR_BORDER@
 #                       background
-client.background       @COLOR_LAYER2_BACKGROUND@
+client.background       @COLOR_BACKGROUND@
 
 # i3 refuses to start without any extra "mode" blocks defined.
 mode WORKAROUND {

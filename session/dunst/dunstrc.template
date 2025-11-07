@@ -52,12 +52,12 @@ offset = 0x36
 origin = top-center
 padding = 12
 horizontal_padding = 18
-background = "@COLOR_LAYER3_BACKGROUND@"
-foreground = "@COLOR_LAYER3_FOREGROUND@"
+background = "@COLOR_BACKGROUND_UPPER@"
+foreground = "@COLOR_FOREGROUND@"
 
 # Frame
 frame_width = 1
-frame_color = "@COLOR_LAYER3_BORDER@"
+frame_color = "@COLOR_BORDER@"
 word_wrap = true
 line_height = 0
 gap_size = 8

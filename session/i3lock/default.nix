@@ -28,26 +28,26 @@ let
         --add-flags "--verif-font='${theme.font.monospace}'" \
         --add-flags "--wrong-font='${theme.font.monospace}'" \
         \
-        --add-flags "--color='${theme.color.layer1.background}'" \
-        --add-flags "--inside-color='${theme.color.layer1.background}'" \
-        --add-flags "--ring-color='${theme.color.layer1.foreground}'" \
-        --add-flags "--separator-color='${theme.color.layer1.background}'" \
-        --add-flags "--keyhl-color='${theme.color.layer1.positive}'" \
-        --add-flags "--bshl-color='${theme.color.layer1.negative}'" \
+        --add-flags "--color='${theme.color.backgroundLower}'" \
+        --add-flags "--inside-color='${theme.color.backgroundLower}'" \
+        --add-flags "--ring-color='${theme.color.foreground}'" \
+        --add-flags "--separator-color='${theme.color.backgroundLower}'" \
+        --add-flags "--keyhl-color='${theme.color.positive}'" \
+        --add-flags "--bshl-color='${theme.color.negative}'" \
         --add-flags "--line-uses-inside" \
         \
-        --add-flags "--time-color='${theme.color.layer1.foreground}'" \
-        --add-flags "--date-color='${theme.color.layer1.foreground}'" \
+        --add-flags "--time-color='${theme.color.foreground}'" \
+        --add-flags "--date-color='${theme.color.foreground}'" \
         \
-        --add-flags "--insidever-color='${theme.color.layer1.background}'" \
-        --add-flags "--ringver-color='${theme.color.layer1.foreground}'" \
+        --add-flags "--insidever-color='${theme.color.backgroundLower}'" \
+        --add-flags "--ringver-color='${theme.color.foreground}'" \
         \
-        --add-flags "--insidewrong-color='${theme.color.layer1.background}'" \
-        --add-flags "--ringwrong-color='${theme.color.layer1.foreground}'" \
+        --add-flags "--insidewrong-color='${theme.color.backgroundLower}'" \
+        --add-flags "--ringwrong-color='${theme.color.foreground}'" \
         \
-        --add-flags "--verif-color='${theme.color.layer1.foreground}'" \
-        --add-flags "--wrong-color='${theme.color.layer1.foreground}'" \
-        --add-flags "--modif-color='${theme.color.layer1.foreground}'" \
+        --add-flags "--verif-color='${theme.color.foreground}'" \
+        --add-flags "--wrong-color='${theme.color.foreground}'" \
+        --add-flags "--modif-color='${theme.color.foreground}'" \
     '';
   };
   lockSessionScript = pkgs.writeShellScript "lock-session.sh" ''

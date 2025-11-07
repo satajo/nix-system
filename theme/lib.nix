@@ -1,6 +1,39 @@
 { pkgs, ... }:
 let
-  palette = import ./palette/gruvbox.nix;
+  palette = {
+    black = {
+      regular = "#282828";
+      light = "#928374";
+    };
+    red = {
+      regular = "#cc241d";
+      light = "#fd4934";
+    };
+    green = {
+      regular = "#98971a";
+      light = "#b8bb26";
+    };
+    yellow = {
+      regular = "#d79921";
+      light = "#fabd2f";
+    };
+    blue = {
+      regular = "#458588";
+      light = "#83a598";
+    };
+    purple = {
+      regular = "#b16286";
+      light = "#d3869b";
+    };
+    aqua = {
+      regular = "#689d6a";
+      light = "#8ec07c";
+    };
+    gray = {
+      regular = "#a89984";
+      light = "#ebdbb2";
+    };
+  };
 in
 rec {
   font = {
@@ -13,57 +46,21 @@ rec {
     # render a specific color, irrelevant of its semantics.
     raw = palette;
 
-    # 1. layer is the deepest layer of the UI, used as the base background color
-    # of windows and applications.
-    #
-    # Examples: Desktop background, full-screen application background colors
-    layer1 = {
-      accent = "#fe8019";
-      background = "#1d2021";
-      border = "#282828";
-      foreground = "#d5c4a1";
-      negative = palette.red.regular;
-      positive = palette.green.regular;
-    };
+    # Foreground, background, borders.
+    foreground = "#ebdbb2";
+    foregroundLower = "#bdae93";
+    foregroundUpper = "#fbf1c7";
 
-    # 2. layer is for large windows and UI containers that get drawn on top of
-    # the 1. layer, standing above it.
-    #
-    # Examples: Modal application window background colors, content boxes inside
-    # full-screen applications.
-    layer2 = {
-      accent = "#fe8019";
-      background = "#282828";
-      border = "#3c3836";
-      foreground = "#ebdbb2";
-      negative = palette.red.regular;
-      positive = palette.green.regular;
-    };
+    background = "#282828";
+    backgroundLower = "#1d2021";
+    backgroundUpper = "#3c3836";
 
-    # 3. layer consists of content boxes and element-backgrounds inside modal
-    # windows. Small pop-up windows and dialogues should be this color.
-    #
-    # Examples: Text input inside a dialog box inside a window, notification pop-up.
-    layer3 = {
-      accent = "#fe8019";
-      background = "#3c3836";
-      border = "#504945";
-      foreground = "#ebdbb2";
-      negative = palette.red.regular;
-      positive = palette.green.regular;
-    };
+    border = "#3c3836";
 
-    # 4. layer covers individual elements that must be highlighted from layer 3.
-    #
-    # Examples: Selected item inside a layer 3 menu. Call to action style buttons.
-    layer4 = {
-      accent = "#fe8019";
-      background = "#504945";
-      border = "#665c54";
-      foreground = "#fbf1c7";
-      negative = palette.red.regular;
-      positive = palette.green.regular;
-    };
+    # Semantic colors
+    accent = "#fe8019";
+    negative = palette.red.regular;
+    positive = palette.green.regular;
   };
 
   # Utlity for substituting theme variables in configuration files.
@@ -72,90 +69,57 @@ rec {
     pkgs.substitute {
       src = src;
       substitutions = [
+        # Fonts
+
         "--replace-quiet"
         "@FONT_ICON@"
         "${font.icon}"
+
         "--replace-quiet"
         "@FONT_MONOSPACE@"
         "${font.monospace}"
 
-        "--replace-quiet"
-        "@COLOR_LAYER1_ACCENT@"
-        "${color.layer1.accent}"
-        "--replace-quiet"
-        "@COLOR_LAYER2_ACCENT@"
-        "${color.layer2.accent}"
-        "--replace-quiet"
-        "@COLOR_LAYER3_ACCENT@"
-        "${color.layer3.accent}"
-        "--replace-quiet"
-        "@COLOR_LAYER4_ACCENT@"
-        "${color.layer4.accent}"
+        # Colors
 
         "--replace-quiet"
-        "@COLOR_LAYER1_BACKGROUND@"
-        "${color.layer1.background}"
-        "--replace-quiet"
-        "@COLOR_LAYER2_BACKGROUND@"
-        "${color.layer2.background}"
-        "--replace-quiet"
-        "@COLOR_LAYER3_BACKGROUND@"
-        "${color.layer3.background}"
-        "--replace-quiet"
-        "@COLOR_LAYER4_BACKGROUND@"
-        "${color.layer4.background}"
+        "@COLOR_ACCENT@"
+        "${color.accent}"
 
         "--replace-quiet"
-        "@COLOR_LAYER1_BORDER@"
-        "${color.layer1.border}"
-        "--replace-quiet"
-        "@COLOR_LAYER2_BORDER@"
-        "${color.layer2.border}"
-        "--replace-quiet"
-        "@COLOR_LAYER3_BORDER@"
-        "${color.layer3.border}"
-        "--replace-quiet"
-        "@COLOR_LAYER4_BORDER@"
-        "${color.layer4.border}"
+        "@COLOR_BACKGROUND@"
+        "${color.background}"
 
         "--replace-quiet"
-        "@COLOR_LAYER1_FOREGROUND@"
-        "${color.layer1.foreground}"
-        "--replace-quiet"
-        "@COLOR_LAYER2_FOREGROUND@"
-        "${color.layer2.foreground}"
-        "--replace-quiet"
-        "@COLOR_LAYER3_FOREGROUND@"
-        "${color.layer3.foreground}"
-        "--replace-quiet"
-        "@COLOR_LAYER4_FOREGROUND@"
-        "${color.layer4.foreground}"
+        "@COLOR_BACKGROUND_LOWER@"
+        "${color.backgroundLower}"
 
         "--replace-quiet"
-        "@COLOR_LAYER1_NEGATIVE@"
-        "${color.layer1.negative}"
-        "--replace-quiet"
-        "@COLOR_LAYER2_NEGATIVE@"
-        "${color.layer2.negative}"
-        "--replace-quiet"
-        "@COLOR_LAYER3_NEGATIVE@"
-        "${color.layer3.negative}"
-        "--replace-quiet"
-        "@COLOR_LAYER4_NEGATIVE@"
-        "${color.layer4.negative}"
+        "@COLOR_BACKGROUND_UPPER@"
+        "${color.backgroundUpper}"
 
         "--replace-quiet"
-        "@COLOR_LAYER1_POSITIVE@"
-        "${color.layer1.positive}"
+        "@COLOR_BORDER@"
+        "${color.border}"
+
         "--replace-quiet"
-        "@COLOR_LAYER2_POSITIVE@"
-        "${color.layer2.positive}"
+        "@COLOR_FOREGROUND@"
+        "${color.foreground}"
+
         "--replace-quiet"
-        "@COLOR_LAYER3_POSITIVE@"
-        "${color.layer3.positive}"
+        "@COLOR_FOREGROUND_LOWER@"
+        "${color.foregroundLower}"
+
         "--replace-quiet"
-        "@COLOR_LAYER4_POSITIVE@"
-        "${color.layer4.positive}"
+        "@COLOR_FOREGROUND_UPPER@"
+        "${color.foregroundUpper}"
+
+        "--replace-quiet"
+        "@COLOR_NEGATIVE@"
+        "${color.negative}"
+
+        "--replace-quiet"
+        "@COLOR_POSITIVE@"
+        "${color.positive}"
       ];
     };
 }

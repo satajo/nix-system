@@ -6,8 +6,8 @@ let
     image:
     pkgs.runCommand "wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
       magick ${image} -colorspace RGB \
-        -fill "${theme.color.layer2.background}" -opaque "#ffffff" \
-        -fill "${theme.color.layer1.background}" -opaque "#000000" \
+        -fill "${theme.color.background}" -opaque "#ffffff" \
+        -fill "${theme.color.backgroundLower}" -opaque "#000000" \
         $out
     '';
 in

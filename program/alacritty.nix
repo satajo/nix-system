@@ -13,13 +13,13 @@ in
 
         colors = {
           primary = {
-            background = theme.color.layer2.background;
-            foreground = theme.color.layer2.foreground;
+            background = theme.color.background;
+            foreground = theme.color.foreground;
           };
 
           cursor = {
-            cursor = theme.color.layer2.foreground;
-            text = theme.color.layer2.background;
+            cursor = theme.color.foreground;
+            text = theme.color.background;
           };
 
           normal = {
