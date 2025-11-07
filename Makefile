@@ -20,7 +20,6 @@ switch: format ## Build the new configuration and make it the boot default.
 test: format ## Build and activate the new configuration, but do not add it to the GRUB boot menu.
 	sudo nixos-rebuild test --flake .#$$(hostname)
 
-
 .PHONY: regenerate-hardware-config
 regenerate-hardware-config: ## Re-generate the hardware-configuration.nix for the current host.
 	nixos-generate-config --show-hardware-config > host/$$(hostname)/hardware-configuration.nix
