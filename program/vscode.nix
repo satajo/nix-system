@@ -8,9 +8,6 @@ in
       enable = true;
       package = pkgs.vscodium;
 
-      # Require extensions to be installed through Nix configuration.
-      mutableExtensionsDir = false;
-
       profiles.default = {
         # Fully manage versions through Nix.
         enableUpdateCheck = false;
