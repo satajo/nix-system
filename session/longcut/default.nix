@@ -6,7 +6,7 @@
   ...
 }:
 let
-  package = inputs.longcut.packages.${pkgs.system}.default;
+  package = inputs.longcut.packages.${pkgs.stdenv.hostPlatform.system}.default;
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
 
   configFile = theme.substitute ./longcut.template.yaml;

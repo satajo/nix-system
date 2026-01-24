@@ -45,7 +45,6 @@
       pinta # quick but simple image editor
       protonvpn-gui # vpn provider
       tldr # console command cheatsheets
-      via # keyboard firmware configurator
       vlc # video player
 
       ## Kubernetes and virtualization
@@ -56,7 +55,7 @@
     ]
     ++ lib.optionals config.profile.personal [
       anki # spaced repetition learning tool
-      bitwarden # password manager
+      bitwarden-desktop # password manager
       discord # chat
       krita # art program
     ];
