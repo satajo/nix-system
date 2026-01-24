@@ -14,13 +14,6 @@ in
 {
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
-  # i3 comes with no compositor so we use picom with it.
-  services.picom = {
-    enable = true;
-    backend = "glx";
-    vSync = true;
-  };
-
   services.xserver = {
     desktopManager.xterm.enable = false;
 
