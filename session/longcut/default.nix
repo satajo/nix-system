@@ -8,8 +8,8 @@
 let
   package = inputs.longcut.packages.${pkgs.stdenv.hostPlatform.system}.default;
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
-
-  configFile = theme.substitute ./longcut.template.yaml;
+  longcutConfig = import ./longcut.nix { inherit pkgs theme; };
+  configFile = pkgs.writeText "longcut.yaml" (lib.generators.toYAML { } longcutConfig);
 
   configCheckOk =
     pkgs.runCommand "longcut-config-check"
