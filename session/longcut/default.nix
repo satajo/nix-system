@@ -6,68 +6,137 @@
   ...
 }:
 let
-  package = inputs.longcut.packages.${pkgs.stdenv.hostPlatform.system}.default;
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
-  longcutConfig = import ./longcut.nix { inherit pkgs theme; };
-  configFile = pkgs.writeText "longcut.yaml" (lib.generators.toYAML { } longcutConfig);
+  package = inputs.longcut.packages.${pkgs.stdenv.hostPlatform.system}.default;
+  baseConfig = import ./longcut.nix { inherit pkgs theme; };
+  essentialPackages = with pkgs; [
+    alacritty
+    bluez
+    brightnessctl
+    dunst
+    firefox
+    gpick
+    i3
+    jq
+    libnotify
+    networkmanager
+    playerctl
+    pipewire
+    rofi
+    scrot
+    translate-shell
+    xclip
+    xdotool
+    xorg.xprop
+    xsel
+    wireplumber
+  ];
+  mergeHelpers = rec {
+    mergeValues =
+      left: right:
+      if lib.isAttrs left && lib.isAttrs right then
+        mergeAttrs left right
+      else if lib.isList left && lib.isList right then
+        left ++ right
+      else
+        right;
 
-  configCheckOk =
-    pkgs.runCommand "longcut-config-check"
-      {
-        nativeBuildInputs = [ package ];
-      }
-      ''
-        # Run the check
-        ${package}/bin/longcut --config-file ${configFile} --check-config-only
-
-        # If we get here, the check passed
-        touch $out
-      '';
+    mergeAttrs =
+      left: right:
+      let
+        keys = builtins.attrNames left ++ builtins.attrNames right;
+      in
+      lib.foldl' (
+        acc: key:
+        let
+          hasLeft = builtins.hasAttr key left;
+          hasRight = builtins.hasAttr key right;
+          value =
+            if hasLeft && hasRight then
+              mergeValues (builtins.getAttr key left) (builtins.getAttr key right)
+            else if hasRight then
+              builtins.getAttr key right
+            else
+              builtins.getAttr key left;
+        in
+        acc // { "${key}" = value; }
+      ) { } keys;
+  };
+  mergeConfigs = configs: lib.foldl' (acc: cfg: mergeHelpers.mergeAttrs acc cfg) { } configs;
 in
 {
-  assertions = [
-    {
-      assertion = builtins.pathExists configCheckOk;
-      message = "Longcut configuration validation failed";
-    }
-  ];
-
-  home-manager.users.satajo = {
-    home.packages = [
-      package
-    ]
-    ++ (with pkgs; [
-      bluez
-      brightnessctl
-      gpick
-      jq
-      libnotify
-      scrot
-      translate-shell
-      xclip
-      xdotool
-      xorg.xprop
-      xsel
-    ]);
-
-    # Systemd service
-    systemd.user.services.longcut = {
-      Unit = {
-        Description = "Longcut shortcut manager";
-        After = [ "graphical-session-pre.target" ];
-        PartOf = [ "graphical-session.target" ];
-      };
-
-      Service = {
-        Type = "simple";
-        # Service is started through a login shell invocation to iherit paths correctly.
-        ExecStart = "${pkgs.runtimeShell} -lc '${package}/bin/longcut --config-file ${configFile}'";
-        KillMode = "process";
-        Restart = "always";
-        RestartSec = "1s";
-      };
-
-      Install.WantedBy = [ "graphical-session.target" ];
-    };
+  options.longcut.enable = lib.mkOption {
+    type = lib.types.bool;
+    default = true;
+    description = "Enable Longcut shortcuts and service.";
   };
+
+  options.longcut.baseConfig = lib.mkOption {
+    type = lib.types.attrs;
+    default = baseConfig;
+    description = "Base Longcut configuration that fragments extend.";
+  };
+
+  options.longcut.fragments = lib.mkOption {
+    type = lib.types.listOf lib.types.attrs;
+    default = [ ];
+    description = "Additional Longcut configuration fragments appended to the base config.";
+  };
+
+  options.longcut.extraPackages = lib.mkOption {
+    type = lib.types.listOf lib.types.package;
+    default = [ ];
+    description = "Extra packages to install when Longcut is enabled.";
+  };
+
+  config = lib.mkIf config.longcut.enable (
+    let
+      mergedConfig = mergeConfigs ([ config.longcut.baseConfig ] ++ config.longcut.fragments);
+      configFile = pkgs.writeText "longcut.yaml" (lib.generators.toYAML { } mergedConfig);
+      configCheckOk =
+        pkgs.runCommand "longcut-config-check"
+          {
+            nativeBuildInputs = [ package ];
+          }
+          ''
+            ${package}/bin/longcut --config-file ${configFile} --check-config-only
+
+            touch $out
+          '';
+    in
+    {
+      assertions = [
+        {
+          assertion = builtins.pathExists configCheckOk;
+          message = "Longcut configuration validation failed";
+        }
+      ];
+
+      home-manager.users.satajo = {
+        home.packages = [
+          package
+        ]
+        ++ essentialPackages
+        ++ config.longcut.extraPackages;
+
+        systemd.user.services.longcut = {
+          Unit = {
+            Description = "Longcut shortcut manager";
+            After = [ "graphical-session-pre.target" ];
+            PartOf = [ "graphical-session.target" ];
+          };
+
+          Service = {
+            Type = "simple";
+            ExecStart = "${pkgs.runtimeShell} -lc '${package}/bin/longcut --config-file ${configFile}'";
+            KillMode = "process";
+            Restart = "always";
+            RestartSec = "1s";
+          };
+
+          Install.WantedBy = [ "graphical-session.target" ];
+        };
+      };
+    }
+  );
 }
