@@ -8,9 +8,6 @@
 }:
 {
   options = {
-    # State version used for (both) system state and home-manager state versions.
-    originalSystemStateVersion = lib.mkOption { type = lib.types.str; };
-
     # "Profile" feature flags for toggling different behaviours and system customisations.
     profile = {
       # Nvidia GPU integration with various services"
@@ -32,8 +29,6 @@
   ];
 
   config = {
-    system.stateVersion = config.originalSystemStateVersion;
-
     # Main user account. Don't forget to set a password with ‘passwd’.
     users.users.satajo = {
       isNormalUser = true;
@@ -53,7 +48,7 @@
         "satajo" = {
           home.username = "satajo";
           home.homeDirectory = "/home/satajo";
-          home.stateVersion = config.originalSystemStateVersion;
+          home.stateVersion = config.system.stateVersion;
         };
       };
     };
