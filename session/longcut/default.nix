@@ -37,12 +37,17 @@ in
       package
     ]
     ++ (with pkgs; [
+      bluez
       brightnessctl
       gpick
       jq
+      libnotify
       scrot
       translate-shell
       xclip
+      xdotool
+      xorg.xprop
+      xsel
     ]);
 
     # Systemd service

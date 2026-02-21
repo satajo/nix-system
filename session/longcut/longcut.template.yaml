@@ -316,63 +316,47 @@ core:
         - name: Audio
           shortcut: a
           commands:
-            - name: Default sink
-              shortcut: d
+            - name: Select sink
+              shortcut: s
               # Set the default sink by finding it by name again
-              steps: pw-dump | jq -r '.[] | select(.info.props."node.name"=="{0}") | .id' | xargs wpctl set-default
+              steps: |
+                SINK_ID=$(pw-dump | jq -r '.[] | select(.info.props."node.name"=="{0}") | .id')
+                wpctl set-default $SINK_ID
               parameters:
                 - name: Name
                   type: choose
                   generate_options:
                     # List all sinks using pw-dump
                     command: pw-dump | jq -r '.[] | select(.info.props."media.class"=="Audio/Sink") | .info.props."node.name"'
-
-        - name: Backlight
-          shortcut: b
-          commands:
-            - name: Down
+            - name: Volume down
               shortcut: d
-              steps: brightnessctl --exponent set 3%-
               final: false
-            - name: Up
+              steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%-
+            - name: Mute
+              shortcut: m
+              steps: wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
+            - name: Unmute
+              shortcut: "n"
+              steps: wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+            - name: Volume up
               shortcut: u
-              steps: brightnessctl --exponent set 3%+
               final: false
-
-        - name: Desktop
-          shortcut: d
-          layers:
-            - name: Gaps
-              shortcut: g
-              commands:
-                - name: Reset
-                  shortcut: r
-                  steps:
-                    - i3-msg 'gaps inner all set 35'
-                    - i3-msg 'gaps outer all set -34'
-                - name: Disable
-                  shortcut: d
-                  steps:
-                    - i3-msg 'gaps inner all set 0'
-                    - i3-msg 'gaps outer all set 0'
-                - name: Widen
-                  shortcut: w
-                  final: false
-                  steps: i3-msg 'gaps inner all plus 5'
-                - name: Narrow
-                  shortcut: n
-                  final: false
-                  steps: i3-msg 'gaps inner all minus 5'
-          commands:
-            - name: Narrow gaps
-              shortcut: n
-              steps: i3-msg 'gaps horizontal all set -10'
-            - name: Wide gaps
-              shortcut: w
-              steps: i3-msg 'gaps horizontal all set 410'
+              steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%+
 
         - name: Monitor
           shortcut: m
+          layers:
+            - name: Backlight
+              shortcut: b
+              commands:
+                - name: Down
+                  shortcut: d
+                  steps: brightnessctl --exponent set 3%-
+                  final: false
+                - name: Up
+                  shortcut: u
+                  steps: brightnessctl --exponent set 3%+
+                  final: false
           commands:
             - name: Rotate
               shortcut: r
@@ -380,7 +364,7 @@ core:
                 - name: Monitor name
                   type: choose
                   generate_options:
-                    command: xrandr | grep " connected " | awk '{ print$1 }'
+                    command: xrandr | grep " connected " | cut -d ' ' -f 1
                 - name: Direction
                   type: choose
                   options:
@@ -389,6 +373,43 @@ core:
                     - normal
                     - inverted
               steps: xrandr --output {0} --rotate {1}
+
+        - name: Bluetooth
+          shortcut: b
+          commands:
+            - name: On
+              shortcut: o
+              steps: bluetoothctl power on && notify-send "Bluetooth" "Powered ON"
+            - name: Off
+              shortcut: f
+              steps: bluetoothctl power off && notify-send "Bluetooth" "Powered OFF"
+            - name: Connect
+              shortcut: c
+              steps: |
+                MAC=$(echo "{0}" | cut -d ' ' -f 1)
+                NAME=$(echo "{0}" | cut -d ' ' -f 2-)
+                if bluetoothctl show | grep -q "Powered: yes"; then
+                  bluetoothctl connect $MAC && notify-send "Bluetooth" "Connected to $NAME"
+                else
+                  notify-send "Bluetooth" "Error: Bluetooth is powered OFF"
+                  exit 1
+                fi
+              parameters:
+                - name: Device
+                  type: choose
+                  generate_options:
+                    command: bluetoothctl devices | cut -d ' ' -f 2-
+            - name: Disconnect
+              shortcut: d
+              steps: |
+                MAC=$(echo "{0}" | cut -d ' ' -f 1)
+                NAME=$(echo "{0}" | cut -d ' ' -f 2-)
+                bluetoothctl disconnect $MAC && notify-send "Bluetooth" "Disconnected from $NAME"
+              parameters:
+                - name: Device
+                  type: choose
+                  generate_options:
+                    command: bluetoothctl devices Connected | cut -d ' ' -f 2-
 
         - name: Network
           shortcut: "n"
@@ -401,7 +422,7 @@ core:
                 - name: Connection
                   type: choose
                   generate_options:
-                    command: nmcli connection show | grep -E "wifi|ethernet" | awk -F "  " '{ print $1 }'
+                    command: nmcli -t -f name,type connection show | grep -E "wireless|ethernet" | cut -d ':' -f 1
 
         - name: Notification
           shortcut: "o"
@@ -440,64 +461,75 @@ core:
               shortcut: t
               steps: loginctl terminate-user ""
 
-        - name: Volume
-          shortcut: v
-          commands:
-            - name: Down
-              shortcut: d
-              final: false
-              steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%-
-            - name: Mute
-              shortcut: m
-              steps: wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
-            - name: Unmute
-              shortcut: "n"
-              steps: wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-            - name: Up
-              shortcut: u
-              final: false
-              steps: wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%+
 
     - name: Tool
       shortcut: t
-      commands:
+      layers:
         - name: Take note
           shortcut: "n"
-          steps: echo "$(date '+%Y-%m-%d %H:%M:%S') {0}" >> ~/notes.txt
-          parameters:
-            - name: Note
-              type: text
+          commands:
+            - name: Manual
+              shortcut: m
+              steps: |
+                TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+                echo "$TIMESTAMP [MANUAL] {0}" >> ~/notes.txt
+                notify-send "Note saved" "{0}"
+              parameters:
+                - name: Note
+                  type: text
+            - name: Selection
+              shortcut: s
+              steps: |
+                TIMESTAMP=$(date '+%Y-%m-%d %H:%M:%S')
+                SELECTION=$(xsel -o)
+                echo "$TIMESTAMP [SELECTION] $SELECTION" >> ~/notes.txt
+                notify-send "Note saved from selection" "$SELECTION"
+
         - name: Translate
           shortcut: t
-          steps: trans -brief {0}:{1} '{2}' | xargs -d '\n' notify-send '{0} -> {1}'
-          parameters:
-            - name: From
-              type: choose
-              options:
-                - de
-                - en
-                - fi
-                - fr
-                - it
-                - nl
-            - name: Into
-              type: choose
-              options:
-                - de
-                - en
-                - fi
-                - fr
-                - it
-                - nl
-            - name: Text to translate
-              type: text
-      layers:
+          commands:
+            - name: Manual
+              shortcut: m
+              steps: |
+                TRANSLATION=$(trans -brief {0}:{1} '{2}')
+                notify-send "{0} -> {1}" "$TRANSLATION"
+              parameters:
+                - name: From
+                  type: choose
+                  options:
+                    - de
+                    - en
+                    - fi
+                    - fr
+                    - it
+                    - nl
+                - name: Into
+                  type: choose
+                  options:
+                    - de
+                    - en
+                    - fi
+                    - fr
+                    - it
+                    - nl
+                - name: Text to translate
+                  type: text
+            - name: Selection to English
+              shortcut: s
+              steps: |
+                SELECTION=$(xsel -o)
+                TRANSLATION=$(trans -brief :en "$SELECTION")
+                notify-send "Translated to English" "$TRANSLATION"
+
         - name: Capture
           shortcut: c
           commands:
             - name: Color
               shortcut: c
-              steps: gpick --single --output --converter-name color_{0} | xclip -sel c
+              steps: |
+                COLOR=$(gpick --single --output --converter-name color_{0})
+                echo -n "$COLOR" | xsel -ib
+                notify-send "Color captured" "$COLOR"
               synchronous: false
               parameters:
                 - name: Converter
@@ -521,6 +553,28 @@ core:
 
     - name: Window
       shortcut: i
+      layers:
+        - name: Inspect
+          shortcut: i
+          commands:
+            - name: Class
+              shortcut: c
+              steps: |
+                VAL=$(xprop -id $(xdotool getactivewindow) WM_CLASS | cut -d '"' -f 4)
+                echo -n "$VAL" | xsel -ib
+                notify-send "Window Class" "$VAL"
+            - name: Title
+              shortcut: t
+              steps: |
+                VAL=$(xdotool getactivewindow getwindowname)
+                echo -n "$VAL" | xsel -ib
+                notify-send "Window Title" "$VAL"
+            - name: PID
+              shortcut: p
+              steps: |
+                VAL=$(xprop -id $(xdotool getactivewindow) _NET_WM_PID | cut -d ' ' -f 3)
+                echo -n "$VAL" | xsel -ib
+                notify-send "Window PID" "$VAL"
       commands:
         - name: Fullscreen toggle
           shortcut: f
