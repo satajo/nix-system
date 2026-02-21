@@ -19,6 +19,7 @@
     ./thunar.nix
     ./todoist.nix
     ./vscode.nix
+    ./web-browser.nix
   ];
 
   # System wide single-package programs with no configuration.
@@ -37,7 +38,6 @@
       evince # document viewer
       feh # image viewer
       filen-desktop # cloud drive
-      firefox # browser
       gimp # slow but capable image editor
       hyperfine # benchmarking tool
       neofetch # it's basically required, right?

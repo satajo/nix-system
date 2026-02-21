@@ -304,12 +304,6 @@ in
             synchronous = false;
           }
           {
-            name = "Browser";
-            shortcut = "b";
-            steps = "${bin.firefox}";
-            synchronous = false;
-          }
-          {
             name = "Empty container";
             shortcut = "e";
             steps = "${bin.i3Msg} open";

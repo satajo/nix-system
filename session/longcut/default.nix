@@ -14,7 +14,6 @@ let
     bluez
     brightnessctl
     dunst
-    firefox
     gpick
     i3
     jq
@@ -32,19 +31,42 @@ let
     wireplumber
   ];
   mergeHelpers = rec {
+    listToAttrset = lst: lib.foldl' (acc: item: acc // { "${item.name}" = item; }) { } lst;
+
+    namesInOrder =
+      lists:
+      lib.foldl' (
+        acc: item:
+        let
+          nm = item.name;
+        in
+        if lib.elem nm acc then acc else acc ++ [ nm ]
+      ) [ ] lists;
+
+    isNamedList = lst: lib.isList lst && lib.all (item: lib.isAttrs item && item ? name) lst;
+
+    mergeNamedLists =
+      left: right:
+      let
+        mergedMap = mergeAttrs (listToAttrset left) (listToAttrset right);
+        names = namesInOrder (left ++ right);
+      in
+      lib.map (name: builtins.getAttr name mergedMap) names;
+
     mergeValues =
       left: right:
       if lib.isAttrs left && lib.isAttrs right then
         mergeAttrs left right
       else if lib.isList left && lib.isList right then
-        left ++ right
+        if isNamedList left && isNamedList right then mergeNamedLists left right else left ++ right
       else
         right;
 
     mergeAttrs =
       left: right:
       let
-        keys = builtins.attrNames left ++ builtins.attrNames right;
+        keysRaw = builtins.attrNames left ++ builtins.attrNames right;
+        keys = lib.foldl' (acc: key: if lib.elem key acc then acc else acc ++ [ key ]) [ ] keysRaw;
       in
       lib.foldl' (
         acc: key:
