@@ -6,8 +6,8 @@
 }:
 {
   imports = [
-    ./alacritty.nix
     ./foliate.nix
+    ./terminal-emulator.nix
     ./git
     ./liferea
     ./obsidian.nix

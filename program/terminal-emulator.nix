@@ -84,4 +84,22 @@ in
       };
     };
   };
+
+  longcut.fragments = [
+    {
+      core.layers = [
+        {
+          name = "Open";
+          commands = [
+            {
+              name = "Terminal";
+              shortcut = "t";
+              steps = "${pkgs.alacritty}/bin/alacritty";
+              synchronous = false;
+            }
+          ];
+        }
+      ];
+    }
+  ];
 }

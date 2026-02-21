@@ -10,7 +10,6 @@ let
   package = inputs.longcut.packages.${pkgs.stdenv.hostPlatform.system}.default;
   baseConfig = import ./longcut.nix { inherit pkgs theme; };
   essentialPackages = with pkgs; [
-    alacritty
     bluez
     brightnessctl
     dunst

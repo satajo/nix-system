@@ -1,7 +1,6 @@
 { pkgs, theme }:
 let
   bin = {
-    alacritty = "${pkgs.alacritty}/bin/alacritty";
     bluetoothctl = "${pkgs.bluez}/bin/bluetoothctl";
     brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
     cut = "${pkgs.coreutils}/bin/cut";
@@ -313,12 +312,6 @@ in
             shortcut = "h";
             final = false;
             steps = "${bin.i3Msg} split h";
-          }
-          {
-            name = "Terminal";
-            shortcut = "t";
-            steps = "${bin.alacritty}";
-            synchronous = false;
           }
           {
             name = "Vertically";
