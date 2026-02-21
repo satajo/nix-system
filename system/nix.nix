@@ -14,4 +14,11 @@
 
   # Allow installation of non-free software by default.
   nixpkgs.config.allowUnfree = true;
+
+  programs.nh = {
+    enable = true;
+    clean.enable = true;
+    clean.extraArgs = "--keep 30 --keep-since 7d";
+    flake = "/home/satajo/nix-system";
+  };
 }
