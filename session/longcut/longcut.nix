@@ -706,6 +706,24 @@ in
           {
             name = "Session";
             shortcut = "s";
+            layers = [
+              {
+                name = "Insomnia";
+                shortcut = "i";
+                commands = [
+                  {
+                    name = "On";
+                    shortcut = "1";
+                    steps = "${pkgs.xorg.xset}/bin/xset s off";
+                  }
+                  {
+                    name = "Off";
+                    shortcut = "0";
+                    steps = "${pkgs.xorg.xset}/bin/xset s 600";
+                  }
+                ];
+              }
+            ];
             commands = [
               {
                 name = "Lock";
