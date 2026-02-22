@@ -71,4 +71,37 @@ in
   services.xserver.displayManager.sessionCommands = ''
     xset s 600 # 10 minutes
   '';
+
+  longcut.fragments = [
+    {
+      core.layers = [
+        {
+          name = "System";
+          layers = [
+            {
+              name = "Session";
+              layers = [
+                {
+                  name = "Insomnia";
+                  shortcut = "i";
+                  commands = [
+                    {
+                      name = "On";
+                      shortcut = "1";
+                      steps = "${pkgs.xorg.xset}/bin/xset s off -dpms";
+                    }
+                    {
+                      name = "Off";
+                      shortcut = "0";
+                      steps = "${pkgs.xorg.xset}/bin/xset s 600 +dpms";
+                    }
+                  ];
+                }
+              ];
+            }
+          ];
+        }
+      ];
+    }
+  ];
 }
