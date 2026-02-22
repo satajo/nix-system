@@ -603,12 +603,12 @@ in
             commands = [
               {
                 name = "On";
-                shortcut = "o";
+                shortcut = "1";
                 steps = "${bin.bluetoothctl} power on && ${bin.notifySend} \"Bluetooth\" \"Powered ON\"";
               }
               {
                 name = "Off";
-                shortcut = "f";
+                shortcut = "0";
                 steps = "${bin.bluetoothctl} power off && ${bin.notifySend} \"Bluetooth\" \"Powered OFF\"";
               }
               {
