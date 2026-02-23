@@ -14,7 +14,6 @@ let
     brightnessctl
     dunst
     gpick
-    i3
     jq
     libnotify
     networkmanager

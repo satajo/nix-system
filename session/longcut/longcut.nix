@@ -9,8 +9,6 @@ let
     firefox = "${pkgs.firefox}/bin/firefox";
     gpick = "${pkgs.gpick}/bin/gpick";
     grep = "${pkgs.gnugrep}/bin/grep";
-    i3 = "${pkgs.i3}/bin/i3";
-    i3Msg = "${pkgs.i3}/bin/i3-msg";
     jq = "${pkgs.jq}/bin/jq";
     loginctl = "${pkgs.systemd}/bin/loginctl";
     nmcli = "${pkgs.networkmanager}/bin/nmcli";
@@ -94,131 +92,6 @@ in
         ];
       }
 
-      {
-        name = "Workspace";
-        shortcut = "w";
-        steps = "${bin.i3Msg} workspace '{0}'";
-        parameters = [
-          {
-            name = "Workspace number";
-            type = "character";
-          }
-        ];
-      }
-
-      ## Focus commands
-      {
-        name = "Focus down";
-        shortcut = "Down";
-        final = false;
-        steps = "${bin.i3Msg} focus down";
-      }
-      {
-        name = "Focus left";
-        shortcut = "Left";
-        final = false;
-        steps = "${bin.i3Msg} focus left";
-      }
-      {
-        name = "Focus right";
-        shortcut = "Right";
-        final = false;
-        steps = "${bin.i3Msg} focus right";
-      }
-      {
-        name = "Focus up";
-        shortcut = "Up";
-        final = false;
-        steps = "${bin.i3Msg} focus up";
-      }
-      {
-        name = "Focus parent";
-        shortcut = "PageUp";
-        final = false;
-        steps = "${bin.i3Msg} focus parent";
-      }
-      {
-        name = "Focus child";
-        shortcut = "PageDown";
-        final = false;
-        steps = "${bin.i3Msg} focus child";
-      }
-
-      ## Move commands
-      {
-        name = "Move down";
-        shortcut = {
-          key = "Down";
-          modifiers = "shift";
-        };
-        final = false;
-        steps = "${bin.i3Msg} move container down";
-      }
-      {
-        name = "Move left";
-        shortcut = {
-          key = "Left";
-          modifiers = "shift";
-        };
-        final = false;
-        steps = "${bin.i3Msg} move container left";
-      }
-      {
-        name = "Move Right";
-        shortcut = {
-          key = "Right";
-          modifiers = "shift";
-        };
-        final = false;
-        steps = "${bin.i3Msg} move container right";
-      }
-      {
-        name = "Move up";
-        shortcut = {
-          key = "Up";
-          modifiers = "shift";
-        };
-        final = false;
-        steps = "${bin.i3Msg} move container up";
-      }
-
-      ## Resize commands
-      {
-        name = "Shorten";
-        shortcut = {
-          key = "Down";
-          modifiers = "control";
-        };
-        final = false;
-        steps = "${bin.i3Msg} resize shrink height";
-      }
-      {
-        name = "Heighten";
-        shortcut = {
-          key = "Up";
-          modifiers = "control";
-        };
-        final = false;
-        steps = "${bin.i3Msg} resize grow height";
-      }
-      {
-        name = "Narrow";
-        shortcut = {
-          key = "Left";
-          modifiers = "control";
-        };
-        final = false;
-        steps = "${bin.i3Msg} resize shrink width";
-      }
-      {
-        name = "Widen";
-        shortcut = {
-          key = "Right";
-          modifiers = "control";
-        };
-        final = false;
-        steps = "${bin.i3Msg} resize grow width";
-      }
     ];
 
     layers = [
@@ -245,34 +118,6 @@ in
         ];
       }
 
-      ## Layout layer
-      {
-        name = "Layout";
-        shortcut = "l";
-        commands = [
-          {
-            name = "Horizontal";
-            shortcut = "h";
-            steps = "${bin.i3Msg} layout splith";
-          }
-          {
-            name = "Stacking";
-            shortcut = "s";
-            steps = "${bin.i3Msg} layout stacking";
-          }
-          {
-            name = "Tabbed";
-            shortcut = "t";
-            steps = "${bin.i3Msg} layout tabbed";
-          }
-          {
-            name = "Vertical";
-            shortcut = "v";
-            steps = "${bin.i3Msg} layout splitv";
-          }
-        ];
-      }
-
       ## Open layer
       {
         name = "Open";
@@ -283,23 +128,6 @@ in
             shortcut = "a";
             steps = "${bin.rofi} -show drun -show-icons";
             synchronous = false;
-          }
-          {
-            name = "Empty container";
-            shortcut = "e";
-            steps = "${bin.i3Msg} open";
-          }
-          {
-            name = "Horizontally";
-            shortcut = "h";
-            final = false;
-            steps = "${bin.i3Msg} split h";
-          }
-          {
-            name = "Vertically";
-            shortcut = "v";
-            final = false;
-            steps = "${bin.i3Msg} split v";
           }
         ];
       }
@@ -456,13 +284,6 @@ in
       {
         name = "System";
         shortcut = "s";
-        commands = [
-          {
-            name = "i3 restart";
-            shortcut = "3";
-            steps = "${bin.i3} restart";
-          }
-        ];
         layers = [
           {
             name = "Audio";
@@ -873,34 +694,6 @@ in
                   echo -n "$VAL" | ${bin.xsel} -ib
                   ${bin.notifySend} "Window PID" "$VAL"
                 '';
-              }
-            ];
-          }
-        ];
-        commands = [
-          {
-            name = "Fullscreen toggle";
-            shortcut = "f";
-            steps = "${bin.i3Msg} fullscreen toggle";
-          }
-          {
-            name = "Hover toggle";
-            shortcut = "h";
-            steps = "${bin.i3Msg} floating toggle";
-          }
-          {
-            name = "Kill active";
-            shortcut = "k";
-            steps = "${bin.i3Msg} kill";
-          }
-          {
-            name = "Move to workspace";
-            shortcut = "m";
-            steps = "${bin.i3Msg} move container to workspace {0}";
-            parameters = [
-              {
-                name = "Target workspace";
-                type = "character";
               }
             ];
           }
