@@ -10,6 +10,7 @@
     ./terminal-emulator.nix
     ./git
     ./liferea
+    ./noisegen
     ./obsidian.nix
     ./podman.nix
     ./shell

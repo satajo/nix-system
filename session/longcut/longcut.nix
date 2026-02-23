@@ -273,24 +273,6 @@ in
         ];
       }
 
-      ## Noise layer
-      {
-        name = "Noise";
-        shortcut = "n";
-        commands = [
-          {
-            name = "Play";
-            shortcut = "p";
-            steps = "~/applications/noisegen.sh play";
-          }
-          {
-            name = "Stop";
-            shortcut = "s";
-            steps = "~/applications/noisegen.sh stop";
-          }
-        ];
-      }
-
       ## Open layer
       {
         name = "Open";
