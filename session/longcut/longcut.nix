@@ -304,24 +304,6 @@ in
         ];
       }
 
-      ## Pomodoro layer
-      {
-        name = "Pomodoro";
-        shortcut = "p";
-        commands = [
-          {
-            name = "Begin";
-            shortcut = "b";
-            steps = "~/applications/pomodoro.sh begin 1800";
-          }
-          {
-            name = "End";
-            shortcut = "e";
-            steps = "~/applications/pomodoro.sh end";
-          }
-        ];
-      }
-
       ## Search layer
       {
         name = "Search";

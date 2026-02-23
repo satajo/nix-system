@@ -13,6 +13,7 @@
     ./noisegen
     ./obsidian.nix
     ./podman.nix
+    ./timers
     ./shell
     ./rhythmbox.nix
     ./steam.nix
