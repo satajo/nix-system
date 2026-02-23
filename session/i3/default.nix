@@ -35,12 +35,29 @@ in
       core = {
         commands = [
           {
-            name = "Workspace";
+            name = "Switch to workspace";
             shortcut = "w";
-            steps = "${i3Msg} workspace '{0}'";
+            steps = ''
+              CONTEXT=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
+              ${i3Msg} workspace "$CONTEXT"{0}
+            '';
             parameters = [
               {
-                name = "Workspace number";
+                name = "Workspace name";
+                type = "character";
+              }
+            ];
+          }
+          {
+            name = "Switch to context";
+            shortcut = {
+              key = "W";
+              modifiers = "shift";
+            };
+            steps = "${i3Msg} workspace {0}";
+            parameters = [
+              {
+                name = "Context name";
                 type = "character";
               }
             ];
@@ -247,10 +264,27 @@ in
               {
                 name = "Move to workspace";
                 shortcut = "m";
-                steps = "${i3Msg} move container to workspace {0}";
+                steps = ''
+                  CONTEXT=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
+                  ${i3Msg} move container to workspace "$CONTEXT"{0}
+                '';
                 parameters = [
                   {
                     name = "Target workspace";
+                    type = "character";
+                  }
+                ];
+              }
+              {
+                name = "Move to context";
+                shortcut = {
+                  key = "M";
+                  modifiers = "shift";
+                };
+                steps = "${i3Msg} move container to workspace {0}";
+                parameters = [
+                  {
+                    name = "Target context";
                     type = "character";
                   }
                 ];

@@ -37,43 +37,27 @@ bindsym XF86AudioPrev exec playerctl previous
 exec_always --no-startup-id feh --bg-center --image-bg "@COLOR_BACKGROUND_LOWER@" ~/.config/i3/wallpaper.png
 
 #------------------------------------------------------------------------------
-# Application configuration
+# Workspace configuration for autorun applications in Context 0
 #------------------------------------------------------------------------------
 
-# a Anki
-assign [class="Anki"] a
-
 # c Chat
-assign [class="Slack"] c
+assign [class="Slack"] 0c
 
-assign [class="TelegramDesktop"] c
+assign [class="TelegramDesktop"] 0c
 
-assign [class="discord"] c
-
-# e Editors
-assign [class="Code"] e
-
-assign [class="jetbrains-idea"] e
-for_window [class="jetbrains-idea" title="win0"] floating enable
-
-assign [class="jetbrains-studio"] e
-for_window [class="jetbrains-studio" title="win0"] floating enable
-
-# g Games
-assign [class="steam"] g
+assign [class="discord"] 0c
 
 # n Newsreader
-assign [class="liferea"] n
+assign [class="liferea"] 0n
 
 # m Music
-assign [class="Rhythmbox"] m
-assign [class="Spotify"] m
+assign [class="Rhythmbox"] 0m
 
 # s Study
-assign [class="obsidian"] s
+assign [class="obsidian"] 0s
 
 # t Todo
-assign [class="Todoist"] t
+assign [class="Todoist"] 0t
 
 #------------------------------------------------------------------------------
 # i3 Appearance
