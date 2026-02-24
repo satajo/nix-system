@@ -12,9 +12,9 @@ let
     PROCESS_NAME="play"
 
     function stop_background_playback {
-      if [[ $(pgrep --exact $PROCESS_NAME) ]]; then
+      if [[ $(${pkgs.procps}/bin/pgrep --exact $PROCESS_NAME) ]]; then
         echo "...existing playback detected"
-        pkill --exact $PROCESS_NAME
+        ${pkgs.procps}/bin/pkill --exact $PROCESS_NAME
         echo "...stopped existing playback"
       else
         echo "...no existing playback detected"
@@ -79,7 +79,18 @@ let
   '';
 in
 {
-  home-manager.users.satajo.home.packages = [ noisegen ];
+  home-manager.users.satajo = {
+    home.packages = [ noisegen ];
+
+    services.polybar.settings = {
+      "module/noisegen" = {
+        type = "custom/script";
+        exec = "echo 󱑽 Noisegen";
+        exec-if = "${pkgs.procps}/bin/pgrep -x play";
+        interval = 5;
+      };
+    };
+  };
 
   longcut.fragments = [
     {

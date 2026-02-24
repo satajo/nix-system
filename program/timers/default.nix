@@ -21,12 +21,12 @@ let
       echo "Error: $@" 1>&2
     }
 
-    mkdir -p $DIR_NAME
+    ${pkgs.coreutils}/bin/mkdir -p $DIR_NAME
 
     if [[ $COMMAND == "list" ]]; then
       for file in $DIR_NAME/*; do
         if [[ -f $file ]]; then
-          basename "$file"
+          ${pkgs.coreutils}/bin/basename "$file"
         fi
       done
 
@@ -42,7 +42,7 @@ let
         exit 0
       fi
 
-      END_TIME=$(cat "$FILE_PATH")
+      END_TIME=$(${pkgs.coreutils}/bin/cat "$FILE_PATH")
       CURRENT_TIME=$(${pkgs.coreutils}/bin/date +%s)
       TIME_REMAINING=$(( $END_TIME - $CURRENT_TIME ))
 
@@ -115,7 +115,18 @@ let
   '';
 in
 {
-  home-manager.users.satajo.home.packages = [ timers ];
+  home-manager.users.satajo = {
+    home.packages = [ timers ];
+
+    services.polybar.settings = {
+      "module/timers" = {
+        type = "custom/script";
+        exec = ''${timers}/bin/timers list | while IFS= read -r t; do echo -n "󱦟 $t $(${timers}/bin/timers get "$t")  "; done'';
+        exec-if = ''[ -n "$(${timers}/bin/timers list)" ]'';
+        interval = 1;
+      };
+    };
+  };
 
   longcut.fragments = [
     {
