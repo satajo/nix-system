@@ -38,7 +38,7 @@ in
             name = "Switch to workspace";
             shortcut = "w";
             steps = ''
-              CONTEXT=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
+              CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
               ${i3Msg} workspace "$CONTEXT"{0}
             '';
             parameters = [
@@ -54,7 +54,10 @@ in
               key = "W";
               modifiers = "shift";
             };
-            steps = "${i3Msg} workspace {0}";
+            steps = ''
+              WORKSPACE=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[1:2]')
+              ${i3Msg} workspace {0}"$WORKSPACE"
+            '';
             parameters = [
               {
                 name = "Context name";
@@ -265,7 +268,7 @@ in
                 name = "Move to workspace";
                 shortcut = "m";
                 steps = ''
-                  CONTEXT=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
+                  CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
                   ${i3Msg} move container to workspace "$CONTEXT"{0}
                 '';
                 parameters = [
@@ -281,7 +284,10 @@ in
                   key = "M";
                   modifiers = "shift";
                 };
-                steps = "${i3Msg} move container to workspace {0}";
+                steps = ''
+                  WORKSPACE=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[1:2]')
+                  ${i3Msg} move container to workspace {0}"$WORKSPACE"
+                '';
                 parameters = [
                   {
                     name = "Target context";
