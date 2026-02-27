@@ -81,6 +81,16 @@ in
             y = 24;
           };
         };
+
+        keyboard = {
+          bindings = [
+            {
+              key = "Return";
+              mods = "Shift";
+              chars = "\n";
+            }
+          ];
+        };
       };
     };
   };
