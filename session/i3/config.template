@@ -36,6 +36,9 @@ bindsym XF86AudioPrev exec playerctl previous
 # Wallpaper
 exec_always --no-startup-id feh --bg-center --image-bg "@COLOR_BACKGROUND_LOWER@" ~/.config/i3/wallpaper.png
 
+# Start on the first workspace in context 0
+exec --no-startup-id i3-msg workspace 00
+
 #------------------------------------------------------------------------------
 # Workspace configuration for autorun applications in Context 0
 #------------------------------------------------------------------------------
