@@ -221,7 +221,7 @@ in
             commands = [
               {
                 name = "Empty container";
-                shortcut = "e";
+                shortcut = "0";
                 steps = "${i3Msg} open";
               }
               {

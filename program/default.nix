@@ -8,6 +8,7 @@
   imports = [
     ./foliate.nix
     ./terminal-emulator.nix
+    ./zed.nix
     ./git
     ./liferea
     ./noisegen
