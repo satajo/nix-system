@@ -28,6 +28,12 @@ in
   home-manager.users.satajo = {
     xdg.configFile."i3/config".source = theme.substitute ./config.template;
     xdg.configFile."i3/wallpaper.png".source = applyWallpaperTheme ./wallpaper.png;
+
+    # Wire up the tray target to enable home-manager based tray-services to autostart.
+    systemd.user.targets.tray = {
+      Unit.After = [ "graphical-session.target" ];
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
   };
 
   longcut.fragments = [
