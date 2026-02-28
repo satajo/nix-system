@@ -15,6 +15,11 @@ in
       buffer_font_family = theme.font.monospace;
       buffer_font_size = 14;
       ui_font_size = 16;
+
+      auto_install_extensions = {
+        nix = true;
+        toml = true;
+      };
     };
   };
 
