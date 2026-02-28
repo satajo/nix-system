@@ -10,8 +10,8 @@ in
     font.name = theme.font.monospace;
     theme = {
       # For theme names, see: /run/current-system/sw/share/themes/
-      name = "Gruvbox-Dark";
-      package = pkgs.gruvbox-gtk-theme;
+      name = "Ayu-Dark";
+      package = pkgs.ayu-theme-gtk;
     };
   };
 }

@@ -21,7 +21,7 @@ in
             asciidoctor.asciidoctor-vscode
             esbenp.prettier-vscode
             hashicorp.terraform
-            jdinhlife.gruvbox
+            roman.ayu-next
             jnoortheen.nix-ide
             k--kato.intellij-idea-keybindings
             ms-vscode.makefile-tools
@@ -47,7 +47,7 @@ in
             confirmDragAndDrop = false;
           };
           workbench = {
-            colorTheme = "Gruvbox Dark Medium";
+            colorTheme = "Ayu Next";
             tree = {
               indent = 24;
               renderIndentGuides = "always";

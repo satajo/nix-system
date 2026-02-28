@@ -1,37 +1,39 @@
+# Color palette based on the Ayu Dark theme (https://github.com/ayu-theme).
 { pkgs, ... }:
 let
   palette = {
+    # Terminal ANSI colors: regular = normal, light = bright.
     black = {
-      regular = "#282828";
-      light = "#928374";
+      regular = "#0a0000";
+      light = "#0a0000";
     };
     red = {
-      regular = "#cc241d";
-      light = "#fd4934";
+      regular = "#e6495a";
+      light = "#f07178";
     };
     green = {
-      regular = "#98971a";
-      light = "#b8bb26";
+      regular = "#97c142";
+      light = "#aad94c";
     };
     yellow = {
-      regular = "#d79921";
-      light = "#fabd2f";
+      regular = "#e89d37";
+      light = "#ffb454";
     };
     blue = {
-      regular = "#458588";
-      light = "#83a598";
+      regular = "#17acf2";
+      light = "#59c2ff";
     };
     purple = {
-      regular = "#b16286";
-      light = "#d3869b";
+      regular = "#c385fe";
+      light = "#d2a6ff";
     };
     aqua = {
-      regular = "#689d6a";
-      light = "#8ec07c";
+      regular = "#84ceb5";
+      light = "#95e6cb";
     };
     gray = {
-      regular = "#a89984";
-      light = "#ebdbb2";
+      regular = "#ffffff";
+      light = "#ffffff";
     };
   };
 in
@@ -47,20 +49,20 @@ rec {
     raw = palette;
 
     # Foreground, background, borders.
-    foreground = "#ebdbb2";
-    foregroundLower = "#bdae93";
-    foregroundUpper = "#fbf1c7";
+    foreground = "#bfbdb6"; # editor foreground
+    foregroundLower = "#5a6378"; # ui.fg (muted/secondary text)
+    foregroundUpper = "#ffffff";
 
-    background = "#282828";
-    backgroundLower = "#1d2021";
-    backgroundUpper = "#3c3836";
+    background = "#10141c"; # surface.lift (editor bg)
+    backgroundLower = "#0d1017"; # surface.base (below)
+    backgroundUpper = "#1b1f29"; # ui.line (above)
 
-    border = "#3c3836";
+    border = "#404953"; # gray shade 2
 
     # Semantic colors
-    accent = "#fe8019";
-    negative = palette.red.regular;
-    positive = palette.green.regular;
+    accent = "#e6b450"; # common.accentTint
+    negative = "#d95757"; # common.error
+    positive = palette.green.light;
   };
 
   # Utlity for substituting theme variables in configuration files.
