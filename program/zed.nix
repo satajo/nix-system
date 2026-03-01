@@ -20,6 +20,8 @@ in
         nix = true;
         toml = true;
       };
+
+      base_keymap = "JetBrains";
     };
   };
 
