@@ -88,12 +88,12 @@ in
                     {
                       name = "On";
                       shortcut = "1";
-                      steps = "${pkgs.xorg.xset}/bin/xset s off -dpms";
+                      steps = [ { bash = "${pkgs.xorg.xset}/bin/xset s off -dpms"; } ];
                     }
                     {
                       name = "Off";
                       shortcut = "0";
-                      steps = "${pkgs.xorg.xset}/bin/xset s 600 +dpms";
+                      steps = [ { bash = "${pkgs.xorg.xset}/bin/xset s 600 +dpms"; } ];
                     }
                   ];
                 }

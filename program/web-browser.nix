@@ -25,7 +25,7 @@
             {
               name = "Browser";
               shortcut = "b";
-              steps = "${pkgs.firefox}/bin/firefox";
+              steps = [ { bash = "${pkgs.firefox}/bin/firefox"; } ];
               synchronous = false;
             }
           ];

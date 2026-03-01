@@ -43,7 +43,7 @@ in
           {
             name = "Switch context";
             shortcut = "c";
-            steps = "${i3Msg} workspace {0}{1}";
+            steps = [ { bash = "${i3Msg} workspace {0}{1}"; } ];
             parameters = [
               {
                 name = "Context name";
@@ -58,10 +58,14 @@ in
           {
             name = "Switch workspace";
             shortcut = "w";
-            steps = ''
-              CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
-              ${i3Msg} workspace "$CONTEXT"{0}
-            '';
+            steps = [
+              {
+                bash = ''
+                  CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
+                  ${i3Msg} workspace "$CONTEXT"{0}
+                '';
+              }
+            ];
             parameters = [
               {
                 name = "Workspace name";
@@ -75,37 +79,37 @@ in
             name = "Focus down";
             shortcut = "Down";
             final = false;
-            steps = "${i3Msg} focus down";
+            steps = [ { bash = "${i3Msg} focus down"; } ];
           }
           {
             name = "Focus left";
             shortcut = "Left";
             final = false;
-            steps = "${i3Msg} focus left";
+            steps = [ { bash = "${i3Msg} focus left"; } ];
           }
           {
             name = "Focus right";
             shortcut = "Right";
             final = false;
-            steps = "${i3Msg} focus right";
+            steps = [ { bash = "${i3Msg} focus right"; } ];
           }
           {
             name = "Focus up";
             shortcut = "Up";
             final = false;
-            steps = "${i3Msg} focus up";
+            steps = [ { bash = "${i3Msg} focus up"; } ];
           }
           {
             name = "Focus parent";
             shortcut = "PageUp";
             final = false;
-            steps = "${i3Msg} focus parent";
+            steps = [ { bash = "${i3Msg} focus parent"; } ];
           }
           {
             name = "Focus child";
             shortcut = "PageDown";
             final = false;
-            steps = "${i3Msg} focus child";
+            steps = [ { bash = "${i3Msg} focus child"; } ];
           }
 
           ## Move commands
@@ -116,7 +120,7 @@ in
               modifiers = "shift";
             };
             final = false;
-            steps = "${i3Msg} move container down";
+            steps = [ { bash = "${i3Msg} move container down"; } ];
           }
           {
             name = "Move left";
@@ -125,7 +129,7 @@ in
               modifiers = "shift";
             };
             final = false;
-            steps = "${i3Msg} move container left";
+            steps = [ { bash = "${i3Msg} move container left"; } ];
           }
           {
             name = "Move Right";
@@ -134,7 +138,7 @@ in
               modifiers = "shift";
             };
             final = false;
-            steps = "${i3Msg} move container right";
+            steps = [ { bash = "${i3Msg} move container right"; } ];
           }
           {
             name = "Move up";
@@ -143,7 +147,7 @@ in
               modifiers = "shift";
             };
             final = false;
-            steps = "${i3Msg} move container up";
+            steps = [ { bash = "${i3Msg} move container up"; } ];
           }
 
           ## Resize commands
@@ -154,7 +158,7 @@ in
               modifiers = "control";
             };
             final = false;
-            steps = "${i3Msg} resize shrink height";
+            steps = [ { bash = "${i3Msg} resize shrink height"; } ];
           }
           {
             name = "Heighten";
@@ -163,7 +167,7 @@ in
               modifiers = "control";
             };
             final = false;
-            steps = "${i3Msg} resize grow height";
+            steps = [ { bash = "${i3Msg} resize grow height"; } ];
           }
           {
             name = "Narrow";
@@ -172,7 +176,7 @@ in
               modifiers = "control";
             };
             final = false;
-            steps = "${i3Msg} resize shrink width";
+            steps = [ { bash = "${i3Msg} resize shrink width"; } ];
           }
           {
             name = "Widen";
@@ -181,7 +185,7 @@ in
               modifiers = "control";
             };
             final = false;
-            steps = "${i3Msg} resize grow width";
+            steps = [ { bash = "${i3Msg} resize grow width"; } ];
           }
         ];
 
@@ -193,22 +197,22 @@ in
               {
                 name = "Horizontal";
                 shortcut = "h";
-                steps = "${i3Msg} layout splith";
+                steps = [ { bash = "${i3Msg} layout splith"; } ];
               }
               {
                 name = "Stacking";
                 shortcut = "s";
-                steps = "${i3Msg} layout stacking";
+                steps = [ { bash = "${i3Msg} layout stacking"; } ];
               }
               {
                 name = "Tabbed";
                 shortcut = "t";
-                steps = "${i3Msg} layout tabbed";
+                steps = [ { bash = "${i3Msg} layout tabbed"; } ];
               }
               {
                 name = "Vertical";
                 shortcut = "v";
-                steps = "${i3Msg} layout splitv";
+                steps = [ { bash = "${i3Msg} layout splitv"; } ];
               }
             ];
           }
@@ -220,19 +224,19 @@ in
               {
                 name = "Empty container";
                 shortcut = "0";
-                steps = "${i3Msg} open";
+                steps = [ { bash = "${i3Msg} open"; } ];
               }
               {
                 name = "Horizontally";
                 shortcut = "h";
                 final = false;
-                steps = "${i3Msg} split h";
+                steps = [ { bash = "${i3Msg} split h"; } ];
               }
               {
                 name = "Vertically";
                 shortcut = "v";
                 final = false;
-                steps = "${i3Msg} split v";
+                steps = [ { bash = "${i3Msg} split v"; } ];
               }
             ];
           }
@@ -244,7 +248,7 @@ in
               {
                 name = "i3 restart";
                 shortcut = "3";
-                steps = "${i3Msg} restart";
+                steps = [ { bash = "${i3Msg} restart"; } ];
               }
             ];
           }
@@ -256,17 +260,17 @@ in
               {
                 name = "Fullscreen toggle";
                 shortcut = "f";
-                steps = "${i3Msg} fullscreen toggle";
+                steps = [ { bash = "${i3Msg} fullscreen toggle"; } ];
               }
               {
                 name = "Hover toggle";
                 shortcut = "h";
-                steps = "${i3Msg} floating toggle";
+                steps = [ { bash = "${i3Msg} floating toggle"; } ];
               }
               {
                 name = "Kill active";
                 shortcut = "k";
-                steps = "${i3Msg} kill";
+                steps = [ { bash = "${i3Msg} kill"; } ];
               }
             ];
             layers = [
@@ -277,7 +281,7 @@ in
                   {
                     name = "To context";
                     shortcut = "c";
-                    steps = "${i3Msg} move container to workspace {0}{1}";
+                    steps = [ { bash = "${i3Msg} move container to workspace {0}{1}"; } ];
                     parameters = [
                       {
                         name = "Target context";
@@ -292,10 +296,14 @@ in
                   {
                     name = "To workspace";
                     shortcut = "w";
-                    steps = ''
-                      CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
-                      ${i3Msg} move container to workspace "$CONTEXT"{0}
-                    '';
+                    steps = [
+                      {
+                        bash = ''
+                          CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
+                          ${i3Msg} move container to workspace "$CONTEXT"{0}
+                        '';
+                      }
+                    ];
                     parameters = [
                       {
                         name = "Target workspace";

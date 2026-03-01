@@ -102,12 +102,12 @@ in
             {
               name = "Play";
               shortcut = "p";
-              steps = "${noisegen}/bin/noisegen play";
+              steps = [ { bash = "${noisegen}/bin/noisegen play"; } ];
             }
             {
               name = "Stop";
               shortcut = "s";
-              steps = "${noisegen}/bin/noisegen stop";
+              steps = [ { bash = "${noisegen}/bin/noisegen stop"; } ];
             }
           ];
         }

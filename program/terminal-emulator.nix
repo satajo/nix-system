@@ -104,7 +104,7 @@ in
             {
               name = "Terminal";
               shortcut = "t";
-              steps = "${pkgs.alacritty}/bin/alacritty";
+              steps = [ { bash = "${pkgs.alacritty}/bin/alacritty"; } ];
               synchronous = false;
             }
           ];

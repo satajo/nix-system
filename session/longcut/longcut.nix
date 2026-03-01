@@ -71,7 +71,7 @@ in
       {
         name = "Media";
         shortcut = "m";
-        steps = "${bin.playerctl} --player {0} {1}";
+        steps = [ { bash = "${bin.playerctl} --player {0} {1}"; } ];
         parameters = [
           {
             name = "Player name";
@@ -103,17 +103,17 @@ in
           {
             name = "US Colemak";
             shortcut = "0";
-            steps = "${bin.setxkbmap} us -variant colemak";
+            steps = [ { bash = "${bin.setxkbmap} us -variant colemak"; } ];
           }
           {
             name = "Greek Colemak";
             shortcut = "1";
-            steps = "${bin.setxkbmap} gr -variant colemak";
+            steps = [ { bash = "${bin.setxkbmap} gr -variant colemak"; } ];
           }
           {
             name = "Finnish Qwerty";
             shortcut = "2";
-            steps = "${bin.setxkbmap} fi";
+            steps = [ { bash = "${bin.setxkbmap} fi"; } ];
           }
         ];
       }
@@ -126,7 +126,7 @@ in
           {
             name = "Application";
             shortcut = "a";
-            steps = "${bin.rofi} -show drun -show-icons";
+            steps = [ { bash = "${bin.rofi} -show drun -show-icons"; } ];
             synchronous = false;
           }
         ];
@@ -144,7 +144,7 @@ in
               {
                 name = "Options";
                 shortcut = "o";
-                steps = "${bin.firefox} --new-window 'https://search.nixos.org/options?query={0}'";
+                steps = [ { bash = "${bin.firefox} --new-window 'https://search.nixos.org/options?query={0}'"; } ];
                 synchronous = false;
                 parameters = [
                   {
@@ -156,7 +156,7 @@ in
               {
                 name = "Packages";
                 shortcut = "p";
-                steps = "${bin.firefox} --new-window 'https://search.nixos.org/packages?query={0}'";
+                steps = [ { bash = "${bin.firefox} --new-window 'https://search.nixos.org/packages?query={0}'"; } ];
                 synchronous = false;
                 parameters = [
                   {
@@ -172,7 +172,7 @@ in
           {
             name = "Crates.io";
             shortcut = "c";
-            steps = "${bin.firefox} --new-window 'https://crates.io/search?q={0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://crates.io/search?q={0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -184,7 +184,7 @@ in
           {
             name = "Duck Duck Go";
             shortcut = "d";
-            steps = "${bin.firefox} --new-window 'https://www.duckduckgo.com/{0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://www.duckduckgo.com/{0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -196,7 +196,7 @@ in
           {
             name = "Google";
             shortcut = "g";
-            steps = "${bin.firefox} --new-window 'https://www.google.com/search?q={0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://www.google.com/search?q={0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -208,7 +208,7 @@ in
           {
             name = "Hoogle";
             shortcut = "h";
-            steps = "${bin.firefox} --new-window 'https://hoogle.haskell.org/?hoogle={0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://hoogle.haskell.org/?hoogle={0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -220,7 +220,7 @@ in
           {
             name = "Kagi";
             shortcut = "k";
-            steps = "${bin.firefox} --new-window 'https://kagi.com/search?q={0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://kagi.com/search?q={0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -232,7 +232,7 @@ in
           {
             name = "Merriam-Webster";
             shortcut = "m";
-            steps = "${bin.firefox} --new-window 'https://merriam-webster.com/dictionary/{0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://merriam-webster.com/dictionary/{0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -244,7 +244,7 @@ in
           {
             name = "Npm";
             shortcut = "n";
-            steps = "${bin.firefox} --new-window 'https://npmjs.com/search?q={0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://npmjs.com/search?q={0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -256,7 +256,7 @@ in
           {
             name = "Reddit";
             shortcut = "r";
-            steps = "${bin.firefox} --new-window 'https://www.reddit.com/search/?q={0}'";
+            steps = [ { bash = "${bin.firefox} --new-window 'https://www.reddit.com/search/?q={0}'"; } ];
             synchronous = false;
             parameters = [
               {
@@ -268,7 +268,9 @@ in
           {
             name = "Youtube";
             shortcut = "y";
-            steps = "${bin.firefox} --new-window 'https://www.youtube.com/results?search_query={0}'";
+            steps = [
+              { bash = "${bin.firefox} --new-window 'https://www.youtube.com/results?search_query={0}'"; }
+            ];
             synchronous = false;
             parameters = [
               {
@@ -292,10 +294,14 @@ in
               {
                 name = "Select sink";
                 shortcut = "s";
-                steps = ''
-                  SINK_ID=$(${bin.pwDump} | ${bin.jq} -r '.[] | select(.info.props."node.name"=="{0}") | .id')
-                  ${bin.wpctl} set-default $SINK_ID
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      SINK_ID=$(${bin.pwDump} | ${bin.jq} -r '.[] | select(.info.props."node.name"=="{0}") | .id')
+                      ${bin.wpctl} set-default $SINK_ID
+                    '';
+                  }
+                ];
                 parameters = [
                   {
                     name = "Name";
@@ -310,23 +316,23 @@ in
                 name = "Volume down";
                 shortcut = "d";
                 final = false;
-                steps = "${bin.wpctl} set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%-";
+                steps = [ { bash = "${bin.wpctl} set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%-"; } ];
               }
               {
                 name = "Mute";
                 shortcut = "m";
-                steps = "${bin.wpctl} set-mute @DEFAULT_AUDIO_SINK@ 1";
+                steps = [ { bash = "${bin.wpctl} set-mute @DEFAULT_AUDIO_SINK@ 1"; } ];
               }
               {
                 name = "Unmute";
                 shortcut = "n";
-                steps = "${bin.wpctl} set-mute @DEFAULT_AUDIO_SINK@ 0";
+                steps = [ { bash = "${bin.wpctl} set-mute @DEFAULT_AUDIO_SINK@ 0"; } ];
               }
               {
                 name = "Volume up";
                 shortcut = "u";
                 final = false;
-                steps = "${bin.wpctl} set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%+";
+                steps = [ { bash = "${bin.wpctl} set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ 1%+"; } ];
               }
             ];
           }
@@ -342,13 +348,13 @@ in
                   {
                     name = "Down";
                     shortcut = "d";
-                    steps = "${bin.brightnessctl} --exponent set 3%-";
+                    steps = [ { bash = "${bin.brightnessctl} --exponent set 3%-"; } ];
                     final = false;
                   }
                   {
                     name = "Up";
                     shortcut = "u";
-                    steps = "${bin.brightnessctl} --exponent set 3%+";
+                    steps = [ { bash = "${bin.brightnessctl} --exponent set 3%+"; } ];
                     final = false;
                   }
                 ];
@@ -377,7 +383,7 @@ in
                     ];
                   }
                 ];
-                steps = "${bin.xrandr} --output {0} --rotate {1}";
+                steps = [ { bash = "${bin.xrandr} --output {0} --rotate {1}"; } ];
               }
             ];
           }
@@ -389,26 +395,34 @@ in
               {
                 name = "On";
                 shortcut = "1";
-                steps = "${bin.bluetoothctl} power on && ${bin.notifySend} \"Bluetooth\" \"Powered ON\"";
+                steps = [
+                  { bash = "${bin.bluetoothctl} power on && ${bin.notifySend} \"Bluetooth\" \"Powered ON\""; }
+                ];
               }
               {
                 name = "Off";
                 shortcut = "0";
-                steps = "${bin.bluetoothctl} power off && ${bin.notifySend} \"Bluetooth\" \"Powered OFF\"";
+                steps = [
+                  { bash = "${bin.bluetoothctl} power off && ${bin.notifySend} \"Bluetooth\" \"Powered OFF\""; }
+                ];
               }
               {
                 name = "Connect";
                 shortcut = "c";
-                steps = ''
-                  MAC=$(echo "{0}" | ${bin.cut} -d ' ' -f 1)
-                  NAME=$(echo "{0}" | ${bin.cut} -d ' ' -f 2-)
-                  if ${bin.bluetoothctl} show | ${bin.grep} -q "Powered: yes"; then
-                    ${bin.bluetoothctl} connect $MAC && ${bin.notifySend} "Bluetooth" "Connected to $NAME"
-                  else
-                    ${bin.notifySend} "Bluetooth" "Error: Bluetooth is powered OFF"
-                    exit 1
-                  fi
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      MAC=$(echo "{0}" | ${bin.cut} -d ' ' -f 1)
+                      NAME=$(echo "{0}" | ${bin.cut} -d ' ' -f 2-)
+                      if ${bin.bluetoothctl} show | ${bin.grep} -q "Powered: yes"; then
+                        ${bin.bluetoothctl} connect $MAC && ${bin.notifySend} "Bluetooth" "Connected to $NAME"
+                      else
+                        ${bin.notifySend} "Bluetooth" "Error: Bluetooth is powered OFF"
+                        exit 1
+                      fi
+                    '';
+                  }
+                ];
                 parameters = [
                   {
                     name = "Device";
@@ -420,11 +434,15 @@ in
               {
                 name = "Disconnect";
                 shortcut = "d";
-                steps = ''
-                  MAC=$(echo "{0}" | ${bin.cut} -d ' ' -f 1)
-                  NAME=$(echo "{0}" | ${bin.cut} -d ' ' -f 2-)
-                  ${bin.bluetoothctl} disconnect $MAC && ${bin.notifySend} "Bluetooth" "Disconnected from $NAME"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      MAC=$(echo "{0}" | ${bin.cut} -d ' ' -f 1)
+                      NAME=$(echo "{0}" | ${bin.cut} -d ' ' -f 2-)
+                      ${bin.bluetoothctl} disconnect $MAC && ${bin.notifySend} "Bluetooth" "Disconnected from $NAME"
+                    '';
+                  }
+                ];
                 parameters = [
                   {
                     name = "Device";
@@ -443,7 +461,7 @@ in
               {
                 name = "Connect";
                 shortcut = "c";
-                steps = "${bin.nmcli} connection up {0}";
+                steps = [ { bash = "${bin.nmcli} connection up {0}"; } ];
                 timeout = 5000;
                 parameters = [
                   {
@@ -465,12 +483,12 @@ in
               {
                 name = "Act";
                 shortcut = "a";
-                steps = "${bin.dunstctl} action";
+                steps = [ { bash = "${bin.dunstctl} action"; } ];
               }
               {
                 name = "Close";
                 shortcut = "c";
-                steps = "${bin.dunstctl} close";
+                steps = [ { bash = "${bin.dunstctl} close"; } ];
               }
               {
                 name = "Close all";
@@ -478,12 +496,12 @@ in
                   key = "c";
                   modifiers = "control";
                 };
-                steps = "${bin.dunstctl} close-all";
+                steps = [ { bash = "${bin.dunstctl} close-all"; } ];
               }
               {
                 name = "History pop";
                 shortcut = "h";
-                steps = "${bin.dunstctl} history-pop";
+                steps = [ { bash = "${bin.dunstctl} history-pop"; } ];
               }
             ];
           }
@@ -495,27 +513,27 @@ in
               {
                 name = "Lock";
                 shortcut = "l";
-                steps = "${bin.loginctl} lock-session";
+                steps = [ { bash = "${bin.loginctl} lock-session"; } ];
               }
               {
                 name = "Power off";
                 shortcut = "p";
-                steps = "${bin.systemctl} poweroff";
+                steps = [ { bash = "${bin.systemctl} poweroff"; } ];
               }
               {
                 name = "Reboot";
                 shortcut = "r";
-                steps = "${bin.systemctl} reboot";
+                steps = [ { bash = "${bin.systemctl} reboot"; } ];
               }
               {
                 name = "Suspend";
                 shortcut = "s";
-                steps = "${bin.systemctl} suspend";
+                steps = [ { bash = "${bin.systemctl} suspend"; } ];
               }
               {
                 name = "Terminate";
                 shortcut = "t";
-                steps = "${bin.loginctl} terminate-user \"\"";
+                steps = [ { bash = "${bin.loginctl} terminate-user \"\""; } ];
               }
             ];
           }
@@ -533,11 +551,15 @@ in
               {
                 name = "Manual";
                 shortcut = "m";
-                steps = ''
-                  TIMESTAMP=$(${bin.date} '+%Y-%m-%d %H:%M:%S')
-                  echo "$TIMESTAMP [MANUAL] {0}" >> ~/notes.txt
-                  ${bin.notifySend} "Note saved" "{0}"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      TIMESTAMP=$(${bin.date} '+%Y-%m-%d %H:%M:%S')
+                      echo "$TIMESTAMP [MANUAL] {0}" >> ~/notes.txt
+                      ${bin.notifySend} "Note saved" "{0}"
+                    '';
+                  }
+                ];
                 parameters = [
                   {
                     name = "Note";
@@ -548,12 +570,16 @@ in
               {
                 name = "Selection";
                 shortcut = "s";
-                steps = ''
-                  TIMESTAMP=$(${bin.date} '+%Y-%m-%d %H:%M:%S')
-                  SELECTION=$(${bin.xsel} -o)
-                  echo "$TIMESTAMP [SELECTION] $SELECTION" >> ~/notes.txt
-                  ${bin.notifySend} "Note saved from selection" "$SELECTION"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      TIMESTAMP=$(${bin.date} '+%Y-%m-%d %H:%M:%S')
+                      SELECTION=$(${bin.xsel} -o)
+                      echo "$TIMESTAMP [SELECTION] $SELECTION" >> ~/notes.txt
+                      ${bin.notifySend} "Note saved from selection" "$SELECTION"
+                    '';
+                  }
+                ];
               }
             ];
           }
@@ -565,10 +591,14 @@ in
               {
                 name = "Manual";
                 shortcut = "m";
-                steps = ''
-                  TRANSLATION=$(${bin.trans} -brief {0}:{1} '{2}')
-                  ${bin.notifySend} "{0} -> {1}" "$TRANSLATION"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      TRANSLATION=$(${bin.trans} -brief {0}:{1} '{2}')
+                      ${bin.notifySend} "{0} -> {1}" "$TRANSLATION"
+                    '';
+                  }
+                ];
                 parameters = [
                   {
                     name = "From";
@@ -603,11 +633,15 @@ in
               {
                 name = "Selection to English";
                 shortcut = "s";
-                steps = ''
-                  SELECTION=$(${bin.xsel} -o)
-                  TRANSLATION=$(${bin.trans} -brief :en "$SELECTION")
-                  ${bin.notifySend} "Translated to English" "$TRANSLATION"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      SELECTION=$(${bin.xsel} -o)
+                      TRANSLATION=$(${bin.trans} -brief :en "$SELECTION")
+                      ${bin.notifySend} "Translated to English" "$TRANSLATION"
+                    '';
+                  }
+                ];
               }
             ];
           }
@@ -619,11 +653,15 @@ in
               {
                 name = "Color";
                 shortcut = "c";
-                steps = ''
-                  COLOR=$(${bin.gpick} --single --output --converter-name color_{0})
-                  echo -n "$COLOR" | ${bin.xsel} -ib
-                  ${bin.notifySend} "Color captured" "$COLOR"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      COLOR=$(${bin.gpick} --single --output --converter-name color_{0})
+                      echo -n "$COLOR" | ${bin.xsel} -ib
+                      ${bin.notifySend} "Color captured" "$COLOR"
+                    '';
+                  }
+                ];
                 synchronous = false;
                 parameters = [
                   {
@@ -640,19 +678,29 @@ in
               {
                 name = "Region";
                 shortcut = "r";
-                steps = "${bin.scrot} --select --line mode=edge,width=4 - | ${bin.xclip} -selection c -t image/png";
+                steps = [
+                  {
+                    bash = "${bin.scrot} --select --line mode=edge,width=4 - | ${bin.xclip} -selection c -t image/png";
+                  }
+                ];
                 synchronous = false;
               }
               {
                 name = "Window";
                 shortcut = "i";
-                steps = "${bin.scrot} --focused --line mode=edge,width=4 - | ${bin.xclip} -selection c -t image/png";
+                steps = [
+                  {
+                    bash = "${bin.scrot} --focused --line mode=edge,width=4 - | ${bin.xclip} -selection c -t image/png";
+                  }
+                ];
                 synchronous = false;
               }
               {
                 name = "Workspace";
                 shortcut = "w";
-                steps = "${bin.scrot} --line mode=edge,width=4 - | ${bin.xclip} -selection c -t image/png";
+                steps = [
+                  { bash = "${bin.scrot} --line mode=edge,width=4 - | ${bin.xclip} -selection c -t image/png"; }
+                ];
                 synchronous = false;
               }
             ];
@@ -671,29 +719,41 @@ in
               {
                 name = "Class";
                 shortcut = "c";
-                steps = ''
-                  VAL=$(${bin.xprop} -id $(${bin.xdotool} getactivewindow) WM_CLASS | ${bin.cut} -d '"' -f 4)
-                  echo -n "$VAL" | ${bin.xsel} -ib
-                  ${bin.notifySend} "Window Class" "$VAL"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      VAL=$(${bin.xprop} -id $(${bin.xdotool} getactivewindow) WM_CLASS | ${bin.cut} -d '"' -f 4)
+                      echo -n "$VAL" | ${bin.xsel} -ib
+                      ${bin.notifySend} "Window Class" "$VAL"
+                    '';
+                  }
+                ];
               }
               {
                 name = "Title";
                 shortcut = "t";
-                steps = ''
-                  VAL=$(${bin.xdotool} getactivewindow getwindowname)
-                  echo -n "$VAL" | ${bin.xsel} -ib
-                  ${bin.notifySend} "Window Title" "$VAL"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      VAL=$(${bin.xdotool} getactivewindow getwindowname)
+                      echo -n "$VAL" | ${bin.xsel} -ib
+                      ${bin.notifySend} "Window Title" "$VAL"
+                    '';
+                  }
+                ];
               }
               {
                 name = "PID";
                 shortcut = "p";
-                steps = ''
-                  VAL=$(${bin.xprop} -id $(${bin.xdotool} getactivewindow) _NET_WM_PID | ${bin.cut} -d ' ' -f 3)
-                  echo -n "$VAL" | ${bin.xsel} -ib
-                  ${bin.notifySend} "Window PID" "$VAL"
-                '';
+                steps = [
+                  {
+                    bash = ''
+                      VAL=$(${bin.xprop} -id $(${bin.xdotool} getactivewindow) _NET_WM_PID | ${bin.cut} -d ' ' -f 3)
+                      echo -n "$VAL" | ${bin.xsel} -ib
+                      ${bin.notifySend} "Window PID" "$VAL"
+                    '';
+                  }
+                ];
               }
             ];
           }

@@ -141,7 +141,7 @@ in
                 {
                   name = "New timer";
                   shortcut = "n";
-                  steps = "${timers}/bin/timers start '{0}' '{1}'";
+                  steps = [ { bash = "${timers}/bin/timers start '{0}' '{1}'"; } ];
                   parameters = [
                     {
                       name = "Name";
@@ -156,7 +156,7 @@ in
                 {
                   name = "Stop timer";
                   shortcut = "s";
-                  steps = "${timers}/bin/timers stop '{0}'";
+                  steps = [ { bash = "${timers}/bin/timers stop '{0}'"; } ];
                   parameters = [
                     {
                       name = "Timer";
@@ -168,7 +168,7 @@ in
                 {
                   name = "Start Pomodoro";
                   shortcut = "p";
-                  steps = "${timers}/bin/timers start Pomodoro 1800";
+                  steps = [ { bash = "${timers}/bin/timers start Pomodoro 1800"; } ];
                 }
               ];
             }

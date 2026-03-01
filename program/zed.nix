@@ -34,7 +34,7 @@ in
             {
               name = "Editor";
               shortcut = "e";
-              steps = "${pkgs.zed-editor}/bin/zeditor --new";
+              steps = [ { bash = "${pkgs.zed-editor}/bin/zeditor --new"; } ];
               synchronous = false;
             }
           ];

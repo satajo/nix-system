@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1771442359,
-        "narHash": "sha256-FAaBStwjMjK9QFPK7wHfEqTXhjxwgmc9Z8EvsoQkStc=",
+        "lastModified": 1772385415,
+        "narHash": "sha256-ryJMmmYQkRSAT6JzhawEntmluvMOFXk69KDdSProYsQ=",
         "owner": "satajo",
         "repo": "longcut",
-        "rev": "c41999692e15a67e4d9ba88d946e549544e7fa89",
+        "rev": "cdfe3ca87d32a42c4979d6e3c16adc02e3e25e60",
         "type": "github"
       },
       "original": {
