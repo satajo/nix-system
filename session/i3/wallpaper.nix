@@ -2,30 +2,12 @@
 let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
 
-  colors = with theme.color; [
-    raw.red.regular
-    raw.green.regular
-    raw.yellow.regular
-    raw.blue.regular
-    raw.purple.regular
-    raw.aqua.regular
-    raw.red.light
-    raw.green.light
-    raw.yellow.light
-    raw.blue.light
-    raw.purple.light
-    raw.aqua.light
-    foregroundUpper
-  ];
-
   wallpaperCacheKey = builtins.hashString "sha256" (
-    builtins.concatStringsSep "" (
-      [
-        (toString ./wallpaper.png)
-        theme.color.backgroundLower
-      ]
-      ++ colors
-    )
+    builtins.concatStringsSep "" [
+      (toString ./wallpaper.png)
+      theme.color.backgroundLower
+      theme.stringToThemeColorBashFn
+    ]
   );
 
   contextWallpaper = pkgs.writeShellApplication {
@@ -43,12 +25,8 @@ let
 
       context="''${name:0:1}"
 
-      colors=(
-        ${builtins.concatStringsSep "\n        " (builtins.map (c: ''"${c}"'') colors)}
-      )
-
-      context_ord=$(printf '%d' "'$context")
-      context_color=''${colors[$((context_ord % ''${#colors[@]}))]}
+      ${theme.stringToThemeColorBashFn}
+      context_color=$(string_to_theme_color "$context")
 
       cache_dir="''${XDG_CACHE_HOME:-$HOME/.cache}/context-wallpapers/${wallpaperCacheKey}"
       cached="$cache_dir/$context.png"

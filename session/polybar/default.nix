@@ -8,6 +8,7 @@ let
     xset = "${pkgs.xset}/bin/xset";
     pgrep = "${pkgs.procps}/bin/pgrep";
   };
+  i3ContextWorkspaces = import ./i3-context-workspaces.nix { inherit pkgs; };
 in
 {
   home-manager.users.satajo = {
@@ -40,7 +41,7 @@ in
           enable-ipc = true;
 
           # TODO: Make these externally injectable somewhen. For now, "noisegen" and "timers" are cheating.
-          modules-left = "xworkspaces xwindow";
+          modules-left = "context-workspaces xwindow";
           modules-center = "insomnia now-playing noisegen timers";
           modules-right = "cpu memory disk volume battery-1 battery-2 calendar clock";
         };
@@ -140,22 +141,10 @@ in
           label = "%title:0:30:...%";
         };
 
-        "module/xworkspaces" = {
-          type = "internal/xworkspaces";
-          label-active = "%name%";
-          label-active-foreground = c.foreground;
-          label-active-background = c.background;
-          label-active-underline = c.accent;
-          label-active-padding = 1;
-          label-occupied = "%name%";
-          label-occupied-padding = 1;
-          label-urgent = "%name%";
-          label-urgent-background = c.background;
-          label-urgent-underline = c.accent;
-          label-urgent-padding = 1;
-          label-empty = "%name%";
-          label-empty-foreground = c.background;
-          label-empty-padding = 1;
+        "module/context-workspaces" = {
+          type = "custom/script";
+          exec = "${i3ContextWorkspaces}/bin/i3-context-workspaces";
+          tail = true;
         };
       };
     };

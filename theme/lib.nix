@@ -65,6 +65,43 @@ rec {
     positive = palette.green.light;
   };
 
+  # Defines a bash function `string_to_theme_color` that deterministically maps any
+  # string to one of the theme palette colours. It sums the ASCII ordinals of
+  # all characters in the input and indexes into the palette with modulo,
+  # guaranteeing the same input always produces the same colour.
+  stringToThemeColorBashFn =
+    let
+      contextPalette = with palette; [
+        red.regular
+        green.regular
+        yellow.regular
+        blue.regular
+        purple.regular
+        aqua.regular
+        red.light
+        green.light
+        yellow.light
+        blue.light
+        purple.light
+        aqua.light
+        gray.regular
+      ];
+      colorArgs = builtins.concatStringsSep " " (builtins.map (col: ''"${col}"'') contextPalette);
+    in
+    ''
+      string_to_theme_color() {
+        local _colors=(${colorArgs})
+        local _input="$1"
+        local _hash=0 _ord _i _char
+        for (( _i=0; _i < ''${#_input}; _i++ )); do
+          _char=''${_input:_i:1}
+          printf -v _ord '%d' "'$_char"
+          _hash=$(( _hash + _ord ))
+        done
+        echo "''${_colors[$(( _hash % ''${#_colors[@]} ))]}"
+      }
+    '';
+
   # Utlity for substituting theme variables in configuration files.
   substitute =
     src:
