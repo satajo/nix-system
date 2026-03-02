@@ -43,14 +43,17 @@ in
           {
             name = "Switch context";
             shortcut = "c";
-            steps = [ { bash = "${i3Msg} workspace {0}{1}"; } ];
+            steps = [
+              {
+                bash = ''
+                  WORKSPACE=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[1:]')
+                  ${i3Msg} workspace {0}"$WORKSPACE"
+                '';
+              }
+            ];
             parameters = [
               {
                 name = "Context name";
-                type = "character";
-              }
-              {
-                name = "Workspace name";
                 type = "character";
               }
             ];
@@ -281,14 +284,17 @@ in
                   {
                     name = "To context";
                     shortcut = "c";
-                    steps = [ { bash = "${i3Msg} move container to workspace {0}{1}"; } ];
+                    steps = [
+                      {
+                        bash = ''
+                          WORKSPACE=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[1:]')
+                          ${i3Msg} move container to workspace {0}"$WORKSPACE"
+                        '';
+                      }
+                    ];
                     parameters = [
                       {
                         name = "Target context";
-                        type = "character";
-                      }
-                      {
-                        name = "Target workspace";
                         type = "character";
                       }
                     ];
