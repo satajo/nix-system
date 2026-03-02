@@ -1,19 +1,10 @@
 { pkgs, ... }:
 let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
-
-  applyWallpaperTheme =
-    image:
-    pkgs.runCommand "wallpaper.png" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
-      magick ${image} -colorspace RGB \
-        -fill "${theme.color.background}" -opaque "#ffffff" \
-        -fill "${theme.color.backgroundLower}" -opaque "#000000" \
-        $out
-    '';
-
   i3Msg = "${pkgs.i3}/bin/i3-msg";
 in
 {
+  imports = [ ./wallpaper.nix ];
   environment.pathsToLink = [ "/libexec" ]; # links /libexec from derivations to /run/current-system/sw
 
   services.xserver = {
@@ -21,14 +12,11 @@ in
 
     windowManager.i3 = {
       enable = true;
-      extraPackages = with pkgs; [ feh ];
     };
   };
 
   home-manager.users.satajo = {
     xdg.configFile."i3/config".source = theme.substitute ./config.template;
-    xdg.configFile."i3/wallpaper.png".source = applyWallpaperTheme ./wallpaper.png;
-
     # Wire up the tray target to enable home-manager based tray-services to autostart.
     systemd.user.targets.tray = {
       Unit.After = [ "graphical-session.target" ];
