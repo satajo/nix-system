@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
+  cws = import ./i3-contextual-workspaces.nix { inherit pkgs; };
   i3Msg = "${pkgs.i3}/bin/i3-msg";
 in
 {
@@ -17,9 +18,30 @@ in
 
   home-manager.users.satajo = {
     xdg.configFile."i3/config".source = theme.substitute ./config.template;
+
     # Wire up the tray target to enable home-manager based tray-services to autostart.
     systemd.user.targets.tray = {
       Unit.After = [ "graphical-session.target" ];
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
+    systemd.user.services.context-workspace-listener = {
+      Unit = {
+        Description = "Track last-active workspace per i3 context";
+        After = [ "graphical-session-pre.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        Type = "simple";
+        ExecStart = toString (
+          pkgs.writeShellScript "i3cws-remember-on-focus" ''
+            ${cws.watchFocus}/bin/i3cws-watch-focus | while read -r context workspace; do
+              ${cws.rememberContextWorkspaceAssociation}/bin/i3cws-remember-context-workspace-association "$context" "$workspace"
+            done
+          ''
+        );
+        Restart = "on-failure";
+      };
       Install.WantedBy = [ "graphical-session.target" ];
     };
   };
@@ -32,12 +54,7 @@ in
             name = "Switch context";
             shortcut = "c";
             steps = [
-              {
-                bash = ''
-                  WORKSPACE=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[1:]')
-                  ${i3Msg} workspace {0}"$WORKSPACE"
-                '';
-              }
+              { bash = "${cws.switchToContext}/bin/i3cws-switch-to-context {0}"; }
             ];
             parameters = [
               {
@@ -50,12 +67,7 @@ in
             name = "Switch workspace";
             shortcut = "w";
             steps = [
-              {
-                bash = ''
-                  CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
-                  ${i3Msg} workspace "$CONTEXT"{0}
-                '';
-              }
+              { bash = "${cws.switchToWorkspace}/bin/i3cws-switch-to-workspace {0}"; }
             ];
             parameters = [
               {
@@ -273,12 +285,7 @@ in
                     name = "To context";
                     shortcut = "c";
                     steps = [
-                      {
-                        bash = ''
-                          WORKSPACE=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[1:]')
-                          ${i3Msg} move container to workspace {0}"$WORKSPACE"
-                        '';
-                      }
+                      { bash = "${cws.moveToContext}/bin/i3cws-move-to-context {0}"; }
                     ];
                     parameters = [
                       {
@@ -291,12 +298,7 @@ in
                     name = "To workspace";
                     shortcut = "w";
                     steps = [
-                      {
-                        bash = ''
-                          CONTEXT=$(${i3Msg} -t get_workspaces | jq -r '.[] | select(.focused) | .name[0:1]')
-                          ${i3Msg} move container to workspace "$CONTEXT"{0}
-                        '';
-                      }
+                      { bash = "${cws.moveToWorkspace}/bin/i3cws-move-to-workspace {0}"; }
                     ];
                     parameters = [
                       {

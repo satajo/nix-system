@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
+  cws = import ./i3-contextual-workspaces.nix { inherit pkgs; };
 
   wallpaperCacheKey = builtins.hashString "sha256" (
     builtins.concatStringsSep "" [
@@ -18,12 +19,10 @@ let
       coreutils
     ];
     text = ''
-      name="$1"
-      if [ -z "$name" ]; then
+      context="$1"
+      if [ -z "$context" ]; then
         exit 1
       fi
-
-      context="''${name:0:1}"
 
       ${theme.stringToThemeColorBashFn}
       context_color=$(string_to_theme_color "$context")
@@ -46,16 +45,12 @@ let
   contextWallpaperListener = pkgs.writeShellApplication {
     name = "context-wallpaper-listener";
     runtimeInputs = [
-      pkgs.i3
-      pkgs.jq
+      cws.watchFocus
       contextWallpaper
     ];
     text = ''
-      current=$(i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .name')
-      context-wallpaper "$current"
-
-      i3-msg -m -t subscribe '["workspace"]' | jq --unbuffered -r 'select(.change == "focus") | .current.name' | while read -r name; do
-        context-wallpaper "$name"
+      i3cws-watch-focus | while read -r context _; do
+        context-wallpaper "$context"
       done
     '';
   };

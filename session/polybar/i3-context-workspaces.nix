@@ -1,6 +1,7 @@
 { pkgs, ... }:
 let
   theme = import ../../theme/lib.nix { inherit pkgs; };
+  cws = import ../i3/i3-contextual-workspaces.nix { inherit pkgs; };
   c = theme.color;
 
 in
@@ -10,6 +11,7 @@ pkgs.writeShellApplication {
     i3
     jq
     coreutils
+    cws.query
   ];
   text = ''
     i3msg="${pkgs.i3}/bin/i3-msg"
@@ -19,34 +21,30 @@ pkgs.writeShellApplication {
     ${theme.stringToThemeColorBashFn}
 
     render() {
-      local workspaces_json focused active_context active_workspace context_color
+      local state active_context active_workspace context_color
       local -a contexts context_ws
       local output=""
 
-      workspaces_json=$($i3msg -t get_workspaces)
-      focused=$(echo "$workspaces_json" | jq -r '.[] | select(.focused) | .name')
-      if [ -z "$focused" ]; then
+      state=$(i3cws-query)
+      active_context=$(echo "$state" | jq -r '.focused.context')
+      active_workspace=$(echo "$state" | jq -r '.focused.workspace')
+      if [ -z "$active_context" ] || [ "$active_context" = "null" ]; then
         echo ""
         return
       fi
 
-      active_context="''${focused:0:1}"
-      active_workspace="''${focused:1}"
       context_color=$(string_to_theme_color "$active_context")
 
-      # Collect unique sorted contexts
-      mapfile -t contexts < <(echo "$workspaces_json" | jq -r '.[].name' | cut -c1 | sort -u)
-
-      # Collect workspaces in active context (second char onwards, sorted)
-      mapfile -t context_ws < <(echo "$workspaces_json" | jq -r --arg c "$active_context" \
-        '.[] | select(.name | startswith($c)) | .name' | sort | while read -r name; do echo "''${name:1}"; done)
+      mapfile -t contexts < <(echo "$state" | jq -r '.contexts[].name')
+      mapfile -t context_ws < <(echo "$state" | jq -r --arg c "$active_context" \
+        '.contexts[] | select(.name == $c) | .workspaces[]')
 
       # Contexts section
       for ctx in "''${contexts[@]}"; do
         if [ "$ctx" = "$active_context" ]; then
           output+="%{B''${context_color}}%{F''${bg}} ''${ctx} %{F-}%{B-}"
         else
-          output+="%{A1:$i3msg workspace ''${ctx}''${active_workspace}:} ''${ctx} %{A}"
+          output+="%{A1:${cws.switchToContext}/bin/i3cws-switch-to-context ''${ctx}:} ''${ctx} %{A}"
         fi
       done
 
@@ -57,7 +55,7 @@ pkgs.writeShellApplication {
         if [ "$ws" = "$active_workspace" ]; then
           output+="%{u''${context_color}}%{+u}%{B''${bg_upper}} ''${ws} %{B-}%{-u}"
         else
-          output+="%{A1:$i3msg workspace ''${active_context}''${ws}:} ''${ws} %{A}"
+          output+="%{A1:${cws.switchToWorkspace}/bin/i3cws-switch-to-workspace ''${ws}:} ''${ws} %{A}"
         fi
       done
 
