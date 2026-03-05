@@ -14,6 +14,7 @@ in
   home-manager.users.satajo = {
     services.polybar = {
       enable = true;
+      package = pkgs.polybar.override { pulseSupport = true; };
       script = "polybar primary &";
 
       settings = {
@@ -130,7 +131,7 @@ in
         };
 
         "module/volume" = {
-          type = "internal/alsa";
+          type = "internal/pulseaudio";
           label-volume = "󰕾 %percentage%%";
           label-muted = "󰖁 %percentage%%";
           label-muted-underline = c.negative;
