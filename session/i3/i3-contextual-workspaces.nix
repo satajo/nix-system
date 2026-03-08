@@ -71,9 +71,11 @@ let
 
       dir="''${XDG_CACHE_HOME:-$HOME/.cache}/i3-context-workspaces"
       state_file="$dir/$context"
+      workspace=""
       if [ -f "$state_file" ]; then
         workspace=$(cat "$state_file")
-      else
+      fi
+      if [ -z "$workspace" ]; then
         workspace="0"
       fi
 
