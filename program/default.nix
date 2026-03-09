@@ -6,6 +6,7 @@
 }:
 {
   imports = [
+    ./claude
     ./foliate.nix
     ./terminal-emulator.nix
     ./zed.nix
