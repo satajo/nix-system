@@ -21,14 +21,21 @@ let
     fi
   '';
 
+  usageCacheDir = "\${XDG_CACHE_HOME:-$HOME/.cache}/claude";
+  usageCache = "${usageCacheDir}/usage.json";
+  usageCacheMaxAgeSeconds = 60;
+
   statusline = pkgs.writeShellScript "claude-statusline" ''
     INPUT=$(cat)
 
-    MODEL=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.model.display_name // "?"')
-    CWD=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.cwd // empty')
-    INPUT_TOKENS=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.context_window.total_input_tokens // 0')
-    OUTPUT_TOKENS=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.context_window.total_output_tokens // 0')
-    COST=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.cost.total_cost_usd // 0')
+    IFS=$'\t' read -r MODEL CWD INPUT_TOKENS OUTPUT_TOKENS COST < <(
+      echo "$INPUT" | ${pkgs.jq}/bin/jq -r '[
+        (.model.display_name // "?"),
+        (.cwd // ""),
+        (.context_window.total_input_tokens // 0 | tostring),
+        (.context_window.total_output_tokens // 0 | tostring),
+        (.cost.total_cost_usd // 0 | tostring)
+      ] | join("\t")')
 
     TOTAL_TOKENS=$((INPUT_TOKENS + OUTPUT_TOKENS))
 
@@ -56,17 +63,61 @@ let
     fi
     BRANCH=''${BRANCH:-"?"}
 
-    BLUE='\033[38;2;23;172;242m'
-    RED='\033[38;2;230;73;90m'
-    PURPLE='\033[38;2;195;133;254m'
-    YELLOW='\033[38;2;232;157;55m'
+    # Fetch subscription usage with cached response
+    USAGE_5H="?"
+    CACHE_DIR="${usageCacheDir}"
+    CACHE="${usageCache}"
+    CACHE_MAX_AGE=${toString usageCacheMaxAgeSeconds}
+    CREDS_FILE="$HOME/.claude/.credentials.json"
+
+    NEED_REFRESH=1
+    if [ -f "$CACHE" ]; then
+      CACHE_AGE=$(( $(date +%s) - $(stat -c %Y "$CACHE") ))
+      if [ "$CACHE_AGE" -lt "$CACHE_MAX_AGE" ]; then
+        NEED_REFRESH=0
+      fi
+    fi
+
+    if [ "$NEED_REFRESH" -eq 1 ] && [ -f "$CREDS_FILE" ]; then
+      mkdir -p "$CACHE_DIR"
+      (
+        TOKEN=$(${pkgs.jq}/bin/jq -r '.claudeAiOauth.accessToken // empty' "$CREDS_FILE")
+        if [ -n "$TOKEN" ]; then
+          RESPONSE=$(${pkgs.curl}/bin/curl -s --max-time 3 \
+            -H "Authorization: Bearer $TOKEN" \
+            -H "anthropic-beta: oauth-2025-04-20" \
+            -H "Content-Type: application/json" \
+            "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
+          if echo "$RESPONSE" | ${pkgs.jq}/bin/jq -e '.five_hour' >/dev/null 2>&1; then
+            echo "$RESPONSE" > "$CACHE.tmp" && mv "$CACHE.tmp" "$CACHE"
+          fi
+        fi
+      ) &
+    fi
+
+    if [ -f "$CACHE" ]; then
+      USAGE_5H=$(${pkgs.jq}/bin/jq -r '.five_hour.utilization // "?"' "$CACHE")
+      if [ "$USAGE_5H" != "?" ]; then
+        USAGE_5H=$(${pkgs.gawk}/bin/awk "BEGIN { printf \"%.0f%%\", $USAGE_5H }")
+      fi
+    fi
+
+    BLUE='\033[34m'
+    RED='\033[31m'
+    PURPLE='\033[35m'
+    YELLOW='\033[33m'
+    GREEN='\033[32m'
     RESET='\033[0m'
 
-    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${RED}branch:''${RESET} $BRANCH  ''${PURPLE}tokens:''${RESET} $TOKENS_FMT  ''${YELLOW}cost:''${RESET} $COST_FMT"
+    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${RED}branch:''${RESET} $BRANCH  ''${PURPLE}tokens:''${RESET} $TOKENS_FMT  ''${YELLOW}cost:''${RESET} $COST_FMT  ''${GREEN}quota:''${RESET} $USAGE_5H"
   '';
 
   settings = builtins.toJSON {
     skipDangerousModePermissionPrompt = true;
+    attribution = {
+      commit = "";
+      pr = "";
+    };
     enabledPlugins = {
       "rust-analyzer-lsp@claude-plugins-official" = true;
       "superpowers@claude-plugins-official" = true;
