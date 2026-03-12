@@ -112,20 +112,18 @@ let
     echo -e "''${BLUE}model:''${RESET} $MODEL  ''${RED}branch:''${RESET} $BRANCH  ''${PURPLE}tokens:''${RESET} $TOKENS_FMT  ''${YELLOW}cost:''${RESET} $COST_FMT  ''${GREEN}quota:''${RESET} $USAGE_5H"
   '';
 
+  # Passed via --settings flag instead of home-manager's home.file because
+  # Claude Code writes runtime state to the same settings.json, which requires
+  # the file to be mutable.
   settings = builtins.toJSON {
-    skipDangerousModePermissionPrompt = true;
     attribution = {
       commit = "";
       pr = "";
     };
     enabledPlugins = {
+      "claude-md-management@claude-plugins-official" = true;
       "rust-analyzer-lsp@claude-plugins-official" = true;
       "superpowers@claude-plugins-official" = true;
-      "claude-md-management@claude-plugins-official" = true;
-    };
-    statusLine = {
-      type = "command";
-      command = toString statusline;
     };
     hooks = {
       Notification = [
@@ -151,10 +149,28 @@ let
         }
       ];
     };
+    skipDangerousModePermissionPrompt = true;
+    statusLine = {
+      type = "command";
+      command = toString statusline;
+    };
+    voiceEnabled = true;
+  };
+
+  keybindings = builtins.toJSON {
+    bindings = [
+      {
+        context = "Chat";
+        bindings = {
+          space = null;
+          "\\" = "voice:pushToTalk";
+        };
+      }
+    ];
   };
 
   claude-wrapped = pkgs.writeShellScriptBin "claude" ''
-    exec ${claude-code}/bin/claude --allow-dangerously-skip-permissions "$@"
+    exec ${claude-code}/bin/claude --allow-dangerously-skip-permissions --settings '${settings}' "$@"
   '';
 in
 {
@@ -163,6 +179,7 @@ in
       claude-wrapped
       pkgs.sox
     ];
-    home.file.".claude/settings.json".text = settings;
+
+    home.file.".claude/keybindings.json".text = keybindings;
   };
 }
