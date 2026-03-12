@@ -63,15 +63,17 @@ let
     fi
     BRANCH=''${BRANCH:-"?"}
 
-    # Fetch subscription usage with cached response
+    # Fetch 5-hour usage quota from Anthropic API, shared across all Claude sessions.
+    # Uses flock to ensure only one session refreshes at a time, preventing request storms.
     USAGE_5H="?"
     CACHE_DIR="${usageCacheDir}"
     CACHE="${usageCache}"
     CACHE_MAX_AGE=${toString usageCacheMaxAgeSeconds}
     CREDS_FILE="$HOME/.claude/.credentials.json"
 
+    # -s (not -f): the lock below creates an empty file, which we must not treat as valid cache
     NEED_REFRESH=1
-    if [ -f "$CACHE" ]; then
+    if [ -s "$CACHE" ]; then
       CACHE_AGE=$(( $(date +%s) - $(stat -c %Y "$CACHE") ))
       if [ "$CACHE_AGE" -lt "$CACHE_MAX_AGE" ]; then
         NEED_REFRESH=0
@@ -81,24 +83,41 @@ let
     if [ "$NEED_REFRESH" -eq 1 ] && [ -f "$CREDS_FILE" ]; then
       mkdir -p "$CACHE_DIR"
       (
-        TOKEN=$(${pkgs.jq}/bin/jq -r '.claudeAiOauth.accessToken // empty' "$CREDS_FILE")
-        if [ -n "$TOKEN" ]; then
-          RESPONSE=$(${pkgs.curl}/bin/curl -s --max-time 3 \
-            -H "Authorization: Bearer $TOKEN" \
-            -H "anthropic-beta: oauth-2025-04-20" \
-            -H "Content-Type: application/json" \
-            "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
-          if echo "$RESPONSE" | ${pkgs.jq}/bin/jq -e '.five_hour' >/dev/null 2>&1; then
-            echo "$RESPONSE" > "$CACHE.tmp" && mv "$CACHE.tmp" "$CACHE"
-          fi
+        # Non-blocking lock: if another session is already refreshing, skip
+        ${pkgs.util-linux}/bin/flock -n 9 || exit 0
+        # Re-check freshness: another session may have refreshed while we waited for the lock
+        if [ -s "$CACHE" ]; then
+          CACHE_AGE=$(( $(date +%s) - $(stat -c %Y "$CACHE") ))
+          [ "$CACHE_AGE" -lt "$CACHE_MAX_AGE" ] && exit 0
         fi
-      ) &
+
+        TOKEN=$(${pkgs.jq}/bin/jq -r '.claudeAiOauth.accessToken // empty' "$CREDS_FILE")
+        [ -z "$TOKEN" ] && exit 0
+
+        RESPONSE=$(${pkgs.curl}/bin/curl -s --max-time 10 \
+          -H "Authorization: Bearer $TOKEN" \
+          -H "anthropic-beta: oauth-2025-04-20" \
+          -H "Content-Type: application/json" \
+          "https://api.anthropic.com/api/oauth/usage" 2>/dev/null)
+
+        # On success, atomically swap in the new data (readers are outside the lock)
+        if echo "$RESPONSE" | ${pkgs.jq}/bin/jq -e '.five_hour' >/dev/null 2>&1; then
+          echo "$RESPONSE" > "$CACHE.tmp" && mv "$CACHE.tmp" "$CACHE"
+          exit 0
+        fi
+
+        # Fetch failed — backoff by bumping mtime so we don't retry for CACHE_MAX_AGE seconds.
+        # If cache has old valid data, keep it visible; otherwise write empty object for -s check.
+        [ -s "$CACHE" ] && touch "$CACHE" || { echo '{}' > "$CACHE.tmp" && mv "$CACHE.tmp" "$CACHE"; }
+      ) 9>>"$CACHE" &  # Lock on the cache file itself; >> avoids truncating existing data
     fi
 
-    if [ -f "$CACHE" ]; then
-      USAGE_5H=$(${pkgs.jq}/bin/jq -r '.five_hour.utilization // "?"' "$CACHE")
-      if [ "$USAGE_5H" != "?" ]; then
+    if [ -s "$CACHE" ]; then
+      USAGE_5H=$(${pkgs.jq}/bin/jq -r '.five_hour.utilization // empty' "$CACHE" 2>/dev/null)
+      if [ -n "$USAGE_5H" ]; then
         USAGE_5H=$(${pkgs.gawk}/bin/awk "BEGIN { printf \"%.0f%%\", $USAGE_5H }")
+      else
+        USAGE_5H="?"
       fi
     fi
 
@@ -162,7 +181,6 @@ let
       {
         context = "Chat";
         bindings = {
-          space = null;
           "\\" = "voice:pushToTalk";
         };
       }
