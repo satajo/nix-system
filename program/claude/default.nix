@@ -161,6 +161,7 @@ in
   home-manager.users.satajo = {
     home.packages = [
       claude-wrapped
+      pkgs.sox
     ];
     home.file.".claude/settings.json".text = settings;
   };
