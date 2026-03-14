@@ -3,6 +3,19 @@ let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
   cws = import ./i3-contextual-workspaces.nix { inherit pkgs; };
   i3Msg = "${pkgs.i3}/bin/i3-msg";
+
+  contextWorkspaceListener = pkgs.writeShellApplication {
+    name = "i3cws-remember-on-focus";
+    runtimeInputs = [
+      cws.watchFocus
+      cws.rememberContextWorkspaceAssociation
+    ];
+    text = ''
+      i3cws-watch-focus | while read -r context workspace; do
+        i3cws-remember-context-workspace-association "$context" "$workspace"
+      done
+    '';
+  };
 in
 {
   imports = [ ./wallpaper.nix ];
@@ -28,19 +41,14 @@ in
     systemd.user.services.context-workspace-listener = {
       Unit = {
         Description = "Track last-active workspace per i3 context";
-        After = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session.target" ];
         PartOf = [ "graphical-session.target" ];
       };
       Service = {
         Type = "simple";
-        ExecStart = toString (
-          pkgs.writeShellScript "i3cws-remember-on-focus" ''
-            ${cws.watchFocus}/bin/i3cws-watch-focus | while read -r context workspace; do
-              ${cws.rememberContextWorkspaceAssociation}/bin/i3cws-remember-context-workspace-association "$context" "$workspace"
-            done
-          ''
-        );
+        ExecStart = "${contextWorkspaceListener}/bin/i3cws-remember-on-focus";
         Restart = "on-failure";
+        RestartSec = "1";
       };
       Install.WantedBy = [ "graphical-session.target" ];
     };

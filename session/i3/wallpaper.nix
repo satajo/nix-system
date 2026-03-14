@@ -60,7 +60,7 @@ in
     systemd.user.services.context-wallpaper = {
       Unit = {
         Description = "Context-aware wallpaper manager";
-        After = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session.target" ];
         PartOf = [ "graphical-session.target" ];
       };
 
@@ -68,6 +68,7 @@ in
         Type = "simple";
         ExecStart = "${contextWallpaperListener}/bin/context-wallpaper-listener";
         Restart = "on-failure";
+        RestartSec = "1";
       };
 
       Install.WantedBy = [ "graphical-session.target" ];
