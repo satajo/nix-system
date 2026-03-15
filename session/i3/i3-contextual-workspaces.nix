@@ -3,7 +3,7 @@ let
   i3Msg = "${pkgs.i3}/bin/i3-msg";
   jq = "${pkgs.jq}/bin/jq";
 
-  currentContext = "$(${i3Msg} -t get_workspaces | ${jq} -r '.[] | select(.focused) | .name[0:1]')";
+  currentContext = "$(${i3Msg} -t get_workspaces | ${jq} -r '.[] | select(.focused) | .name | split(\":\") | .[0]')";
 
   query = pkgs.writeShellApplication {
     name = "i3cws-query";
@@ -14,7 +14,8 @@ let
     text = ''
       i3-msg -t get_workspaces | jq '
         [.[] | {name: .name, focused: .focused,
-                context: .name[0:1], workspace: .name[1:]}]
+                context: (.name | split(":") | .[0]),
+                workspace: (.name | split(":") | .[1])}]
         | {
             focused: (map(select(.focused)) | first | {context, workspace}),
             contexts: group_by(.context)
@@ -33,10 +34,10 @@ let
       pkgs.jq
     ];
     text = ''
-      i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | "\(.name[0:1]) \(.name[1:])"'
+      i3-msg -t get_workspaces | jq -r '.[] | select(.focused) | .name | split(":") | "\(.[0]) \(.[1])"'
 
       i3-msg -m -t subscribe '["workspace"]' | jq --unbuffered -r '
-        select(.change == "focus") | .current.name | "\(.[0:1]) \(.[1:])"
+        select(.change == "focus") | .current.name | split(":") | "\(.[0]) \(.[1])"
       '
     '';
   };
@@ -79,7 +80,7 @@ let
         workspace="0"
       fi
 
-      i3-msg workspace "$context$workspace"
+      i3-msg workspace "$context:$workspace"
     '';
   };
 
@@ -96,7 +97,7 @@ let
       fi
 
       context=${currentContext}
-      i3-msg workspace "$context$workspace"
+      i3-msg workspace "$context:$workspace"
     '';
   };
 
@@ -109,7 +110,7 @@ let
         exit 1
       fi
 
-      i3-msg move container to workspace "''${context}0"
+      i3-msg move container to workspace "''${context}:0"
     '';
   };
 
@@ -126,7 +127,7 @@ let
       fi
 
       context=${currentContext}
-      i3-msg move container to workspace "$context$workspace"
+      i3-msg move container to workspace "$context:$workspace"
     '';
   };
 

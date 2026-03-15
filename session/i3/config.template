@@ -33,31 +33,31 @@ bindsym XF86AudioPrev exec playerctl previous
 # Desktop environment
 #------------------------------------------------------------------------------
 
-# Start on the first workspace in context 0
-exec --no-startup-id i3-msg workspace 00
+# Start on the first workspace in context home
+exec --no-startup-id i3-msg workspace home:0
 
 #------------------------------------------------------------------------------
-# Workspace configuration for autorun applications in Context 0
+# Workspace configuration for autorun applications in context "home"
 #------------------------------------------------------------------------------
 
 # c Chat
-assign [class="Slack"] 0c
+assign [class="Slack"] home:c
 
-assign [class="TelegramDesktop"] 0c
+assign [class="TelegramDesktop"] home:c
 
-assign [class="discord"] 0c
+assign [class="discord"] home:c
 
 # n Newsreader
-assign [class="liferea"] 0n
+assign [class="liferea"] home:n
 
 # m Music
-assign [class="Rhythmbox"] 0m
+assign [class="Rhythmbox"] home:m
 
 # s Study
-assign [class="obsidian"] 0s
+assign [class="obsidian"] home:s
 
 # t Todo
-assign [class="Todoist"] 0t
+assign [class="Todoist"] home:t
 
 #------------------------------------------------------------------------------
 # i3 Appearance

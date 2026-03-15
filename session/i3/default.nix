@@ -67,7 +67,7 @@ in
             parameters = [
               {
                 name = "Context name";
-                type = "character";
+                type = "text";
               }
             ];
           }
@@ -298,7 +298,7 @@ in
                     parameters = [
                       {
                         name = "Target context";
-                        type = "character";
+                        type = "text";
                       }
                     ];
                   }
