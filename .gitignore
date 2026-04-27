@@ -1,2 +1,6 @@
+# Ignore all hidden files and directories
+.*
+!.gitignore
+
 # nixos-rebuild build output
 /result

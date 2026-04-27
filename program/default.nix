@@ -7,6 +7,7 @@
 {
   imports = [
     ./claude
+    ./direnv
     ./foliate.nix
     ./terminal-emulator.nix
     ./zed.nix

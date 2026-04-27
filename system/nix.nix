@@ -18,7 +18,7 @@
   programs.nh = {
     enable = true;
     clean.enable = true;
-    clean.extraArgs = "--keep 30 --keep-since 7d";
+    clean.extraArgs = "--keep 30 --keep-since 30d";
     flake = "/home/satajo/nix-system";
   };
 }
