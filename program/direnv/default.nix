@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   # direnv auto-loads each project's `.envrc` on `cd`; nix-direnv is the flake-aware backend.
   # Enabling this also sets nix.settings.keep-outputs / keep-derivations so dev shell deps

@@ -9,22 +9,22 @@
     ./claude
     ./direnv
     ./foliate.nix
-    ./terminal-emulator.nix
-    ./zed.nix
     ./git
+    ./helix.nix
     ./liferea
     ./noisegen
     ./obsidian.nix
     ./podman.nix
-    ./timers
-    ./shell
     ./rhythmbox.nix
+    ./shell
     ./steam.nix
     ./telegram.nix
+    ./terminal-emulator.nix
     ./thunar.nix
+    ./timers
     ./todoist.nix
-    ./vscode.nix
     ./web-browser.nix
+    ./zed.nix
   ];
 
   # System wide single-package programs with no configuration.
