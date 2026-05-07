@@ -9,6 +9,7 @@
     ./nix.nix
     ./nvidia.nix
     ./pipewire.nix # Audio server
+    ./printer.nix
     ./vm-guest.nix
   ];
 
@@ -20,9 +21,6 @@
   services.devmon.enable = true;
   services.gvfs.enable = true;
   services.udisks2.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Allow firmware updates through fwupdmgr
   services.fwupd.enable = true;
