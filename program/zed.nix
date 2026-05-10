@@ -1,10 +1,11 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
 let
   theme = import ../theme/lib.nix { pkgs = pkgs; };
+  zed-editor = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.zed-editor;
 in
 {
   home-manager.users.satajo = {
-    home.packages = [ pkgs.zed-editor ];
+    home.packages = [ zed-editor ];
 
     xdg.configFile."zed/settings.json".text = builtins.toJSON {
       theme = {
@@ -38,7 +39,7 @@ in
             {
               name = "Editor";
               shortcut = "e";
-              steps = [ { bash = "${pkgs.zed-editor}/bin/zeditor --new"; } ];
+              steps = [ { bash = "${zed-editor}/bin/zeditor --new"; } ];
               synchronous = false;
             }
           ];

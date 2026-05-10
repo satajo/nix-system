@@ -1,6 +1,6 @@
 { inputs, pkgs, ... }:
 let
-  claude-code = inputs.claude-code.packages.x86_64-linux.default;
+  claude-code = inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   notify-hook = pkgs.writeShellScript "claude-notify" ''
     INPUT=$(cat)
