@@ -51,7 +51,7 @@ assign [class="discord"] home:c
 assign [class="liferea"] home:n
 
 # m Music
-assign [class="Rhythmbox"] home:m
+assign [class="music-player"] home:m
 
 # s Study
 assign [class="obsidian"] home:s

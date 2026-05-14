@@ -4,6 +4,7 @@
   nix = {
     # Pin nix command's registry to the same package versions that the system uses.
     registry.nixpkgs.flake = inputs.nixpkgs;
+    registry.nixpkgs-unstable.flake = inputs.nixpkgs-unstable;
 
     # Experimental features made available by default.
     settings.experimental-features = [

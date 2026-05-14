@@ -8,6 +8,7 @@
     ./i3lock # Screen locker
     ./keynav
     ./longcut # Command runner
+    ./mpd.nix
     ./polybar # Status bar
     ./redshift.nix
     ./rofi # Application switcher / launcher
@@ -34,6 +35,9 @@
   # only by name, the value is desktop-independent (any portal-aware app
   # reads it, regardless of toolkit).
   home-manager.users.satajo.gtk.colorScheme = "dark";
+
+  # Manage ~/.config/user-dirs.dirs declaratively.
+  home-manager.users.satajo.xdg.userDirs.enable = true;
 
   # Keyring management
   services.gnome.gnome-keyring.enable = true;

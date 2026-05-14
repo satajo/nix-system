@@ -12,10 +12,10 @@
     ./git
     ./helix.nix
     ./liferea
+    ./music-player.nix
     ./noisegen
     ./obsidian.nix
     ./podman.nix
-    ./rhythmbox.nix
     ./shell
     ./steam.nix
     ./telegram.nix
