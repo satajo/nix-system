@@ -24,17 +24,14 @@ let
   statusline = pkgs.writeShellScript "claude-statusline" ''
     INPUT=$(cat)
 
-    IFS=$'\t' read -r MODEL CWD INPUT_TOKENS OUTPUT_TOKENS COST USAGE_5H < <(
+    IFS=$'\t' read -r MODEL CWD CONTEXT_TOKENS COST USAGE_5H < <(
       echo "$INPUT" | ${pkgs.jq}/bin/jq -r '[
         (.model.display_name // "?"),
         (.cwd // ""),
         (.context_window.total_input_tokens // 0 | tostring),
-        (.context_window.total_output_tokens // 0 | tostring),
         (.cost.total_cost_usd // 0 | tostring),
         (.rate_limits.five_hour.used_percentage // empty | tostring)
       ] | join("\t")')
-
-    TOTAL_TOKENS=$((INPUT_TOKENS + OUTPUT_TOKENS))
 
     format_tokens() {
       local n=$1
@@ -51,7 +48,7 @@ let
       fi
     }
 
-    TOKENS_FMT=$(format_tokens "$TOTAL_TOKENS")
+    CONTEXT_FMT=$(format_tokens "$CONTEXT_TOKENS")
     COST_FMT=$(${pkgs.gawk}/bin/awk "BEGIN { printf \"\\$%.2f\", $COST }")
 
     BRANCH=""
@@ -73,7 +70,7 @@ let
     GREEN='\033[32m'
     RESET='\033[0m'
 
-    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${RED}branch:''${RESET} $BRANCH  ''${PURPLE}tokens:''${RESET} $TOKENS_FMT  ''${YELLOW}cost:''${RESET} $COST_FMT  ''${GREEN}quota:''${RESET} $USAGE_5H"
+    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${GREEN}quota:''${RESET} $USAGE_5H  ''${PURPLE}context:''${RESET} $CONTEXT_FMT  ''${YELLOW}cost:''${RESET} $COST_FMT  ''${RED}branch:''${RESET} $BRANCH"
   '';
 
   # Passed via --settings flag instead of home-manager's home.file because
@@ -113,12 +110,18 @@ let
         }
       ];
     };
+    permissions = {
+      defaultMode = "auto";
+    };
     skipDangerousModePermissionPrompt = true;
     statusLine = {
       type = "command";
       command = toString statusline;
     };
-    voiceEnabled = true;
+    tui = "fullscreen";
+    voice = {
+      enabled = true;
+    };
   };
 
   keybindings = builtins.toJSON {
@@ -133,7 +136,7 @@ let
   };
 
   claude-wrapped = pkgs.writeShellScriptBin "claude" ''
-    exec ${claude-code}/bin/claude --allow-dangerously-skip-permissions --settings '${settings}' "$@"
+    exec ${claude-code}/bin/claude --settings '${settings}' "$@"
   '';
 in
 {
