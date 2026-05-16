@@ -49,7 +49,7 @@
   services.geoclue2.enable = true;
 
   # Time zone.
-  services.localtimed.enable = true;
+  services.tzupdate.enable = true;
 
   # Logind.
   services.logind.settings.Login = {
