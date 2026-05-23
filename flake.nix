@@ -12,10 +12,6 @@
       url = "github:satajo/longcut";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    claude-code = {
-      url = "github:sadjow/claude-code-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -27,11 +23,16 @@
     }@inputs:
     let
       hosts = builtins.attrNames (builtins.readDir ./host);
+      system = "x86_64-linux";
+      pkgs-unstable = import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
       mkSystem =
         hostname:
         nixpkgs.lib.nixosSystem {
           specialArgs = {
-            inherit inputs;
+            inherit inputs pkgs-unstable;
           };
 
           modules = [
@@ -42,13 +43,12 @@
           ];
         };
 
-      toolingSystem = "x86_64-linux";
-      toolingPkgs = nixpkgs.legacyPackages.${toolingSystem};
+      toolingPkgs = nixpkgs.legacyPackages.${system};
     in
     {
       nixosConfigurations = nixpkgs.lib.genAttrs hosts mkSystem;
 
-      devShells.${toolingSystem}.default = toolingPkgs.mkShell {
+      devShells.${system}.default = toolingPkgs.mkShell {
         buildInputs = with toolingPkgs; [
           nix
           nixd
@@ -57,6 +57,6 @@
       };
 
       # Formatter for .nix files. Run using "nix fmt" command.
-      formatter.${toolingSystem} = toolingPkgs.nixfmt-tree;
+      formatter.${system} = toolingPkgs.nixfmt-tree;
     };
 }

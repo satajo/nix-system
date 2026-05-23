@@ -1,7 +1,7 @@
-{ inputs, pkgs, ... }:
+{ pkgs, pkgs-unstable, ... }:
 let
   theme = import ../theme/lib.nix { pkgs = pkgs; };
-  zed-editor = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.zed-editor;
+  zed-editor = pkgs-unstable.zed-editor;
 in
 {
   home-manager.users.satajo = {

@@ -1,12 +1,12 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
+  pkgs-unstable,
   ...
 }:
 let
-  rmpc = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system}.rmpc;
+  rmpc = pkgs-unstable.rmpc;
 in
 {
   config = lib.mkIf config.profile.personal {
