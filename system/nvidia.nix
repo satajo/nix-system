@@ -12,5 +12,8 @@
 
     # Expose the GPU to container runtimes.
     hardware.nvidia-container-toolkit.enable = true;
+
+    # Save/restore VRAM across suspend so the display survives S3 resume.
+    hardware.nvidia.powerManagement.enable = true;
   };
 }

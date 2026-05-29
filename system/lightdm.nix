@@ -24,4 +24,12 @@ in
       };
     };
   };
+
+  # Autologin straight into the default session so a successful LUKS unlock at
+  # boot is the only credential prompt. The runtime screen lock (xss-lock +
+  # i3lock) is unaffected and still guards suspend, resume, and idle.
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "satajo";
+  };
 }
