@@ -36,6 +36,14 @@ bindsym XF86AudioPrev exec playerctl previous
 # Start on the first workspace in context home
 exec --no-startup-id i3-msg workspace home:0
 
+# Hand-fire the proxy target so WantedBy=graphical-session.target user services
+# start after i3 is fully up rather than racing the wrapper. systemd marks
+# graphical-session.target itself as RefuseManualStart=yes, hence the proxy --
+# nixos-fake-graphical-session.target has BindsTo=graphical-session.target, so
+# starting the proxy pulls in the real one. Paired with the X-NIXOS-SYSTEMD-AWARE
+# marker set in session/i3/default.nix.
+exec --no-startup-id systemctl --user start nixos-fake-graphical-session.target
+
 #------------------------------------------------------------------------------
 # Workspace configuration for autorun applications in context "home"
 #------------------------------------------------------------------------------

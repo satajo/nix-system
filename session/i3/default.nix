@@ -1,8 +1,19 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   theme = import ../../theme/lib.nix { pkgs = pkgs; };
   cws = import ./i3-contextual-workspaces.nix { inherit pkgs; };
   i3Msg = "${pkgs.i3}/bin/i3-msg";
+
+  # NixOS does not expose a Nix-level handle for this marker -- it lives only as
+  # a hardcoded bash case-pattern in nixpkgs' display-managers/default.nix. The
+  # assertion below fails the build if upstream ever drops the match, so we hear
+  # about it rather than silently regressing to the racy fake-target path.
+  systemdAwareMarker = "X-NIXOS-SYSTEMD-AWARE";
 
   contextWorkspaceListener = pkgs.writeShellApplication {
     name = "i3cws-remember-on-focus";
@@ -27,7 +38,31 @@ in
     windowManager.i3 = {
       enable = true;
     };
+
+    # Marks the session systemd-aware so xsession-wrapper does not pre-fire
+    # nixos-fake-graphical-session.target before i3 is up. Without this, every
+    # WantedBy=graphical-session.target service (keynav, polybar, tray, dunst,
+    # the i3 context-listener...) races the X server's XKB and input-device
+    # settle. i3 itself fires graphical-session.target once running (see
+    # config.template).
+    displayManager.sessionCommands = ''
+      export XDG_CURRENT_DESKTOP="$XDG_CURRENT_DESKTOP:${systemdAwareMarker}"
+    '';
   };
+
+  # Our export injects the marker once into the wrapper; the upstream check adds
+  # the second. If the wrapper sees fewer than two, upstream has dropped its
+  # case-match for the marker and the systemd-aware path is no longer wired.
+  assertions = [
+    {
+      assertion =
+        let
+          wrapper = builtins.readFile config.services.displayManager.sessionData.wrapper;
+        in
+        builtins.length (lib.splitString systemdAwareMarker wrapper) >= 3;
+      message = "NixOS xsession-wrapper no longer recognises ${systemdAwareMarker}; revisit session/i3/default.nix.";
+    }
+  ];
 
   home-manager.users.satajo = {
     xdg.configFile."i3/config".source = theme.substitute ./config.template;
