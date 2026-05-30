@@ -81,11 +81,6 @@ let
       commit = "";
       pr = "";
     };
-    enabledPlugins = {
-      "claude-md-management@claude-plugins-official" = true;
-      "rust-analyzer-lsp@claude-plugins-official" = true;
-      "superpowers@claude-plugins-official" = true;
-    };
     hooks = {
       Notification = [
         {
