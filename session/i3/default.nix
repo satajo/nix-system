@@ -39,13 +39,23 @@ in
       enable = true;
     };
 
-    # Marks the session systemd-aware so xsession-wrapper does not pre-fire
-    # nixos-fake-graphical-session.target before i3 is up. Without this, every
-    # WantedBy=graphical-session.target service (keynav, polybar, tray, dunst,
-    # the i3 context-listener...) races the X server's XKB and input-device
-    # settle. i3 itself fires graphical-session.target once running (see
-    # config.template).
+    # Two early-session fixups, both running in xsession-wrapper before i3 exec:
+    #
+    # 1. Force the configured XKB layout onto the legacy core keyboard. The
+    #    xorg.conf.d file written from services.xserver.xkb reliably configures
+    #    per-device layouts via libinput, but the legacy core-keyboard layout
+    #    races at autologin -- visible to anything that resolves keysym->keycode
+    #    once via XGrabKey (keynav, in particular, whose grid keysyms only form
+    #    a 3x3 pattern under Colemak and end up scattered if grabbed under us).
+    #
+    # 2. Mark the session systemd-aware so xsession-wrapper does not pre-fire
+    #    nixos-fake-graphical-session.target before i3 is up. Without this,
+    #    every WantedBy=graphical-session.target service (keynav, polybar,
+    #    tray, dunst, the i3 context-listener...) races the X server's XKB and
+    #    input-device settle. i3 itself fires graphical-session.target once
+    #    running (see config.template).
     displayManager.sessionCommands = ''
+      ${pkgs.xorg.setxkbmap}/bin/setxkbmap ${config.services.xserver.xkb.layout} -variant ${config.services.xserver.xkb.variant}
       export XDG_CURRENT_DESKTOP="$XDG_CURRENT_DESKTOP:${systemdAwareMarker}"
     '';
   };
