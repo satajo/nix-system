@@ -42,13 +42,13 @@
       chromium # another browser, as some sites don't work on Firefox
       evince # document viewer
       feh # image viewer
-      filen-desktop # cloud drive
+      filen-desktop # cloud drive (pulls in EOL electron, see permittedInsecurePackages below)
       gimp # slow but capable image editor
       hyperfine # benchmarking tool
-      neofetch # it's basically required, right?
+      fastfetch # it's basically required, right?
       nil # nix language server
       pinta # quick but simple image editor
-      protonvpn-gui # vpn provider
+      proton-vpn # vpn provider
       tldr # console command cheatsheets
       vlc # video player
 
@@ -64,4 +64,8 @@
       discord # chat
       krita # art program
     ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10" # filen-desktop wraps the default electron, which is EOL
+  ];
 }

@@ -24,7 +24,7 @@ let
     translate-shell
     xclip
     xdotool
-    xorg.xprop
+    xprop
     xsel
     wireplumber
   ];

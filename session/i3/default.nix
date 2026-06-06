@@ -55,7 +55,7 @@ in
     #    input-device settle. i3 itself fires graphical-session.target once
     #    running (see config.template).
     displayManager.sessionCommands = ''
-      ${pkgs.xorg.setxkbmap}/bin/setxkbmap ${config.services.xserver.xkb.layout} -variant ${config.services.xserver.xkb.variant}
+      ${pkgs.setxkbmap}/bin/setxkbmap ${config.services.xserver.xkb.layout} -variant ${config.services.xserver.xkb.variant}
       export XDG_CURRENT_DESKTOP="$XDG_CURRENT_DESKTOP:${systemdAwareMarker}"
     '';
   };

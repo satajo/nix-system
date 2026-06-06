@@ -17,14 +17,14 @@ let
     pwDump = "${pkgs.pipewire}/bin/pw-dump";
     rofi = "${pkgs.rofi}/bin/rofi";
     scrot = "${pkgs.scrot}/bin/scrot";
-    setxkbmap = "${pkgs.xorg.setxkbmap}/bin/setxkbmap";
+    setxkbmap = "${pkgs.setxkbmap}/bin/setxkbmap";
     systemctl = "${pkgs.systemd}/bin/systemctl";
     trans = "${pkgs.translate-shell}/bin/trans";
     wpctl = "${pkgs.wireplumber}/bin/wpctl";
     xclip = "${pkgs.xclip}/bin/xclip";
     xdotool = "${pkgs.xdotool}/bin/xdotool";
-    xprop = "${pkgs.xorg.xprop}/bin/xprop";
-    xrandr = "${pkgs.xorg.xrandr}/bin/xrandr";
+    xprop = "${pkgs.xprop}/bin/xprop";
+    xrandr = "${pkgs.xrandr}/bin/xrandr";
     xsel = "${pkgs.xsel}/bin/xsel";
   };
 in
