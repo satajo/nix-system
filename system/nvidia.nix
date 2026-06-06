@@ -10,6 +10,10 @@
     # Use the closed-source driver.
     hardware.nvidia.open = false;
 
+    # Pascal-era GPUs (GTX 10-series) are no longer supported by the current
+    # mainline driver and need the 580.xx legacy branch.
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
+
     # Expose the GPU to container runtimes.
     hardware.nvidia-container-toolkit.enable = true;
 
