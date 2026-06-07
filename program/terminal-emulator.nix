@@ -74,6 +74,10 @@ in
           multiplier = 1;
         };
 
+        selection = {
+          save_to_clipboard = true;
+        };
+
         window = {
           decorations = "full";
           padding = {
