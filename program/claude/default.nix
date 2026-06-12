@@ -1,6 +1,6 @@
-{ pkgs, pkgs-unstable, ... }:
+{ inputs, pkgs, ... }:
 let
-  claude-code = pkgs-unstable.claude-code;
+  claude-code = inputs.claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
   notify-hook = pkgs.writeShellScript "claude-notify" ''
     INPUT=$(cat)
