@@ -2,7 +2,7 @@
 
 {
   config.boot.loader =
-    if config.profile.vm-guest then
+    if config.custom.profile.vm-guest then
       {
         # Legacy BIOS grub boot for virtual machine.
         grub.enable = true;

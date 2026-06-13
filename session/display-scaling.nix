@@ -17,10 +17,10 @@
   ...
 }:
 let
-  cfg = config.profile.displayScaling;
+  cfg = config.custom.displayScaling;
 in
 {
-  options.profile.displayScaling = {
+  options.custom.displayScaling = {
     panelDpi = lib.mkOption {
       type = lib.types.nullOr lib.types.number;
       default = null;

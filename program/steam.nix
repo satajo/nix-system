@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.profile.personal {
+  config = lib.mkIf config.custom.profile.personal {
     # Steam launch option: gamemoderun mangohud %command%
     programs.steam = {
       enable = true;

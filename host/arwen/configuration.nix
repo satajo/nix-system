@@ -4,9 +4,9 @@
   system.stateVersion = "26.05";
 
   # Profile flags. See root configuration.nix.
-  profile.personal = true;
+  custom.profile.personal = true;
 
-  profile.displayScaling = {
+  custom.displayScaling = {
     panelDpi = 162;
     scaleFactor = 0.74;
   };

@@ -9,7 +9,7 @@
   #
   # See the matcing user-config under user-modules/vm-guest.nix
 
-  config = lib.mkIf config.profile.vm-guest {
+  config = lib.mkIf config.custom.profile.vm-guest {
 
     # System service for spice-vdagentd allows the user-specific agents to communicate with the host
     services.spice-vdagentd.enable = true;

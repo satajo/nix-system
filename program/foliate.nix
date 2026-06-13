@@ -9,7 +9,7 @@
 
   # Foliate uses webkit to render text, which breaks on nvidia environments.
   # Maybe this should be in nvidia settings?
-  environment.sessionVariables = lib.mkIf config.profile.nvidia {
+  environment.sessionVariables = lib.mkIf config.custom.profile.nvidia {
     WEBKIT_DISABLE_DMABUF_RENDERER = "1";
   };
 }

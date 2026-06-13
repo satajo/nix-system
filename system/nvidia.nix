@@ -1,6 +1,6 @@
 { config, lib, ... }:
 {
-  config = lib.mkIf config.profile.nvidia {
+  config = lib.mkIf config.custom.profile.nvidia {
     # Defining nvidia as xserver video drivers enables a host of nvidia features.
     services.xserver.videoDrivers = [ "nvidia" ];
 

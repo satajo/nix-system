@@ -8,8 +8,8 @@
 }:
 {
   options = {
-    # "Profile" feature flags for toggling different behaviours and system customisations.
-    profile = {
+    # Options defined by this repo live under `custom.*`; `custom.profile` are feature flags.
+    custom.profile = {
       # Nvidia GPU integration with various services"
       nvidia = lib.mkEnableOption "nvidia gpu";
 

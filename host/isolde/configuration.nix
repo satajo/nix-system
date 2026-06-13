@@ -3,9 +3,9 @@
   system.stateVersion = "23.11";
 
   # Profile flags. See root configuration.nix.
-  profile.personal = true;
+  custom.profile.personal = true;
 
-  profile.displayScaling = {
+  custom.displayScaling = {
     panelDpi = 143;
     scaleFactor = 0.74;
   };

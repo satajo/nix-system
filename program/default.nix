@@ -58,7 +58,7 @@
       k9s # kubectl terminal ui
       skaffold # kubernetes deployer / dev environment
     ]
-    ++ lib.optionals config.profile.personal [
+    ++ lib.optionals config.custom.profile.personal [
       anki # spaced repetition learning tool
       bitwarden-desktop # password manager
       discord # chat

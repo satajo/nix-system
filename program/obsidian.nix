@@ -5,7 +5,7 @@
   ...
 }:
 {
-  config = lib.mkIf config.profile.personal {
+  config = lib.mkIf config.custom.profile.personal {
     home-manager.users.satajo.home.packages = with pkgs; [ obsidian ];
 
     systemd.user.services.obsidian-desktop = {
