@@ -7,7 +7,7 @@
   custom.profile.personal = true;
 
   custom.displayScaling = {
-    panelDpi = 110;
-    scaleFactor = 1.2;
+    panelDpi = 109;
+    scaleFactor = 1.0;
   };
 }
