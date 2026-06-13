@@ -5,6 +5,11 @@
   # Profile flags. See root configuration.nix.
   profile.personal = true;
 
+  profile.displayScaling = {
+    panelDpi = 143;
+    scaleFactor = 0.74;
+  };
+
   boot.kernelParams = [
     # Fix audio. See: https://discourse.nixos.org/t/realtek-audio-sound-card-not-recognized-by-pipewire/36637/2
     "snd-intel-dspcfg.dsp_driver=1"

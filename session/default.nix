@@ -12,13 +12,13 @@
     ./polybar # Status bar
     ./redshift.nix
     ./rofi # Application switcher / launcher
+    ./display-scaling.nix
   ];
 
   services.displayManager.defaultSession = "none+i3";
 
   services.xserver = {
     enable = true;
-    dpi = 120;
     wacom.enable = true;
   };
 

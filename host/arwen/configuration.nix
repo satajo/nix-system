@@ -6,6 +6,11 @@
   # Profile flags. See root configuration.nix.
   profile.personal = true;
 
+  profile.displayScaling = {
+    panelDpi = 162;
+    scaleFactor = 0.74;
+  };
+
   # Laptop power and thermal management.
   services.tlp.enable = true;
   services.thermald.enable = true;
