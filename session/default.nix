@@ -39,6 +39,10 @@
   # Manage ~/.config/user-dirs.dirs declaratively.
   home-manager.users.satajo.xdg.userDirs.enable = true;
 
+  # Manage ~/.config/mimeapps.list declaratively. Required for the per-program
+  # xdg.mimeApps.defaultApplications associations to take effect.
+  home-manager.users.satajo.xdg.mimeApps.enable = true;
+
   # Keyring management
   services.gnome.gnome-keyring.enable = true;
   programs.seahorse.enable = true;
