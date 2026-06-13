@@ -81,8 +81,8 @@ in
         window = {
           decorations = "full";
           padding = {
-            x = 24;
-            y = 24;
+            x = 16;
+            y = 16;
           };
         };
 
