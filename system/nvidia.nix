@@ -4,8 +4,16 @@
     # Defining nvidia as xserver video drivers enables a host of nvidia features.
     services.xserver.videoDrivers = [ "nvidia" ];
 
-    # Force full composition pipeline to prevent crashes because of POS drivers.
+    # Tear-free output without a compositor (bare i3); trades away G-SYNC/VRR.
     hardware.nvidia.forceFullCompositionPipeline = true;
+
+    # Disable page-flipping (persistent form of nvidia-settings AllowFlipping=0).
+    # The legacy 580 driver hangs on the flip<->blit transition when a window
+    # covers/uncovers a fullscreen game; forcing blit keeps one stable present
+    # path, so games survive overlays. Free here: FFCP already drops G-SYNC.
+    services.xserver.screenSection = ''
+      Option "NoFlip" "true"
+    '';
 
     # Use the closed-source driver.
     hardware.nvidia.open = false;
