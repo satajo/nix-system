@@ -50,7 +50,7 @@ in
     # Pin Xft.dpi to that value so resource-database apps scale from our DPI
     # rather than the per-monitor EDID DPI.
     services.xserver.displayManager.sessionCommands = ''
-      echo "Xft.dpi: ${toString config.services.xserver.dpi}" | ${pkgs.xorg.xrdb}/bin/xrdb -merge
+      echo "Xft.dpi: ${toString config.services.xserver.dpi}" | ${pkgs.xrdb}/bin/xrdb -merge
     '';
   };
 }

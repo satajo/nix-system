@@ -41,6 +41,9 @@
 
     home-manager = {
       useGlobalPkgs = true;
+      # Move pre-existing unmanaged files aside (to <name>.backup) instead of
+      # failing activation when home-manager wants to take them over.
+      backupFileExtension = "backup";
       extraSpecialArgs = {
         inherit inputs;
       };
