@@ -24,12 +24,12 @@ let
   statusline = pkgs.writeShellScript "claude-statusline" ''
     INPUT=$(cat)
 
-    IFS=$'\t' read -r MODEL CWD CONTEXT_TOKENS COST USAGE_5H < <(
+    IFS=$'\t' read -r MODEL EFFORT CWD CONTEXT_TOKENS USAGE_5H < <(
       echo "$INPUT" | ${pkgs.jq}/bin/jq -r '[
         (.model.display_name // "?"),
+        (.effort.level // "?"),
         (.cwd // ""),
         (.context_window.total_input_tokens // 0 | tostring),
-        (.cost.total_cost_usd // 0 | tostring),
         (.rate_limits.five_hour.used_percentage // empty | tostring)
       ] | join("\t")')
 
@@ -49,7 +49,6 @@ let
     }
 
     CONTEXT_FMT=$(format_tokens "$CONTEXT_TOKENS")
-    COST_FMT=$(${pkgs.gawk}/bin/awk "BEGIN { printf \"\\$%.2f\", $COST }")
 
     BRANCH=""
     if [ -n "$CWD" ] && [ -d "$CWD" ]; then
@@ -70,7 +69,7 @@ let
     GREEN='\033[32m'
     RESET='\033[0m'
 
-    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${GREEN}quota:''${RESET} $USAGE_5H  ''${PURPLE}context:''${RESET} $CONTEXT_FMT  ''${YELLOW}cost:''${RESET} $COST_FMT  ''${RED}branch:''${RESET} $BRANCH"
+    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${YELLOW}effort:''${RESET} $EFFORT  ''${GREEN}quota:''${RESET} $USAGE_5H  ''${PURPLE}context:''${RESET} $CONTEXT_FMT  ''${RED}branch:''${RESET} $BRANCH"
   '';
 
   # Passed via --settings flag instead of home-manager's home.file because
