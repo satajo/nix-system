@@ -24,13 +24,14 @@ let
   statusline = pkgs.writeShellScript "claude-statusline" ''
     INPUT=$(cat)
 
-    IFS=$'\t' read -r MODEL EFFORT CWD CONTEXT_TOKENS USAGE_5H < <(
+    IFS=$'\t' read -r MODEL EFFORT CWD CONTEXT_TOKENS USAGE_5H RESET_5H < <(
       echo "$INPUT" | ${pkgs.jq}/bin/jq -r '[
         (.model.display_name // "?"),
         (.effort.level // "?"),
         (.cwd // ""),
         (.context_window.total_input_tokens // 0 | tostring),
-        (.rate_limits.five_hour.used_percentage // empty | tostring)
+        (.rate_limits.five_hour.used_percentage // empty | tostring),
+        (.rate_limits.five_hour.resets_at // empty | tostring)
       ] | join("\t")')
 
     format_tokens() {
@@ -56,10 +57,25 @@ let
     fi
     BRANCH=''${BRANCH:-"?"}
 
-    if [ -n "$USAGE_5H" ]; then
-      USAGE_5H=$(${pkgs.gawk}/bin/awk "BEGIN { printf \"%.0f%%\", $USAGE_5H }")
+    # The 5h quota window exposes only used_percentage and resets_at, so the
+    # elapsed fraction is derived against the fixed 18000s (5h) window length.
+    # Pairing used% with that elapsed clock% reveals spend pace: a used% running
+    # ahead of the clock% means burning the quota faster than the window refills.
+    if [ -n "$USAGE_5H" ] && [ -n "$RESET_5H" ]; then
+      QUOTA=$(${pkgs.gawk}/bin/awk \
+        -v used="$USAGE_5H" -v reset="$RESET_5H" -v now="$(${pkgs.coreutils}/bin/date +%s)" '
+        BEGIN {
+          window = 18000
+          remaining = reset - now
+          if (remaining < 0) remaining = 0
+          if (remaining > window) remaining = window
+          clock = (window - remaining) * 100 / window
+          printf "%.0f%% / %.0f%%", used, clock
+        }')
+    elif [ -n "$USAGE_5H" ]; then
+      QUOTA=$(${pkgs.gawk}/bin/awk "BEGIN { printf \"%.0f%%\", $USAGE_5H }")
     else
-      USAGE_5H="?"
+      QUOTA="?"
     fi
 
     BLUE='\033[34m'
@@ -69,7 +85,7 @@ let
     GREEN='\033[32m'
     RESET='\033[0m'
 
-    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${YELLOW}effort:''${RESET} $EFFORT  ''${GREEN}quota:''${RESET} $USAGE_5H  ''${PURPLE}context:''${RESET} $CONTEXT_FMT  ''${RED}branch:''${RESET} $BRANCH"
+    echo -e "''${BLUE}model:''${RESET} $MODEL  ''${YELLOW}effort:''${RESET} $EFFORT  ''${GREEN}quota:''${RESET} $QUOTA  ''${PURPLE}context:''${RESET} $CONTEXT_FMT  ''${RED}branch:''${RESET} $BRANCH"
   '';
 
   # Passed via --settings flag instead of home-manager's home.file because
