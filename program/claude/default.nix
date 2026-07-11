@@ -5,20 +5,16 @@ let
   notify-hook = pkgs.writeShellScript "claude-notify" ''
     INPUT=$(cat)
 
+    # Skip the notification if Claude's own terminal window is already focused.
     ACTIVE_WINDOW=$(${pkgs.xdotool}/bin/xdotool getactivewindow 2>/dev/null)
     if [ "$ACTIVE_WINDOW" = "$WINDOWID" ]; then
       exit 0
     fi
 
     PROJECT=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.cwd | split("/") | last')
-    EVENT=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.hook_event_name')
     MESSAGE=$(echo "$INPUT" | ${pkgs.jq}/bin/jq -r '.message // empty')
 
-    if [ "$EVENT" = "Notification" ] && [ -n "$MESSAGE" ]; then
-      ${pkgs.libnotify}/bin/notify-send "Claude Code [$PROJECT]" "$MESSAGE"
-    else
-      ${pkgs.libnotify}/bin/notify-send "Claude Code [$PROJECT]" "Ready for input"
-    fi
+    ${pkgs.libnotify}/bin/notify-send "Claude Code [$PROJECT]" "''${MESSAGE:-Waiting for your input}"
   '';
 
   statusline = pkgs.writeShellScript "claude-statusline" ''
@@ -99,18 +95,12 @@ let
     hooks = {
       Notification = [
         {
-          matcher = "";
-          hooks = [
-            {
-              type = "command";
-              command = toString notify-hook;
-            }
-          ];
-        }
-      ];
-      Stop = [
-        {
-          matcher = "";
+          # Only notification types where Claude is actively waiting on the
+          # user (confirmed AskUserQuestion fires as permission_prompt).
+          # Excludes informational types (auth_success, elicitation_complete,
+          # elicitation_response) and agent_completed, which fires per
+          # background sub-agent and would ping mid-workflow.
+          matcher = "permission_prompt|idle_prompt|elicitation_dialog|agent_needs_input";
           hooks = [
             {
               type = "command";
@@ -123,14 +113,18 @@ let
     permissions = {
       defaultMode = "auto";
     };
-    skipDangerousModePermissionPrompt = true;
     statusLine = {
       type = "command";
       command = toString statusline;
+      # Statusline otherwise only re-runs on event, so the quota spend-pace
+      # clock (see the statusline script's window-elapsed comment above)
+      # goes stale while the session sits idle.
+      refreshInterval = 10;
     };
     tui = "fullscreen";
     voice = {
       enabled = true;
+      mode = "hold"; # matches the push-to-talk keybinding below
     };
   };
 
