@@ -61,9 +61,6 @@ assign [class="liferea"] home:n
 # m Music
 assign [class="music-player"] home:m
 
-# s Study
-assign [class="obsidian"] home:s
-
 # t Todo
 assign [class="Todoist"] home:t
 

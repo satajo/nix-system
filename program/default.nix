@@ -14,7 +14,6 @@
     ./liferea
     ./music-player.nix
     ./noisegen
-    ./obsidian.nix
     ./podman.nix
     ./shell
     ./steam.nix
@@ -47,12 +46,14 @@
       hyperfine # benchmarking tool
       fastfetch # it's basically required, right?
       nil # nix language server
+      obsidian # knowledge base manager
       pinta # quick but simple image editor
       proton-vpn # vpn provider
       tldr # console command cheatsheets
       vlc # video player
 
-      ## Kubernetes and virtualization
+      ## General software development tools
+      github-cli
       minikube # local k8s deployment
       kubectl
       k9s # kubectl terminal ui
