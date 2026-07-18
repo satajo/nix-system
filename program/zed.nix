@@ -4,10 +4,20 @@ let
   zed-editor = pkgs-unstable.zed-editor;
 in
 {
-  home-manager.users.satajo = {
-    home.packages = [ zed-editor ];
+  home-manager.users.satajo.programs.zed-editor = {
+    enable = true;
+    package = zed-editor;
 
-    xdg.configFile."zed/settings.json".text = builtins.toJSON {
+    extensions = [
+      "colored-zed-icons-theme"
+      "nix"
+      "toml"
+    ];
+
+    # Allow local edits to be made to the options not covered in the userSettings below.
+    mutableUserSettings = true;
+
+    userSettings = {
       theme = {
         mode = "system";
         dark = "Ayu Dark";
@@ -21,11 +31,9 @@ in
       buffer_font_family = theme.font.monospace;
       buffer_font_size = 14;
       ui_font_size = 16;
-
-      auto_install_extensions = {
-        nix = true;
-        toml = true;
-        colored-zed-icons-theme = true;
+      which_key = {
+        enabled = true;
+        delay_ms = 0;
       };
     };
   };
